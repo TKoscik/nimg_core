@@ -61,6 +61,7 @@ ${researcherRoot}/
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasN4.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasField.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasT1T2.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
