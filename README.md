@@ -7,9 +7,8 @@ Our goal is to restructure personnel and technologies to streamline neuroimage p
 
 #### 'on-arrival', automated image processing  
 
-   We are working toward pushing our processing pipelines to get scan data from the scanner into a useable data product within 72 hours of each scanning session. we have been operating in 'crisis-mode' where imaging results are all top-priority and are needed immediately, making it hard for our imaging team to juggle priorities at times. We need to get ahead of the current crisis and move to an 'on-arrival' processing scheme, such that priorities won't need to be juggled and every researcher's data is ready to analyze right away.
-   
-   As a part of this, we hope to engage researchers earlier in the study planning process to construct pipelines and tools that match your data and give you the best possible results according to your study design. In addition, engaging researchers earlier in the process allow us to build the scripts and tools needed for projects, BEFORE data collection begins, so that data can be processed as it is acquired. 
+> We are working toward pushing our processing pipelines to get scan data from the scanner into a useable data product within 72 hours of each scanning session. we have been operating in 'crisis-mode' where imaging results are all top-priority and are needed immediately, making it hard for our imaging team to juggle priorities at times. We need to get ahead of the current crisis and move to an 'on-arrival' processing scheme, such that priorities won't need to be juggled and every researcher's data is ready to analyze right away.
+> As a part of this, we hope to engage researchers earlier in the study planning process to construct pipelines and tools that match your data and give you the best possible results according to your study design. In addition, engaging researchers earlier in the process allow us to build the scripts and tools needed for projects, BEFORE data collection begins, so that data can be processed as it is acquired. 
    
 #### immediate quality control and accountability  
 
