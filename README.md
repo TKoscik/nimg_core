@@ -1,5 +1,5 @@
-# nimg_core
-## Tools and scripts for neuroimage processing
+# Iowa Neuroimaging Core
+## Tools for streamlined neuroimage processing
 
 ### Mission Statement
 Restructure personnel and technologies to streamline neuroimage processing in order to provide:
