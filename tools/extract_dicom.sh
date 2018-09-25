@@ -188,7 +188,7 @@ while IFS=$'\t' read -r -a idx; do
         echo "Unknown anatomical type: ${mod}"
         exit 1
       fi
-      fname=sub-${subject}_ses-${session}_T1w
+      fname=sub-${subject}_ses-${session}
       for i in $(seq 3 ${#idx[@]}); do
           if [ $((i%2)) -eq 1 ]; then
             fname="${fname}_${idx[${i}]}"
@@ -196,7 +196,7 @@ while IFS=$'\t' read -r -a idx; do
             fname="${fname}-${idx[${i}]}"
           fi
       done
-      fname=${fname::-1} # an unelegant way to remove trailing underscore
+      fname="${fname}${mod}"
       if [ -d ${scratch}/${datadir} ]; then
         dcm2niix -b Y -f ${fname} -o ${savedir} ${scratch}/${datadir}
       fi
