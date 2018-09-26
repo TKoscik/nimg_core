@@ -56,8 +56,11 @@ ${researcherRoot}/
         |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
         |    |    ∟prep/
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-avg.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0Brain.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0MaskBrain.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0MaskTissue.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0Tissue.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4Field.nii.gz
@@ -68,6 +71,7 @@ ${researcherRoot}/
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-resample.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-seg?.nii.gz
         |    |    ∟reg_[${space}]/
         |    |        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
