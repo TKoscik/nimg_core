@@ -63,80 +63,79 @@ ${researcherRoot}/
         |    |    ∟reg_[${space}]/ (e.g. mni, etc. [accompanying transforms in tform folder])
         |    ∟b2/   
              |    ∟b2_sub-${ursi}_ses-${mrqid}.zip 
-        |    ∟baw/  (BrainsAutoWorkup) (a CACHE directory is created for intermediate results and should not be deleted til project is                          complete <BAWEXPERIMENTNAME_CACHE>)
-                ∟<BAWEXPERIMENTNAME_Results>/<PROJECTNAME>
-                    ∟${ursi}/
-                        ∟${mrqid}/
-                        ACCUMULATED_POSTERIORS
-                            POSTERIOR_BACKGROUND_TOTAL.nii.gz
-                            POSTERIOR_CSF_TOTAL.nii.gz
-                            POSTERIOR_GLOBUS_TOTAL.nii.gz
-                            POSTERIOR_GM_TOTAL.nii.gz
-                            POSTERIOR_VB_TOTAL.nii.gz
-                            POSTERIOR_WM_TOTAL.nii.gz
-                        ACPCAlign
-                            BCD_ACPC_Landmarks.fcsv
-                            BCD_Branded2DQCimage.png
-                            BCD_Original.fcsv
-                            BCD_Original2ACPC_transform.h5
-                            Cropped_BCD_ACPC_Aligned.nii.gz
-                            landmarkInitializer_atlas_to_subject_transform.h5
-                        JointFusion
-                            JointFusion_HDAtlas20_2015_dustCleaned_label.nii.gz
-                            JointFusion_HDAtlas20_2015_fs_standard_label.nii.gz
-                            JointFusion_HDAtlas20_2015_lobe_label.nii.gz
-                            allVol
-                                labelVolume.csv
-                                labelVolume.json
-                            lobeVol
-                                labelVolume.csv
-                                labelVolume.json
-                        TissueClassify
-                            POSTERIOR_AIR.nii.gz
-                            POSTERIOR_BASAL.nii.gz
-                            POSTERIOR_CRBLGM.nii.gz
-                            POSTERIOR_CRBLWM.nii.gz
-                            POSTERIOR_CSF.nii.gz
-                            POSTERIOR_GLOBUS.nii.gz
-                            POSTERIOR_HIPPOCAMPUS.nii.gz
-                            POSTERIOR_NOTCSF.nii.gz
-                            POSTERIOR_NOTGM.nii.gz
-                            POSTERIOR_NOTVB.nii.gz
-                            POSTERIOR_NOTWM.nii.gz
-                            POSTERIOR_SURFGM.nii.gz
-                            POSTERIOR_THALAMUS.nii.gz
-                            POSTERIOR_VB.nii.gz
-                            POSTERIOR_WM.nii.gz
-                            atlas_to_subject.h5
-                            complete_brainlabels_seg.nii.gz
-                            fixed_headlabels_seg.nii.gz
-                            t1_average_BRAINSABC.nii.gz
-                            t2_average_BRAINSABC.nii.gz
-                        WarpedAtlas2Subject
-                            hncma_atlas.nii.gz
-                            l_accumben_ProbabilityMap.nii.gz
-                            l_caudate_ProbabilityMap.nii.gz
-                            l_globus_ProbabilityMap.nii.gz
-                            l_hippocampus_ProbabilityMap.nii.gz
-                            l_putamen_ProbabilityMap.nii.gz
-                            l_thalamus_ProbabilityMap.nii.gz
-                            left_hemisphere_wm.nii.gz
-                            phi.nii.gz
-                            r_accumben_ProbabilityMap.nii.gz
-                            r_caudate_ProbabilityMap.nii.gz
-                            r_globus_ProbabilityMap.nii.gz
-                            r_hippocampus_ProbabilityMap.nii.gz
-                            r_putamen_ProbabilityMap.nii.gz
-                            r_thalamus_ProbabilityMap.nii.gz
-                            rho.nii.gz
-                            right_hemisphere_wm.nii.gz
-                            template_WMPM2_labels.nii.gz
-                            template_headregion.nii.gz
-                            template_leftHemisphere.nii.gz
-                            template_nac_labels.nii.gz
-                            template_rightHemisphere.nii.gz
-                            template_ventricles.nii.gz
-                            theta.nii.gz
+        |    ∟baw/  BrainsAutoWorkup/BRAINSTools 
+             |    ∟${ursi}/
+                  |    ∟${mrqid}/
+                       |    ∟ACCUMULATED_POSTERIORS/
+                            |    ∟POSTERIOR_BACKGROUND_TOTAL.nii.gz
+                            |    ∟POSTERIOR_CSF_TOTAL.nii.gz
+                            |    ∟POSTERIOR_GLOBUS_TOTAL.nii.gz
+                            |    ∟POSTERIOR_GM_TOTAL.nii.gz
+                            |    ∟POSTERIOR_VB_TOTAL.nii.gz
+                            |    ∟POSTERIOR_WM_TOTAL.nii.gz
+                        |    ∟ACPCAlign/
+                            |    ∟BCD_ACPC_Landmarks.fcsv
+                            |    ∟BCD_Branded2DQCimage.png
+                            |    ∟BCD_Original.fcsv
+                            |    ∟BCD_Original2ACPC_transform.h5
+                            |    ∟Cropped_BCD_ACPC_Aligned.nii.gz
+                            |    ∟landmarkInitializer_atlas_to_subject_transform.h5
+                        |    ∟JointFusion/
+                            |    ∟JointFusion_HDAtlas20_2015_dustCleaned_label.nii.gz
+                            |    ∟JointFusion_HDAtlas20_2015_fs_standard_label.nii.gz
+                            |    ∟JointFusion_HDAtlas20_2015_lobe_label.nii.gz
+                                |    ∟allVol/
+                                     |    ∟labelVolume.csv
+                                     |    ∟labelVolume.json
+                                |    ∟lobeVol/
+                                     |    ∟labelVolume.csv
+                                     |    ∟labelVolume.json
+                        |    ∟TissueClassify/
+                            |    ∟POSTERIOR_AIR.nii.gz
+                            |    ∟POSTERIOR_BASAL.nii.gz
+                            |    ∟POSTERIOR_CRBLGM.nii.gz
+                            |    ∟POSTERIOR_CRBLWM.nii.gz
+                            |    ∟POSTERIOR_CSF.nii.gz
+                            |    ∟POSTERIOR_GLOBUS.nii.gz
+                            |    ∟POSTERIOR_HIPPOCAMPUS.nii.gz
+                            |    ∟POSTERIOR_NOTCSF.nii.gz
+                            |    ∟POSTERIOR_NOTGM.nii.gz
+                            |    ∟POSTERIOR_NOTVB.nii.gz
+                            |    ∟POSTERIOR_NOTWM.nii.gz
+                            |    ∟POSTERIOR_SURFGM.nii.gz
+                            |    ∟POSTERIOR_THALAMUS.nii.gz
+                            |    ∟POSTERIOR_VB.nii.gz
+                            |    ∟POSTERIOR_WM.nii.gz
+                            |    ∟atlas_to_subject.h5
+                            |    ∟complete_brainlabels_seg.nii.gz
+                            |    ∟fixed_headlabels_seg.nii.gz
+                            |    ∟t1_average_BRAINSABC.nii.gz
+                            |    ∟t2_average_BRAINSABC.nii.gz
+                        |    ∟WarpedAtlas2Subject/
+                            |    ∟hncma_atlas.nii.gz
+                            |    ∟l_accumben_ProbabilityMap.nii.gz
+                            |    ∟l_caudate_ProbabilityMap.nii.gz
+                            |    ∟l_globus_ProbabilityMap.nii.gz
+                            |    ∟l_hippocampus_ProbabilityMap.nii.gz
+                            |    ∟l_putamen_ProbabilityMap.nii.gz
+                            |    ∟l_thalamus_ProbabilityMap.nii.gz
+                            |    ∟left_hemisphere_wm.nii.gz
+                            |    ∟phi.nii.gz
+                            |    ∟r_accumben_ProbabilityMap.nii.gz
+                            |    ∟r_caudate_ProbabilityMap.nii.gz
+                            |    ∟r_globus_ProbabilityMap.nii.gz
+                            |    ∟r_hippocampus_ProbabilityMap.nii.gz
+                            |    ∟r_putamen_ProbabilityMap.nii.gz
+                            |    ∟r_thalamus_ProbabilityMap.nii.gz
+                            |    ∟rho.nii.gz
+                            |    ∟right_hemisphere_wm.nii.gz
+                            |    ∟template_WMPM2_labels.nii.gz
+                            |    ∟template_headregion.nii.gz
+                            |    ∟template_leftHemisphere.nii.gz
+                            |    ∟template_nac_labels.nii.gz
+                            |    ∟template_rightHemisphere.nii.gz
+                            |    ∟template_ventricles.nii.gz
+                            |    ∟theta.nii.gz
         |    ∟dwi/
         |    ∟fsurf/ (Freesurfer subject directory)
         |    ∟func/
