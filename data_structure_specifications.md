@@ -62,7 +62,7 @@ ${researcherRoot}/
         |    |    |    ∟(sub-1234_ses-123456_T1w_pre-05-seg_class-wm.nii.gz)
         |    |    ∟reg_[${space}]/ (e.g. mni, etc. [accompanying transforms in tform folder])
         |    ∟b2/   
-             |    ∟sub-${ursi}_ses-${mrqid}.zip 
+             |    ∟b2_sub-${ursi}_ses-${mrqid}.zip 
         |    ∟baw/  (BrainsAutoWorkup) (a CACHE directory is created for intermediate results and should not be deleted til project is                          complete <BAWEXPERIMENTNAME_CACHE>)
                 ∟<BAWEXPERIMENTNAME_Results>/<PROJECTNAME>
                     ∟${ursi}/
