@@ -62,6 +62,7 @@ ${researcherRoot}/
         |    |    |    ∟(sub-1234_ses-123456_T1w_pre-05-seg_class-wm.nii.gz)
         |    |    ∟reg_[${space}]/ (e.g. mni, etc. [accompanying transforms in tform folder])
         |    ∟b2/   - (Brains2; legacy support only: ${mrqid-baseline} files only exist for longitudinal runs and <trm> mask only for                       manually edited brain masks)
+             |    ∟sub-${ursi}_ses-${mrqid}.zip 
                 ∟${ursi}/
                     ∟${mrqid}
                         ∟10_AUTO.v020<GE>
