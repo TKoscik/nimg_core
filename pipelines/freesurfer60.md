@@ -1,4 +1,4 @@
-FreeSurfer 6.0 Processing Pipeline
+FreeSurfer 6.0 Pipeline
 
 DICOM conversion to NIfTI
 ${researcherRoot}/
