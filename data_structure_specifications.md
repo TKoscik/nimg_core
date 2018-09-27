@@ -53,9 +53,13 @@ ${researcherRoot}/
         ∟derivatives/
         |    ∟anat/
         |    |    ∟native/
-        |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
+        |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_brain.nii.gz
+        |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_tissue.nii.gz
         |    |    ∟prep/
         |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_prep-bex0MaskBrain.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_prep-bexMaskBrain.nii.gz
+        |    |    |   ∟sub-${subject}_ses-${session}_prep-bexMaskTissue.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-avg.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0Brain.nii.gz
         |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0MaskBrain.nii.gz
