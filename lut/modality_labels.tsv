@@ -3,15 +3,15 @@ anat	T1 weighted	T1w
 anat	T2 weighted	T2w 
 anat	T1 rho  T1rho quantitative T1rho brain imaging  
 anat	T2*/SWE T2star  high resolution T2* image 
-anat	FLAIR	FLAIR	
+anat	FLAIR	FLAIR 
 anat	FLASH	FLASH 
 anat	Proton density	PD  
 anat  Proton density map  PDmap 
 anat	Angiography	angio	
 func	BOLD	bold	
 func	T1 rho	fT1rho	
-dwi	DWI	dwi	diffusion-weighted images
-mrs	Spectroscopy	MRS	
+dwi DWI dwi diffusion-weighted images
+mrs Spectroscopy	MRS	
 anat	quantitative T1 map	T1map	
 anat	quantitative T2 map	T2map	
 anat	Inplane T1	inplaneT1	T1-weighted matched to functional acquisition 
