@@ -1,0 +1,5 @@
+#!/bin/bash
+export FREESURFER_HOME=/Shared/pinc/sharedopt/apps/freesurfer/Linux/x86_64/6.0.0
+export SUBJECTS_DIR=researcherRoot/projectName/derivatives/fsurf
+source ${FREESURFER_HOME}/FreeSurferEnv.sh
+recon-all -subject projectName_v6wbcT1T2_SUBJECTID_MRQID -i T1bc -T2 T2bc -cw256 -T2pial -all
