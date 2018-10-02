@@ -8,7 +8,7 @@
     * CIT168  
     * HCP S1200  
     * Koscik HCP  
-* Reorient to RPI/LPI  
+* Reorient to RPI   
 * Motion correction (*e.g. https://stnava.github.io/fMRIANTs , https://github.com/ANTsX/ANTsR/blob/master/R/preprocessfMRI.R#L44-L46*)  
   * 3dvolreg (*AFNI*)  
   * mcflirt (*FSL*)  
