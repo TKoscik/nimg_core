@@ -10,8 +10,8 @@
     * Koscik HCP  
 * Reorient to RPI   
 * Motion correction (*e.g. https://stnava.github.io/fMRIANTs , https://github.com/ANTsX/ANTsR/blob/master/R/preprocessfMRI.R#L44-L46*)  
-  * 3dvolreg (*AFNI*)  
-  * mcflirt (*FSL*)  
+  * 3dvolreg (*AFNI*)  [not good enough for tim]  
+  * mcflirt (*FSL*)  [not good enough for tim]  
   * antsMotionCorr (*ANTs*)  
     * affine or affine & deformable correction  
       * Average the time series (*for registration*)  
