@@ -72,6 +72,7 @@ ${researcherRoot}/
         |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior2.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior3.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_${mod}_prep-avg.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_${mod}_prep-norm.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpcAffine.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
@@ -84,7 +85,7 @@ ${researcherRoot}/
         |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-resample.nii.gz
         |    |    ∟reg_[${space}]/
-        |    |        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
+        |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}.nii.gz
         |    ∟b2/   
         |    |    ∟b2_sub-${ursi}_ses-${mrqid}.zip 
         |    ∟baw/  BrainsAutoWorkup-BRAINSTools
