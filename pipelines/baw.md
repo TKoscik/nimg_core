@@ -22,7 +22,8 @@ To start BRAINSTools processing in argon you need to do the following commands (
 export PATH=/Shared/pinc/sharedopt/apps/anaconda3/Linux/x86_64/4.3.0/bin:$PATH
 bash runbaw.sh -p 1 -s all -r <SGEGraph|SGE> -c <YOURCONFIGFILE>.config
 
-Notes on SGE vs SGEGraph: SGE runs each job node of pipeline in serial while SGEGraph farms out all the jobs at once and then waits for each dependency to resolve before running next job
+Notes on SGE vs SGEGraph: SGE runs each job node of pipeline in serial while SGEGraph farms out all the jobs at 
+once and then waits for each dependency to resolve before running next job
 
 ```
 4. Troubleshooting failures
