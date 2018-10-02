@@ -1,105 +1,50 @@
 # BRAINSTools (BAW) Pipeline
 
-1. DICOM conversion to NIfTI  
+1. Create .csv database file for sample you want to run through BRAINSTools BAW 
 ```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟nifti/
-      ∟${subject}/
-        ∟${ssession}/
-          ∟anat/
+Use this script to find all your T1s and T2s and make the desired csv file:
+
+https://github.com/TKoscik/nimg_core/blob/master/tools/BRAINSTools_csvcreator.sh
+```
+2. Create a config file for the projcect you want to run through BRAINSTools BAW   
+```
+Create a config file using this file as your template and edit the lines described in the header:
+
+https://github.com/TKoscik/nimg_core/blob/master/tools/BRAINSTools.config
+```
+3. Login to argon and start your BRAINSTools processing
+```
+You will need the csv file from Step 1, the config file from Step 2, and the following runbaw.sh file:
+
+https://github.com/TKoscik/nimg_core/blob/master/tools/runbaw.sh
+
+To start BRAINSTools processing in argon you need to do the following commands (described in config header as well):
+export PATH=/Shared/pinc/sharedopt/apps/anaconda3/Linux/x86_64/4.3.0/bin:$PATH
+bash runbaw.sh -p 1 -s all -r <SGEGraph|SGE> -c <YOURCONFIGFILE>.config
+
+Notes on SGE vs SGEGraph: SGE runs each job node of pipeline in serial while SGEGraph farms out all the jobs at once and then waits for each dependency to resolve before running next job
+
+```
+4. Troubleshooting failures
+```
+Failure cases and workarounds can be found here:
+https://github.com/BRAINSia/BRAINSTools/wiki
+
+```
+5. Dataset creation in R via Tim's functions
+```
+Example below of how to generate csv summary datasets for analysis is below
+
+devtools::install_github("TKoscik/tkmisc")
+library(tkmisc)
+library(nifti.io)
+library(R.utils)
+
+bt_summarizer(data.dir = "/Shared/nopoulos/BRAINSTools_Experiments/20160525_BAW_JointFusion/20160525_Kids_base_Results/KIDSHD",
+              scratch="/Shared/nopoulos/BRAINSTools_Experiments/20160525_BAW_JointFusion/data/scratch",
+              label.csv="/Shared/nopoulos/kidsHD_btSummaries/brainstools-summary-labels.csv",
+              save.dir="/nopoulos/BRAINSTools_Experiments/20160525_BAW_JointFusion/data",
+              file.name="KIDSHD_BrainsTools_Summary_20180905.csv")
+
 ```
 
-Everything below will be stored in the deriviatives folder:
-```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟derivatives/
-```
-2. Gradient distortion unwarping [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
-```
-3. Readout distortion correction [*figure out what this is*]  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
-```
-4. Rician denoising  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
-```
-5. ACPC Alignment  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
-```
-6. Brain extraction (preliminary)  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
-```
-7. Bias field correction  
-  a. T1/T2 debiasing [*T1 and T2 co-acquisition*]  
-  b. N4 debiasing [*T1 only acquisition*]  
-  c. Iterative N4 debiasing and segmentation [*atroposN4*]  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bc.nii.gz
-```
-8. Within-session, within-modality averaging  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
-```
-9. Brain extraction  
-```
-      ∟anat/
-        ∟mask/
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-brain.nii.gz
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-tissue.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
-```
-10. Tissue segmentation  
-```
-      ∟anat/
-        ∟segmentation/
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-GM.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-WM.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-?.nii.gz
-```
-11. Coregistration  [*within-session only*]  
-  - coregistering multiple acquisitions of the same modality within a scanning session  
-  - coregistering multiple modalities within scanning sessions  
-```
-      ∟anat/
-      | ∟native/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-syn.nii.gz
-```
-12. Normalization
-  - between session registrations, i.e., register to participant baseline or average  
-  - registration to common space  
-```
-      ∟anat/
-      | ∟reg_${space}/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-0affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1syn.nii.gz
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-inverse.nii.gz
-```
