@@ -129,7 +129,7 @@ ${researcherRoot}/
         |    |    ∟stb/
         |    ∟mrs/
         |    ∟tform/
-        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-acpc0rigid.mat
+        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-acpc_tform-0rigid.mat
         |    |    |    (initial affine transform)
         |    |    ∟sub-${subject}_MOV_ses-${session}_acq-${acq}_${mod}_FIX_ses-${session}_acq-${acq}_${mod}_tform-0affine.mat
         |    |    ∟sub-${subject}_MOV_ses-${session}_acq-${acq}_${mod}_FIX_ses-${session}_acq-${acq}_${mod}_tform-1syn.nii.gz
