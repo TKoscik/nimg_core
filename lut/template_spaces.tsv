@@ -1,0 +1,3 @@
+acronym	location	prefix	description
+HCPMNI07mm	${templates}/HCP	MNI152_T1_0.7mm	Human Connectome Project 0.8mm MNI152
+HCPMNI08mm	${templates}/HCP	MNI152_T1_0.8mm	Human Connectome Project 0.7mm MNI152
