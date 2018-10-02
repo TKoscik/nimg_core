@@ -56,33 +56,62 @@ ${researcherRoot}/
         |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_brain.nii.gz
         |    |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_tissue.nii.gz
         |    |    ∟prep/
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_prep-bex0MaskBrain.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_prep-bexMaskBrain.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_prep-bexMaskTissue.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-avg.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0Brain.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0MaskBrain.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0MaskTissue.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_${mod}_prep-bex0Tissue.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4Field.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasN4.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasN4Field.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasT1T2.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasT1T2Field.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-resample.nii.gz
-        |    |    |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-seg?.nii.gz
+        |    |    |    ∟${subject}
+        |    |    |         ∟${session}
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0BET.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexAFNI.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexANTS.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexBET.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexMask.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-biasFieldT1T2.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-seg.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior1.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior2.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior3.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_${mod}_prep-avg.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpcAffine.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4Field.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasN4.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasFieldN4.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasT1T2.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-resample.nii.gz
         |    |    ∟reg_[${space}]/
         |    |        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
-        |    ∟b2/  (Brains2; legacy support only)
-        |    ∟baw/  (BrainsAutoWorkup)
+        |    ∟b2/   
+        |    |    ∟b2_sub-${ursi}_ses-${mrqid}.zip 
+        |    ∟baw/  BrainsAutoWorkup-BRAINSTools
+        |    |    ∟${ursi}/
+        |    |        ∟${mrqid}/
+        |    |            ∟ACCUMULATED_POSTERIORS/
+        |    |            ∟ACPCAlign/
+        |    |            ∟JointFusion/
+        |    |            |    ∟allVol/
+        |    |            |    ∟lobeVol/
+        |    |            ∟TissueClassify/
+        |    |            ∟WarpedAtlas2Subject/
         |    ∟dwi/
         |    ∟fsurf/ (Freesurfer subject directory)
+        |    |    ∟${ursi}_${mrqid}/
+        |    |    |    ∟label/                 
+        |    |    |    ∟mri/
+        |    |    |    |    ∟orig/
+        |    |    |    |    ∟transforms/                
+        |    |    |    ∟scripts/               
+        |    |    |    ∟stats/           
+        |    |    |    ∟surf/                
+        |    |    |    ∟tmp/
+        |    |    |    |    ∟cw256                  
+        |    |    |    ∟touch/                
+        |    |    |    ∟trash/
+        |    |    ∟fsaverage/
         |    ∟func/
         |    |    ∟ts/
         |    |    |    ∟sub-${ursi}_ses-${mrqid}_task-${task}_[_pre-${order}-${proc}].nii.gz
