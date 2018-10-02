@@ -18,7 +18,9 @@ You will need the csv file from Step 1, the config file from Step 2, and the fol
 
 https://github.com/TKoscik/nimg_core/blob/master/tools/runbaw.sh
 
-To start BRAINSTools processing in argon you need to do the following commands (described in config header as well):
+To start BRAINSTools processing in argon you need to do the following commands 
+(described in config header as well):
+
 export PATH=/Shared/pinc/sharedopt/apps/anaconda3/Linux/x86_64/4.3.0/bin:$PATH
 bash runbaw.sh -p 1 -s all -r <SGEGraph|SGE> -c <YOURCONFIGFILE>.config
 
