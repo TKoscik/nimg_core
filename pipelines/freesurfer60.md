@@ -1,105 +1,77 @@
 # FreeSurfer 6.0 Pipeline
 
-1. DICOM conversion to NIfTI  
+1. FreeSurfer 6.0 Information 
 ```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟nifti/
-      ∟${subject}/
-        ∟${ssession}/
-          ∟anat/
-```
+Everything one would need to know is at this wiki as far as FreeSurfer ins and outs and documetation, how-tos,
+etc:
 
-Everything below will be stored in the deriviatives folder:
+https://surfer.nmr.mgh.harvard.edu/fswiki
+
+We have found that FreeSurfer works best with Atropos N4 corrected inputs and the following scripts point at 
+these in the bids structure.  This is particularly critical for samples with scans acquired on multiple 
+scanners
+
 ```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟derivatives/
+2. Create argon submittable jobs scripts for running FreeSurfer and submit jobs
 ```
-2. Gradient distortion unwarping [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
+If you want to run the T1-T2 pipeline use the following script and template files:
+
+Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
+https://github.com/TKoscik/nimg_core/blob/master/tools/createFSjobsT1T2.sh
+
+T1-T2 Template:
+https://github.com/TKoscik/nimg_core/blob/master/tools/TMPLT1T2FSv60.sh.in
+
+If you want to run the T1 only pipeline use the following script and template files:
+
+Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
+https://github.com/TKoscik/nimg_core/blob/master/tools/createFSjobsT1.sh
+
+T1-only Template:
+https://github.com/TKoscik/nimg_core/blob/master/tools/TMPLT1FSv60.sh.in
+
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
+3. FreeSurfer job status and troubleshooting
 ```
-3. Readout distortion correction [*figure out what this is*]  
+FreeSurfer jobs exit with one of two messages as below in the recon-all.log file and argon job
+output file:
+
+recon-all -s KIDSHD_v6_N4_121_62484516 finished without error at Thu May 31 13:24:47 CDT 2018
+recon-all -s KIDSHD_v6_N4_335_63147515 exited with ERRORS at Wed Mar  7 10:49:58 CST 2018
+
+Main error and get around is outlined here having to do with poor skull stripping:
+copy brainmask.auto.mgz (name brainorig.mgz) from non N4 run
+Load T1.mgz and brainorig.mgz
+Otsu threshold brainorig.mgz 0 1 1
+Multiply T1.mgz and thresholded brainorig.mgz interpolation 1
+Save output as brainmask.nii.gz
+mri_convert -i brainmask.nii.gz -it nii -o brainmask.auto.mgz -ot mgz
+cp brainmask.auto.mgz brainmask.mgz
+rm brainmask.nii.gz
+run recon2 and recon3 
+
+Other fixes one sometimes needs are the following:
+Control points:
+https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview
+https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools
+
+Pial edits:
+https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview
+https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
+4. Dataset creation in R via Tim's functions
+
 ```
-4. Rician denoising  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
-```
-5. ACPC Alignment  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
-```
-6. Brain extraction (preliminary)  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
-```
-7. Bias field correction  
-  a. T1/T2 debiasing [*T1 and T2 co-acquisition*]  
-  b. N4 debiasing [*T1 only acquisition*]  
-  c. Iterative N4 debiasing and segmentation [*atroposN4*]  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bc.nii.gz
-```
-8. Within-session, within-modality averaging  
-```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
-```
-9. Brain extraction  
-```
-      ∟anat/
-        ∟mask/
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-brain.nii.gz
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-tissue.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
-```
-10. Tissue segmentation  
-```
-      ∟anat/
-        ∟segmentation/
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-GM.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-WM.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-?.nii.gz
-```
-11. Coregistration  [*within-session only*]  
-  - coregistering multiple acquisitions of the same modality within a scanning session  
-  - coregistering multiple modalities within scanning sessions  
-```
-      ∟anat/
-      | ∟native/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-syn.nii.gz
-```
-12. Normalization
-  - between session registrations, i.e., register to participant baseline or average  
-  - registration to common space  
-```
-      ∟anat/
-      | ∟reg_${space}/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-0affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1syn.nii.gz
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-inverse.nii.gz
+Examples below of how to generate csv summary datasets for analysis is below
+Launch RStudio
+###Only 1st time###install.packages("devtools")
+###Only 1st time### devtools::install_github("TKoscik/fsurfR")
+library(fsurfR)
+
+For global summary variables:
+summary.fsurf(data.dir = "/Shared/nopoulos/freesurfer/KIDSHD_v6_2017/FreeSurfer_Subjects",save.dir = "~/",save.csv = TRUE, rois = "peg",file.name = "globalvars" )
+
+For regional summary variables:
+summary.fsurf(data.dir = "/Shared/nopoulos/freesurfer/KIDSHD_v6_2017/FreeSurfer_Subjects",save.dir = "~/",save.csv = TRUE, rois = "all",hemi = "t", file.name = "regionaltotals" )
+
 ```
