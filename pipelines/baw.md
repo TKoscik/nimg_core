@@ -56,7 +56,7 @@ BRAINSTools build we currently use:
 /Shared/pinc/sharedopt/20170302/RHEL7/NEP-intel
 
 Word document with all the details of BAW:
-
+https://github.com/TKoscik/nimg_core/blob/master/pipelines/BRAINSAutoWorkupOutputDescriptions.docx
 
 ```
 
