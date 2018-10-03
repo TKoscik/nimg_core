@@ -50,4 +50,13 @@ bt_summarizer(data.dir = "/Shared/nopoulos/BRAINSTools_Experiments/20160525_BAW_
               file.name="KIDSHD_BrainsTools_Summary_20180905.csv")
 
 ```
+Miscellaneous BAW info
+```
+BRAINSTools build we currently use:
+/Shared/pinc/sharedopt/20170302/RHEL7/NEP-intel
+
+Word document with all the details of BAW:
+
+
+```
 
