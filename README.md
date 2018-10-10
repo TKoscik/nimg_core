@@ -1,4 +1,4 @@
-# Iowa Neuroimaging Core
+# Iowa Neuroimaging Data Science Core
 ## Tools for streamlined neuroimage processing
 
 ### Mission Statement  
