@@ -43,8 +43,8 @@ ${researcherRoot}/
         |              |    ∟sub-${subject}_ses-${session}_task-${task}_run-${run}_bold.json
         |              |    ∟sub-${subject}_ses-${session}_task-${task}_run-${run}_bold.nii.gz
         |              ∟mrs/
-        |              |    ∟sub-${subject}_ses-${session}_mrs_roi-${roi}.json
-        |              |    ∟sub-${subject}_ses-${session}_mrs_roi-${roi}.p
+        |              |    ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.json
+        |              |    ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.p
         |              ∟other/
         |              |    ∟sub-${subject}_ses-${session}_${mod}.json
         |              |    ∟sub-${subject}_ses-${session}_${mod}.nii.gz
