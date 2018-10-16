@@ -6,7 +6,7 @@
 | anat | T2*/SWE  high resolution T2* image | T2star |
 | anat | FLAIR | FLAIR |
 | anat | FLASH | FLASH |
-| anat | Proton density	| PD |
+| anat | Proton density | PD |
 | anat | Proton density map | PDmap |
 | anat | Angiography | angio |
 | func | BOLD	| bold |
