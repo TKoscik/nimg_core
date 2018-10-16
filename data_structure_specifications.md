@@ -21,6 +21,7 @@ ${researcherRoot}/
         ∟nifti/			Read-only archive
         |     ∟${subject}/
         |         ∟${session}/
+        |              ∟session_info.tsv
         |              ∟anat/
         |              |    ∟sub-${subject}_ses-${session}_acq-${acq}[_run-${run}]_${mod}.json
         |              |    ∟sub-${subject}_ses-${session}_acq-${acq}[_run-${run}]_${mod}.nii.gz
