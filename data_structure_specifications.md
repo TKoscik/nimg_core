@@ -45,6 +45,7 @@ ${researcherRoot}/
         |              ∟mrs/
         |              |    ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.json
         |              |    ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.p
+        |              ∟orig/ #raw data from scanner (no on scanner processing)
         |              ∟other/
         |              |    ∟sub-${subject}_ses-${session}_${mod}.json
         |              |    ∟sub-${subject}_ses-${session}_${mod}.nii.gz
