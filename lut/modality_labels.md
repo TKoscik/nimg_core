@@ -1,0 +1,21 @@
+
+| type | modality | acronym description |
+| :--- | :--- | :--- |
+| anat | T1 weighted | T1w |
+| anat | T2 weighted | T2w |
+| anat | T1 rho quantitative T1rho brain imaging | T1rho  |
+| anat | T2*/SWE  high resolution T2* image | T2star |
+| anat | FLAIR | FLAIR |
+| anat | FLASH | FLASH |
+| anat | Proton density | PD |
+| anat | Proton density map | PDmap |
+| anat | Angiography | angio |
+| func | BOLD | bold |
+| func | T1 rho | fT1rho |
+| dwi | DWI diffusion-weighted images | dwi |
+| mrs | Spectroscopy | mrs |
+| anat | quantitative T1 map | T1map |
+| anat | quantitative T2 map | T2map |
+| anat | Inplane T1 T1-weighted matched to functional acquisition | inplaneT1 |
+| anat | Inplane T2 T2-weighted matched to functional acquisition | inplaneT2 |
+| anat | Combined PD/T2 | PDT2 |
