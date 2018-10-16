@@ -98,8 +98,8 @@ ${researcherRoot}/
         |    |    ∟reg_[${space}]/
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_brain.nii.gz
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_tissue.nii.gz
-        |    ∟b2/   
-        |    |    ∟b2_sub-${ursi}_ses-${mrqid}.zip 
+        |    ∟brains2/   
+        |    |    ∟sub-${ursi}_ses-${mrqid}_brains2.zip 
         |    ∟baw/  BrainsAutoWorkup-BRAINSTools
         |    |    ∟${ursi}/
         |    |        ∟${mrqid}/
