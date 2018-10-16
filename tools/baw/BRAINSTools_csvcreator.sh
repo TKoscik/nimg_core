@@ -44,7 +44,7 @@ in
 esac
 done
 
-for i in ${researcherRoot}/${projectName}/nifti/[a-zA-Z0-9]*/[a-zA-Z0-9]*/anat ; do 
+for i in ${researcherRoot}/${projectName}/nifti/[a-zA-Z0-9]*/[a-zA-Z0-9]*/orig ; do 
 T1=`find $i -name \*T1w_acq-MPRAGE.nii.gz`
 T2=`find $i -name \*T2w_acq-CUBE.nii.gz`
 info=(`echo $i | awk '{gsub("/"," "); print $0}'`)
