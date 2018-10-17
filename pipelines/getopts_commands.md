@@ -3,10 +3,12 @@
   
   ```
   while getopts "input arguments" OPTION  
-  do  
-    argument)  
-      action  
-      ;;  
+  do 
+    case $OPTION in  
+      argument)  
+         action  
+         ;;  
+     esac  
   done  
   ```
   
@@ -28,17 +30,47 @@
   
   while getopts "a:b" OPTION  
   do  
-    a)  
-      somevariable=$OPTARG    
-      ;;  
-    b)
-      someothervariable=1
-      ;;  
+    case $OPTION in  
+      a)  
+        somevariable=$OPTARG    
+        ;;  
+      b)
+        someothervariable=1
+        ;; 
+     esac  
   done 
   
-  In the script, you would now have two variables, $a and $b such that:  
-    a=input  
-    b=1  
+  In the script, you would now have two variables, $somevariable and $somevariable2 such that:  
+    somevariable=input  
+    somevariable2=1  
+ ```
+  
+  Let's say that argument "-a" could be used more than once  
+  
+  ```  
+  Input to script:
+  
+    testscript.sh -a input -a input2 -a input3  
+    
+  In the getopts section:
+  
+  while getopts "a:" OPTION  
+  do  
+    case $OPTION in 
+      a)  
+        somevariable=`echo $somevariable $OPTARG`
+        ;;  
+    esac  
+  done  
+  
+  somevariable would now be "input input2 input3"  
+  
+  create an array from the variable and index by position:
+  
+  testarray=($somevaraible)  
+  echo ${testarray[2]}
+  
+    would produce "input2"  
  ```
   
   
