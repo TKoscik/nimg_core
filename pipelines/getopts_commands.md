@@ -42,7 +42,7 @@
   
   In the script, you would now have two variables, $somevariable and $somevariable2 such that:  
     somevariable=input  
-    somevariable2=1  
+    someothervariable=1  
  ```
   
   ### Let's say that argument "-a" could be used more than once  
