@@ -73,7 +73,7 @@
     would produce "input2"  
  ```
   
-  ##get_opt1  
+  ## get_opt1, get_arg1 (via functions)  
   
   * Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could sue words  
   
@@ -83,8 +83,7 @@
   
     testscript.sh --variable1=input1 --variable2=input2 --roi=roi1 --roi=roi2 --roi=roi3
     
-  In the script (rather than getopts):  
-  
+  In the script (rather than getopts):    
   
   get_opt1() {
     arg=$(echo $1 | sed 's/=.*//')
