@@ -73,4 +73,57 @@
     would produce "input2"  
  ```
   
+  ##get_opt1  
   
+  * Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could sue words  
+  
+```
+
+  Input to script:
+  
+    testscript.sh --variable1=input1 --variable2=input2 --roi=roi1 --roi=roi2 --roi=roi3
+    
+  In the script (rather than getopts):  
+  
+  
+  get_opt1() {
+    arg=$(echo $1 | sed 's/=.*//')
+    echo $arg
+  }  
+  
+  get_arg1() {
+    if [ X"`echo $1 | grep '='`" = X ] ; then
+	echo "Option $1 requires an argument" 1>&2
+	exit 1
+    else
+	arg=`echo $1 | sed 's/.*=//'`
+	if [ X$arg = X ] ; then
+	    echo "Option $1 requires an argument" 1>&2
+	    exit 1
+	fi
+	echo $arg
+    fi
+  }  
+  
+  while [ $# -ge 1 ] ; do  
+    iarg=$(get_opt1 $1);  
+    case "$iarg} in  
+      --input1)  
+        variable1=$(get_arg1 $1);  
+        export variable1; 
+        shift;;  
+      --input2)  
+        variable2=${get_arg1 $1);
+        export variable2;  
+        shift;;  
+      --roi)  
+        roiLIst=`echo $roiList $(get_arg1 $1)`;  
+        export roiList;
+        shift;;       
+      esac  
+    done  
+    
+    variable1=input1  
+    variable2=input2  
+    roiList=roi1 roi2 roi3
+``` 
