@@ -1,4 +1,4 @@
-### We want all scripts to have a way to parse input arguments, feed this info downstream to other functions  
+# We want all scripts to have a way to parse input arguments, feed this info downstream to other functions  
   ## getopts  
   
   ```
@@ -19,7 +19,7 @@
     * use "argument" in the input arguments setion  
     * A variable may still be assigned, but there is no value assigned from input to the script  
    
-  # For example, with a script, called testscript.sh, with two arguments "-a" and "-b," where "-a" expects some other value  
+  ### For example, with a script, called testscript.sh, with two arguments "-a" and "-b," where "-a" expects some other value  
   
   ```
   Input to script:
@@ -45,7 +45,7 @@
     somevariable2=1  
  ```
   
-  # Let's say that argument "-a" could be used more than once  
+  ### Let's say that argument "-a" could be used more than once  
   
   ```  
   Input to script:
@@ -75,7 +75,7 @@
   
   ## get_opt1, get_arg1 (via functions)  
   
-  # Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could use  whole words (e.g.: "--roi")  
+  ### Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could use  whole words (e.g.: "--roi")  
   
 ```
 
