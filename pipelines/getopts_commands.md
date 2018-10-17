@@ -4,7 +4,7 @@
   ```
   while getopts "input arguments" OPTION  
   do  
-    option)  
+    argument)  
       action  
       ;;  
   done  
