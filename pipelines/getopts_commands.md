@@ -19,7 +19,7 @@
     * use "argument" in the input arguments setion  
     * A variable may still be assigned, but there is no value assigned from input to the script  
    
-  ### For example, with a script, called testscript.sh, with two arguments "-a" and "-b," where "-a" expects some other value  
+  ### For example, with a script called testscript.sh, with two arguments "-a" and "-b," where "-a" expects some other value  
   
   ```
   Input to script:
