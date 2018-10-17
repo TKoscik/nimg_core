@@ -68,7 +68,7 @@
 ### If a variable has more than one item, create an array and index by position  
 
 ```
-  In the above example, we have a variable $somevaraible, with three values:
+  In the above example, we have a variable $somevariable, with three values:
     input1  
     input2  
     input3  
