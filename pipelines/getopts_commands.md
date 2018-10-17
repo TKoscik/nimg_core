@@ -64,10 +64,21 @@
   done  
   
   somevariable would now be "input input2 input3"  
-  
-  create an array from the variable and index by position:
-  
+```  
+### If a variable has more than one item, create an array and index by position  
+
+```
+  In the above example, we have a variable $somevaraible, with three values:
+    input1  
+    input2  
+    input3  
+    
+  Make this variable an array:  
+    
   testarray=($somevaraible)  
+  
+  Index by position (e.g.: 2):  
+  
   echo ${testarray[2]}
   
     would produce "input2"  
