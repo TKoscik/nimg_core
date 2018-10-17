@@ -75,7 +75,7 @@
   
   ## get_opt1, get_arg1 (via functions)  
   
-  * Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could sue words  
+  * Rather than limit to indidiual characters for arguments (e.g.: "-a"), one could use  whole words (e.g.: "--roi")  
   
 ```
 
