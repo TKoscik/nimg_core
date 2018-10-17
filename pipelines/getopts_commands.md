@@ -1,4 +1,4 @@
-# We want all scripts to have a way to parse input arguments, feed this info downstream to other functions  
+# Assigning Input script variables with functions  
   ## getopts  
   
   ```
