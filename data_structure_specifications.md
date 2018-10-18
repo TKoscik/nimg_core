@@ -60,41 +60,36 @@ ${researcherRoot}/
         |    |    ∟prep/
         |    |    |    ∟${subject}
         |    |    |         ∟${session}
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4Field.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasN4.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasFieldN4.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasT1T2.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-resample.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-acpcAffine.mat
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-air.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0BET.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexAFNI.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexANTS.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexBET.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-bexMask.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-biasFieldT1T2.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-seg.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior1.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior2.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior3.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_prep-tissue.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_reg-${space}_tform-0affine.mat
-        |    |    |              ∟sub-${subject}_ses-${session}_reg-${space}_tform-1syn.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_reg-${space}_tform-inverse.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T2w_prep-avg.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T1w_prep-norm.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T2w_prep-norm.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
-        |    |    |              ∟sub-${subject}_ses-${session}_T2w_prep-T1reg_tform-0affine.mat
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep00-gradunwarp.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep01-readout.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep02-denoise.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep03-acpc.nii.gz    #see tform folder
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep04-resample.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep05-avg.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep06-reg.nii.gz     #see tform folder
+        |    |    |              ∟sub-${subject}_ses-${session}_prep07-bex0AFNI.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep07-bex0ANTS.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep07-bex0FSL.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep07-bex0Mask.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep08-biasT1T2.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep08-biasT1T2Field.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep09-biasN4.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep09-biasN4Field.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep10-biasAtroposN4.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep10-biasAtroposN4Field.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexAFNI.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexANTS.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexFSL.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexAir.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexMask.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep11-bexInverse.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep11-brain.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep11-tissue.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep12-seg.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep12-segPosterior1.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep12-segPosterior2.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_prep12-segPosterior3.nii.gz
+        |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep13-norm.nii.gz   #see tform folder
         |    |    ∟reg_[${space}]/
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_brain.nii.gz
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_tissue.nii.gz
@@ -131,15 +126,15 @@ ${researcherRoot}/
         |    |    ∟stb/
         |    ∟mrs/
         |    ∟tform/
-        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-acpc_tform-0rigid.mat
+        |    |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-acpc_tform-0rigid.mat
         |    |    |    (initial affine transform)
-        |    |    ∟sub-${subject}_MOV_ses-${session}_acq-${acq}_${mod}_FIX_ses-${session}_acq-${acq}_${mod}_tform-0affine.mat
-        |    |    ∟sub-${subject}_MOV_ses-${session}_acq-${acq}_${mod}_FIX_ses-${session}_acq-${acq}_${mod}_tform-1syn.nii.gz
-        |    |    ∟sub-${subject}_MOV_ses-${session}_acq-${acq}_${mod}_FIX_ses-${session}_acq-${acq}_${mod}_tform-inverse.nii.gz
+        |    |    ∟sub-${subject}_MOV_ses-${session}_*_${mod}_FIX_ses-${session}_*_${mod}_tform-0affine.mat
+        |    |    ∟sub-${subject}_MOV_ses-${session}_*_${mod}_FIX_ses-${session}_*_${mod}_tform-1syn.nii.gz
+        |    |    ∟sub-${subject}_MOV_ses-${session}_*_${mod}_FIX_ses-${session}_*_${mod}_tform-inverse.nii.gz
         |    |    |    (registration between modalities within/between sessions, preceeds normalization)
-        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${subject}_tform-0affine.mat
-        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${subject}_tform-1syn.nii.gz
-        |    |    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${subject}_tform-inverse.nii.gz
+        |    |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-0affine.mat
+        |    |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-1syn.nii.gz
+        |    |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-inverse.nii.gz
         |    |    |    (registration to subject template, preceeds normalization)
         |    |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-0affine.mat
         |    |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-1syn.nii.gz
