@@ -11,6 +11,17 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ***
 
 ## Script Parameters
+### ARGON HPC header
+```bash
+#! /bin/bash
+#$ -N sub-subject_ses-session_jobDescription     # job name, appended to output stream filename
+#$ -M email-address@for.log                      # email address for logging
+#$ -m bes                                        # email options
+#$ -q CCOM,PINC,UI                               # processing queue(s)
+#$ -pe smp 56                                    # number of slots, [see also -pe 56cpn 56 (full node)]
+#$ -j y                                          # merge HPC error output into standard output stream
+#$ -o /Shared/researcher/project/log/hpc_output  # location to save output stream
+```
 ### Neuroimaging core root directory
 ```bash
 nimg_core_root=/Shared/nopoulos/nimg_core
@@ -246,30 +257,50 @@ input_dir=derivatives/anat/prep
 t1_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
 
-antsBrainExtraction.sh -d 3 \
+# ANTs brain extraction
+antsBrainExtraction.sh \
+  -d 3 \
   -a ${researcher}/${project}/${input_dir}/${t1_img} \
   -a ${researcher}/${project}/${input_dir}/${t2_img} \
   -e ${template_dir}/OASIS/T_template0.nii.gz \
   -m ${template_dir}/OASIS/T_template0_BrainCerebellumProbabilityMask.nii.gz \
   -f ${template_dir}/OASIS/T_template0_BrainCerebellumRegistrationMask.nii.gz \
   -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0
+
 mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BrainExtractionMask.nii.gz \
   ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz
 rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BrainExtractionBrain.nii.gz 
 rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BrainExtractionPrior0GenericAffine.mat
 
-bet ${prepdir}/sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz ${prepdir}/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz -A2 ${prepdir}/sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz -m
-mv ${prepdir}/sub-${subject}_ses-${session}_prep-bex0BET_mask.nii.gz ${prepdir}/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz
-rm ${prepdir}/*bex0BET_*skull*
-rm ${prepdir}/*bex0BET_mesh*
-rm ${prepdir}/*bex0BET_out*
+# FSL brain extraction tool
+bet \
+  ${researcher}/${project}/${input_dir}/${t1_img} \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz \
+  -A2 ${researcher}/${project}/${input_dir}/${t2_img} \
+  -m
 
-3dSkullStrip -input ${prepdir}/sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz \
-  -prefix ${prepdir}/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
-fslmaths ${prepdir}/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz -bin ${prepdir}/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BET_mask.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}*bex0BET_*skull*
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}*bex0BET_mesh*
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}*bex0BET_out*
 
-fslmaths ${prepdir}/sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz -add ${prepdir}/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz -add ${prepdir}/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz -thr 2 -bin -ero -dilM -dilM -ero ${prepdir}/sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+# AFNI skull strip
+3dSkullStrip \
+  -input ${researcher}/${project}/${input_dir}/${t1_img} \
+  -prefix ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
+fslmaths ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz \
+  -bin ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
 
+# Majority-vote brain mask
+fslmaths ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz \
+  -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0BET.nii.gz \
+  -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz \
+  -thr 2 -bin -ero -dilM -dilM -ero \
+  ${researcher}/${project}/derivatives/anat/prep}/sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
 ```
 
 ***
