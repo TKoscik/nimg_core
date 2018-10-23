@@ -1,6 +1,9 @@
 # Structural Preprocessing Pipeline
 
 0. DICOM conversion to NIfTI  
+  * Initialize folder structures  
+  * Extract, sort, and name NIfTIs
+  * Initialize log file with extraction entry
 ```
 ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ```
@@ -33,14 +36,21 @@ DenoiseImage \
   -i ${input_dir}/${input_file} \
   -n Rician \
   -o ${output_dir}/${output_prefix}_prep-denoise.nii.gz
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural image denoising: '${input_dir}/${input_file} >> ${subject_log}
+echo 'timestamp: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo '' >> ${subject_log}
 ```
-| arguments | description | values | default |
-----------------------------------------------
-| -d | dimensionality | 2/3/4 | |
-| -i | input image | | |
+| *arguments* | *description* | *values* | *default* |
+|-----------|-------------|--------|---------|
+| -d | dimensionality | 2/3/4 | - |
+| -i | input image | - | - |
 | -n | noise model | Rician/Guassian | Gaussian |
-| -o | output | [correctedImage,<noiseImage>] | |
-| -x | mask image | | |
+| -o | output | [correctedImage,*noiseImage*] | - |
+| -x | mask image | - | - |
 | -s | shrink factor | 1/2/3/... | 1 |  
 | -p | patch radius | 1 {1x1x1} | 1 |
 | -r | search radius | 2 {2x2x2} | 2 |
