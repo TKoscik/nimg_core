@@ -75,6 +75,28 @@ echo '' >> ${subject_log}
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
 ```
 
+### Code:
+```bash
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural_acpc_alignment: '${input_dir}/${input_file} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+input_image=${input_dir}/${input_file}
+output_image=${output_dir}/${output_prefix}_prep-acpc
+template_space=${template_space_dir}/${template}
+
+antsRegistrationSyN.sh -d 3 -f ${template_space} -m ${input_image} -t r -o ${output_prefix}
+    
+  mv ${output_preix}Warped.nii.gz ${output_prefix}.nii.gz
+  mv ${output_preix}0GenericAffine.mat ${output_preix}_tform-0rigid.mat
+  rm ${output_preix}InverseWarped.nii.gz
+
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
+```
+
 ## 5. Brain extraction (preliminary)  
 
 ### Save location:
