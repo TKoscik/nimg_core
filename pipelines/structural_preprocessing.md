@@ -9,6 +9,24 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ```
 
 ***
+## Script Parameters
+### Neuroimaging core root directory
+```bash
+nimg_core_root=/Shared/nopoulos/nimg_core
+```
+### Root directory for project
+```bash
+researcher=<researcher root directory>  # e.g., /Shared/researcher
+project=<project name>                  # name of folder, e.g., imaging_project
+# ${researcher}/${project} must give you the root directory for all processing steps
+```
+### Template Space
+```bash
+template_dir=${nimg_core}/templates
+space=HCP                            # folder name for template space to use
+template=MNI_T1_0.8mm                # which template space to use
+```
+***
 
 ## 1. Gradient distortion unwarping
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
@@ -45,10 +63,15 @@ echo 'software: ANTs' >> ${subject_log}
 echo 'version: 2.3.1' >> ${subject_log}
 echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-input_image=${input_dir}/${input_file}
-output_image=${output_dir}/${output_prefix}_prep-denoise.nii.gz
+# User-defined (as necessary)
+input_dir=/nifti/${subject}/${session}/anat
+which_img=sub-${subject}_ses-${session}_T1w
 
-DenoiseImage -d 3 -i ${input_image} -n Rician -o ${output_image}
+DenoiseImage \
+  -d 3 \
+  -i ${researcher}/${project}/${input_dir}/${which_img}.nii.gz \
+  -n Rician \
+  -o ${researcher}/${project}/derivatives/anat/prep/${which_img}_prep-denoise.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
@@ -83,25 +106,19 @@ echo 'software: ANTs' >> ${subject_log}
 echo 'version: 2.3.1' >> ${subject_log}
 echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
+# User-defined (as necessary)
 input_dir=derivatives/anat/prep     # location relative to researcher/project/
-which_image=<which image to align>  # e.g., acq-${acq}_T1w
-template_dir=${nimg_core}/templates
-space=<which space>                 # e.g., HCP2009c
-template=<which template>           # e.g., MNI152_T1_0.8mm
-
-input_image=${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_${which_image}.nii.gz
-output_prefix=${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_${which_image}_prep-acpc
-tform_dir=${researcher}/${project}/derivatives/tform
+which_img=sub-${subject}_ses-${session}_T1w_prep-denoise.nii.gz
 
 antsRegistrationSyN.sh \
   -d 3 \
-  -f ${template_dir}/${space}/${template} \
-  -m ${input_image} \
+  -f ${template_dir}/${space}/${template}.nii.gz \
+  -m ${researcher}/${project}/${input_dir}/${which_image}.nii.gz \
   -t r \
-  -o ${output_prefix}
+  -o ${researcher}/${project}/derivatives/anat/prep/${which_image}_prep-acpc
     
 mv ${output_prefix}Warped.nii.gz ${output_prefix}.nii.gz
-mv ${output_prefix}0GenericAffine.mat ${tform_dir}/sub-${subject}_ses-${session}_ref-${space}_tform-0rigid.mat
+mv ${output_prefix}0GenericAffine.mat ${researcher}/${project}/derivatives/tform/${which_img}_ref-${space}_tform-0rigid.mat
 rm ${output_prefix}InverseWarped.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
