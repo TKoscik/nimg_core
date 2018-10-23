@@ -1,6 +1,6 @@
 # Structural Preprocessing Pipeline
 
-## 0. DICOM conversion to NIfTI  
+## DICOM conversion to NIfTI  
   * Initialize folder structures  
   * Extract, sort, and name NIfTIs
   * Initialize log file with extraction entry
@@ -15,10 +15,10 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 nimg_core_root=/Shared/nopoulos/nimg_core
 ```
 ### Root directory for project
+${researcher}/${project} must give you the root directory for all processing steps
 ```bash
-researcher=<researcher root directory>  # e.g., /Shared/researcher
-project=<project name>                  # name of folder, e.g., imaging_project
-# ${researcher}/${project} must give you the root directory for all processing steps
+researcher=/Shared/researcher
+project=imaging_project
 ```
 ### Template Space
 ```bash
@@ -28,7 +28,7 @@ template=MNI_T1_0.8mm                # which template space to use
 ```
 ***
 
-## 1. Gradient distortion unwarping
+## Gradient distortion unwarping
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
 
 ### Save location:
@@ -37,7 +37,7 @@ template=MNI_T1_0.8mm                # which template space to use
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
 ```
 
-## 2. Readout distortion correction [*figure out what this is*]  
+## Readout distortion correction [*figure out what this is*]  
 
 ### Save location:
 ```
@@ -45,7 +45,7 @@ template=MNI_T1_0.8mm                # which template space to use
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
 ```
 
-## 3. Denoising  
+## Denoising  
 Denoise an image using a spatially adaptive filter.  
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
 
@@ -90,7 +90,7 @@ echo '' >> ${subject_log}
 | -v | verbose | 0/1 | 0 |  
 
 
-##  4. ACPC Alignment  
+##  ACPC Alignment  
 
 ### Save location:
 ```
