@@ -124,6 +124,15 @@ rm ${output_prefix}InverseWarped.nii.gz
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+
+***
+
+## Within-modality averaging
+### Save location:
+```
+ ${researcher}/${project}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
+```
 ### Code:
 ```bash
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
@@ -168,16 +177,6 @@ buildtemplateparallel.sh \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
-
-***
-
-## Within-modality averaging
-### Save location:
-```
- ${researcher}/${project}/derivatives/anat/prep/
-  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
-```
-
 
 ***
 
