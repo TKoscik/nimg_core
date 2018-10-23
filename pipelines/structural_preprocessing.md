@@ -136,7 +136,7 @@ echo '' >> ${subject_log}
 ### Code:
 ```bash
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_within_modality_averaging: '${input_dir}/${input_file} >> ${subject_log}
+echo 'structural_within_modality_average: '${input_dir}/${input_file} >> ${subject_log}
 echo 'software: ANTs' >> ${subject_log}
 echo 'version: 2.3.1' >> ${subject_log}
 echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
@@ -145,6 +145,7 @@ echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 input_dir=derivatives/anat/prep     # location relative to researcher/project/
 which_imgs[0]=sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz
 which_imgs[1]=sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz
+output_name=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 
 # Find smallest pixel dimensions in each direction
 pixdim[0]=1000 # arbitrarily large value (must be bigger than actual input)
@@ -171,7 +172,7 @@ done
 # create unbiased average of images
 buildtemplateparallel.sh \
   -d 3 /
-  -o ${prepdir}/sub-${subject}_ses-${session}_T${i}w_prep-avg.nii.gz \
+  -o {researcher}/${project}/derivatives/anat/prep/${output_name}_prep-avg.nii.gz \
   ${researcher}/${project}/derivatives/anat/prep/${rs_imgs}
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
@@ -179,6 +180,46 @@ echo '' >> ${subject_log}
 ```
 
 ***
+
+## Within-session, multimodal registration
+### Save location:
+```
+${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-reg.nii.gz
+```
+### Code:
+```bash
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural_within_session_multimodal_average: '${input_dir}/${input_file} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+# User-defined (as necessary)
+input_dir=derivatives/anat/prep
+fixed_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
+moving_img=sub-${subject}_ses-${session}_T2w_prep-avg.nii.gz
+output_prefix=sub-${subject}_ses-${session}_T2w
+
+antsRegistrationSyN.sh -d 3 \
+  -f ${researcher}/${project}/${input_dir}/${fixed_img} \
+  -m ${researcher}/${project}/${input_dir}/${moving_img} \
+  -o ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_ \
+  -t s
+
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_Warped.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_prep-reg.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_0GenericAffine.mat \
+  ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-0affine.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_1Warp.nii.gz \
+  ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-1syn.nii.gz
+
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_InverseWarped.nii.gz
+
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
+```
+
 
 ## 5. Brain extraction (preliminary)  
 
