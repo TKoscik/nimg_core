@@ -10,13 +10,18 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 
 ***
 
-## 1. Gradient distortion unwarping [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
+## 1. Gradient distortion unwarping
+[*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
+
+### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
 ```
 
 ## 2. Readout distortion correction [*figure out what this is*]  
+
+### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
@@ -29,7 +34,7 @@ Denoise an image using a spatially adaptive filter.
 ### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
-  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_prep-denoise.nii.gz
 ```
 
 ### Code:
@@ -63,12 +68,16 @@ echo '' >> ${subject_log}
 
 
 ##  4. ACPC Alignment  
+
+### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
 ```
 
 ## 5. Brain extraction (preliminary)  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
@@ -78,18 +87,24 @@ ${researcherRoot}/${projectName}/derivatives/anat/prep/
   a. T1/T2 debiasing [*T1 and T2 co-acquisition*]  
   b. N4 debiasing [*T1 only acquisition*]  
   c. Iterative N4 debiasing and segmentation [*atroposN4*]  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bc.nii.gz
 ```
 
 ## 7. Within-session, within-modality averaging  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
 ```
 
 ## 8. Brain extraction  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/
   ∟mask/
@@ -98,6 +113,8 @@ ${researcherRoot}/${projectName}/derivatives/anat/
 ```
 
 ## 9. Tissue segmentation  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/
   ∟segmentation/
@@ -111,6 +128,8 @@ ${researcherRoot}/${projectName}/derivatives/anat/
 ## 10. Coregistration  [*within-session only*]  
   - coregistering multiple acquisitions of the same modality within a scanning session  
   - coregistering multiple modalities within scanning sessions  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/
   ∟native/
@@ -124,6 +143,8 @@ ${researcherRoot}/${projectName}/derivatives/anat/
 ## 11. Normalization
   - between session registrations, i.e., register to participant baseline or average  
   - registration to common space  
+
+### Save location:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/
   ∟reg_${space}/
