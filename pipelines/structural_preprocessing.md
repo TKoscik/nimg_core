@@ -38,7 +38,7 @@ Denoise an image using a spatially adaptive filter.
 ```
 
 ### Code:
-```
+```bash
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'structural_image_denoising: '${input_dir}/${input_file} >> ${subject_log}
 echo 'software: ANTs' >> ${subject_log}
