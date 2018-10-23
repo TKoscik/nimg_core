@@ -22,7 +22,9 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
 ```
 
-**3. Rician denoising**  
+**3. Denoising**  
+Denoise an image using a spatially adaptive filter.  
+Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
