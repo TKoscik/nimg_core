@@ -14,13 +14,13 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ### ARGON HPC header
 ```bash
 #! /bin/bash
-#$ -N sub-subject_ses-session_jobDescription     # job name, appended to output stream filename
-#$ -M email-address@for.log                      # email address for logging
-#$ -m bes                                        # email options
-#$ -q CCOM,PINC,UI                                       # processing queue(s)
-#$ -pe smp 56                                            # number of slots, [see also -pe 56cpn 56 (full node)]
-#$ -j y                                                  # merge HPC error output into standard output stream
-#$ -o /Shared/researcher/imaging project/log/hpc_output  # location to save output stream
+#$ -N sub-subject_ses-session_jobDescription
+#$ -M email-address@for.log
+#$ -m bes
+#$ -q CCOM,PINC,UI
+#$ -pe smp 56
+#$ -j y
+#$ -o /Shared/researcher/imaging_project/log/hpc_output
 ```
 #### HPC operators
 | Operator | Description |  
@@ -33,8 +33,6 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 | -j | merge HPC error output into standard output stream |  
 | -o | location to save output stream |  
 | -e | location to save error stream |  
-
-
 ### Neuroimaging core root directory
 ```bash
 nimg_core_root=/Shared/nopoulos/nimg_core
