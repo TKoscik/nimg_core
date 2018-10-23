@@ -1,38 +1,31 @@
 # Structural Preprocessing Pipeline
 
-1. DICOM conversion to NIfTI  
+0. DICOM conversion to NIfTI  
 ```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟nifti/
-      ∟${subject}/
-        ∟${ssession}/
-          ∟anat/
+${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ```
 
 Everything below will be stored in the deriviatives folder:
 ```
-${researcherRoot}/
-  ∟${projectName}/
-    ∟derivatives/
+${researcherRoot}/${projectName}/derivatives/
 ```
-2. Gradient distortion unwarping [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
+
+1. Gradient distortion unwarping [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
+ ${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
 ```
-3. Readout distortion correction [*figure out what this is*]  
+
+2. Readout distortion correction [*figure out what this is*]  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
+ ${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
 ```
-4. Rician denoising  
+
+3. Rician denoising  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
+ ${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
 ```
 ```
 DenoiseImage \
@@ -54,72 +47,74 @@ Optional Arguments:
   *-v --verbose         (0)/1  
 
 
-5. ACPC Alignment  
+4. ACPC Alignment  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
+ ${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
 ```
-6. Brain extraction (preliminary)  
+
+5. Brain extraction (preliminary)  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex0.nii.gz
 ```
-7. Bias field correction  
+
+6. Bias field correction  
   a. T1/T2 debiasing [*T1 and T2 co-acquisition*]  
   b. N4 debiasing [*T1 only acquisition*]  
   c. Iterative N4 debiasing and segmentation [*atroposN4*]  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bc.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bc.nii.gz
 ```
-8. Within-session, within-modality averaging  
+
+7. Within-session, within-modality averaging  
 ```
-      ∟anat/
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
 ```
-9. Brain extraction  
+
+8. Brain extraction  
 ```
-      ∟anat/
-        ∟mask/
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-brain.nii.gz
-        | ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-tissue.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-bex.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/
+  ∟mask/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-brain.nii.gz
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_mask-tissue.nii.gz
 ```
-10. Tissue segmentation  
+
+9. Tissue segmentation  
 ```
-      ∟anat/
-        ∟segmentation/
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-GM.nii.gz
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-WM.nii.gz
-        ∟prep/ [optional]
-          ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-?.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/
+  ∟segmentation/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-GM.nii.gz
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-WM.nii.gz
+  ∟prep/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-?.nii.gz
 ```
-11. Coregistration  [*within-session only*]  
+
+10. Coregistration  [*within-session only*]  
   - coregistering multiple acquisitions of the same modality within a scanning session  
   - coregistering multiple modalities within scanning sessions  
 ```
-      ∟anat/
-      | ∟native/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-syn.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/
+  ∟native/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_native.nii.gz
+  ∟tform/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-0affine.mat
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-1syn.nii.gz
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${acq}${mod}_tform-1inverse.nii.gz
 ```
-12. Normalization
+
+11. Normalization
   - between session registrations, i.e., register to participant baseline or average  
   - registration to common space  
 ```
-      ∟anat/
-      | ∟reg_${space}/
-      |   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
-      ∟tform/
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-0affine.mat
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1syn.nii.gz
-        ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-inverse.nii.gz
+${researcherRoot}/${projectName}/derivatives/anat/
+  ∟reg_${space}/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
+  ∟tform/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-0affine.mat
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1syn.nii.gz
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1inverse.nii.gz
 ```
