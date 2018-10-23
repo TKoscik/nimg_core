@@ -9,6 +9,7 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
 ```
 
 ***
+
 ## Script Parameters
 ### Neuroimaging core root directory
 ```bash
@@ -26,35 +27,36 @@ template_dir=${nimg_core}/templates
 space=HCP                            # folder name for template space to use
 template=MNI_T1_0.8mm                # which template space to use
 ```
+
 ***
 
 ## Gradient distortion unwarping
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
-
 ### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-gradunwarp.nii.gz
 ```
 
-## Readout distortion correction [*figure out what this is*]  
+***
 
+## Readout distortion correction [*figure out what this is*]  
 ### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-readout.nii.gz
 ```
 
+***
+
 ## Denoising  
 Denoise an image using a spatially adaptive filter.  
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
-
 ### Save location:
 ```
  ${researcherRoot}/${projectName}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-denoise.nii.gz
 ```
-
 ### Code:
 ```bash
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
@@ -76,7 +78,6 @@ DenoiseImage \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
-
 | *arguments* | *description* | *values* | *default* |
 |---|---|---|---|
 | -d | dimensionality | 2/3/4 | - |  
@@ -89,15 +90,14 @@ echo '' >> ${subject_log}
 | -r | search radius | 2 {2x2x2} | 2 |
 | -v | verbose | 0/1 | 0 |  
 
+***
 
 ##  ACPC Alignment  
-
 ### Save location:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
 ```
-
 ### Code:
 ```bash
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
@@ -124,6 +124,62 @@ rm ${output_prefix}InverseWarped.nii.gz
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+### Code:
+```bash
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural_within_modality_averaging: '${input_dir}/${input_file} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+# User-defined (as necessary)
+input_dir=derivatives/anat/prep     # location relative to researcher/project/
+which_imgs[0]=sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz
+which_imgs[1]=sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz
+
+# Find smallest pixel dimensions in each direction
+pixdim[0]=1000 # arbitrarily large value (must be bigger than actual input)
+pixdim[1]=1000
+pixdim[2]=1000
+for i in ${which_imgs[@]}; do
+  IFS='x' read -r -a pixdimTemp <<< $(PrintHeader ${researcher}/${project}/${input_dir}/${i} 1)
+  for j in {0..2}; do
+    if (( $(echo "${pixdimTemp[${j}]} < ${pixdim[${j}]}" | bc -l) )); then
+      pixdim[${j}]=${pixdimTemp[${j}]} 
+    fi
+  done
+done
+
+# Resample images to highest resolution
+rs_imgs=()
+for i in ${which_imgs[@]}; do
+  new_prefix=$(basename -- "$i")
+  new_prefix="${oname%_*}"
+  rs_imgs+=${new_prefix}_prep-resample.nii.gz # append to new array for next step
+  ResampleImage 3 ${researcher}/${project}/${input_dir}/${i} ${researcher}/${project}/derivatives/anat/prep/${new_prefix}_prep-resample.nii.gz 0 0
+done
+
+# create unbiased average of images
+buildtemplateparallel.sh \
+  -d 3 /
+  -o ${prepdir}/sub-${subject}_ses-${session}_T${i}w_prep-avg.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/${rs_imgs}
+
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
+```
+
+***
+
+## Within-modality averaging
+### Save location:
+```
+ ${researcher}/${project}/derivatives/anat/prep/
+  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-avg.nii.gz
+```
+
+
+***
 
 ## 5. Brain extraction (preliminary)  
 
