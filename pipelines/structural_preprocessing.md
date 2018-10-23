@@ -34,7 +34,6 @@ ${researcherRoot}/
         ∟prep/ [optional]
           ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
 ```
-
 ```
 DenoiseImage \
   -d 3 \
@@ -54,7 +53,6 @@ Optional Arguments:
   *-r --search radius   2   {2x2x2}  
   *-v --verbose         (0)/1  
 
-```
 
 5. ACPC Alignment  
 ```
