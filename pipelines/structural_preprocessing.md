@@ -34,17 +34,17 @@ DenoiseImage \
   -n Rician \
   -o ${output_dir}/${output_prefix}_prep-denoise.nii.gz
 ```
-Default arguments:  
-  *-d --dimensionality  2/3/4  
-  *-i --input image  
-  *-n --noise model     Rician/(Guassian)  
-  *-o --output          [correctedImage,<noiseImage>]  
-Optional Arguments:  
-  *-x --mask image  
-  *-s --shrink factor   (1)/2/3/...  
-  *-p --patch radius    1   {1x1x1}  
-  *-r --search radius   2   {2x2x2}  
-  *-v --verbose         (0)/1  
+| arguments | description | values | default |
+----------------------------------------------
+| -d | dimensionality | 2/3/4 | |
+| -i | input image | | |
+| -n | noise model | Rician/Guassian | Gaussian |
+| -o | output | [correctedImage,<noiseImage>] | |
+| -x | mask image | | |
+| -s | shrink factor | 1/2/3/... | 1 |  
+| -p | patch radius | 1 {1x1x1} | 1 |
+| -r | search radius | 2 {2x2x2} | 2 |
+| -v | verbose | 0/1 | 0 |  
 
 
 4. ACPC Alignment  
