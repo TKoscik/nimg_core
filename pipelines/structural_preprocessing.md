@@ -83,11 +83,11 @@ echo 'software: ANTs' >> ${subject_log}
 echo 'version: 2.3.1' >> ${subject_log}
 echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-input_dir=derivatives/anat/prep
-which_image=<which image to process>
+input_dir=derivatives/anat/prep     # location relative to researcher/project/
+which_image=<which image to align>  # e.g., acq-${acq}_T1w
 template_dir=${nimg_core}/templates
-space=<which space>         # e.g., HCP2009c
-template=<which template>   # e.g., MNI152_T1_0.8mm
+space=<which space>                 # e.g., HCP2009c
+template=<which template>           # e.g., MNI152_T1_0.8mm
 
 input_image=${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_${which_image}.nii.gz
 output_prefix=${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_${which_image}_prep-acpc
