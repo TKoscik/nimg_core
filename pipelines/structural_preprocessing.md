@@ -71,7 +71,7 @@ echo '' >> ${subject_log}
 
 ### Save location:
 ```
- ${researcherRoot}/${projectName}/derivatives/anat/prep/
+ ${researcher}/${project}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-acpc.nii.gz
 ```
 
@@ -83,15 +83,26 @@ echo 'software: ANTs' >> ${subject_log}
 echo 'version: 2.3.1' >> ${subject_log}
 echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-input_image=${input_dir}/${input_file}
-output_image=${output_dir}/${output_prefix}_prep-acpc
-template_space=${template_space_dir}/${template}
+input_dir=derivatives/anat/prep
+which_image=<which image to process>
+template_dir=${nimg_core}/templates
+space=<which space>         # e.g., HCP2009c
+template=<which template>   # e.g., MNI152_T1_0.8mm
 
-antsRegistrationSyN.sh -d 3 -f ${template_space} -m ${input_image} -t r -o ${output_prefix}
+input_image=${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_${which_image}.nii.gz
+output_prefix=${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_${which_image}_prep-acpc
+tform_dir=${researcher}/${project}/derivatives/tform
+
+antsRegistrationSyN.sh \
+  -d 3 \
+  -f ${template_dir}/${space}/${template} \
+  -m ${input_image} \
+  -t r \
+  -o ${output_prefix}
     
-  mv ${output_preix}Warped.nii.gz ${output_prefix}.nii.gz
-  mv ${output_preix}0GenericAffine.mat ${output_preix}_tform-0rigid.mat
-  rm ${output_preix}InverseWarped.nii.gz
+mv ${output_prefix}Warped.nii.gz ${output_prefix}.nii.gz
+mv ${output_prefix}0GenericAffine.mat ${tform_dir}/sub-${subject}_ses-${session}_ref-${space}_tform-0rigid.mat
+rm ${output_prefix}InverseWarped.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
