@@ -28,21 +28,23 @@ ${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
   ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-denoise.nii.gz
 ```
 ```
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural_image_denoising: '${input_dir}/${input_file} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
 input_image=${input_dir}/${input_file}
 output_image=${output_dir}/${output_prefix}_prep-denoise.nii.gz
 
 DenoiseImage -d 3 -i ${input_image} -n Rician -o ${output_image}
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural image denoising: '${input_dir}/${input_file} >> ${subject_log}
-echo 'timestamp: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
-| *arguments* | *description*  | *values* | *default* |
-|-------------|----------------|----------|-----------|
-| -d          | dimensionality | 2/3/4    | -         |  
+| *arguments* | *description* | *values* | *default* |
+|---|---|---|---|
+| -d | dimensionality | 2/3/4 | - |  
 | -i | input image | - | - |
 | -n | noise model | Rician/Guassian | Gaussian |
 | -o | output | [correctedImage,*noiseImage*] | - |
