@@ -4,7 +4,7 @@ Each structural preprocessing script/job should be initialized with a set of use
 [Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)
 
 **Follow links for descriptions, citations, and code snippets.**
-
+copies of citations can be found online [HERE](https://paperpile.com/shared/5aInqX)  
 
 ***
 
