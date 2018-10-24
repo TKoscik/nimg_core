@@ -25,4 +25,4 @@ Our hope is that easier and more rapid access to imaging results will result in 
 
 ***
 
-copies of citations can be found online [HERE](https://paperpile.com/shared/5aInqX) 
+copies of cited works can be found online [HERE](https://paperpile.com/shared/5aInqX), and are otherwise readily accessible via [PubMed](https://www.ncbi.nlm.nih.gov/pubmed/). 
