@@ -61,10 +61,6 @@ template=MNI_T1_0.8mm                # which template space to use
 
 ## Denoising  
 Denoise an image using a spatially adaptive filter.  
-### Citations
-> Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
-
->Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -103,12 +99,14 @@ echo '' >> ${subject_log}
 | -p | patch radius | 1 {1x1x1} | 1 |
 | -r | search radius | 2 {2x2x2} | 2 |
 | -v | verbose | 0/1 | 0 |  
+### Citations
+> Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
+
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 
 ***
 
 ##  ACPC Alignment  
-### Citations
->Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -141,20 +139,12 @@ rm ${output_prefix}InverseWarped.nii.gz
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+### Citations
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 
 ***
 
 ## Within-modality averaging
-### Citations:
-#### buildtemplateparallel.sh
->Avants BB, Yushkevich P, Pluta J, Minkoff D, Korczykowski M, Detre J, & Gee JC. (2010). The optimal template effect in hippocampus studies of diseased populations. Neuroimage, 49(3), 2957-2466. DOI:10.1016/j.neuroimage.2009.09.062 PMCID:PMC2818274
-
->Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
-
-#### ANTs Registration
->Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
-
->Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -207,15 +197,20 @@ buildtemplateparallel.sh \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
-
-***
-
-## Within-session, multimodal registration
 ### Citations:
+#### ANTs buildtemplateparallel.sh
+>Avants BB, Yushkevich P, Pluta J, Minkoff D, Korczykowski M, Detre J, & Gee JC. (2010). The optimal template effect in hippocampus studies of diseased populations. Neuroimage, 49(3), 2957-2466. DOI:10.1016/j.neuroimage.2009.09.062 PMCID:PMC2818274
+
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
+
 #### ANTs Registration
 >Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 
 >Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
+
+***
+
+## Within-session, multimodal registration
 ### Output:
 ```
 ${researcher}/${project}/derivatives/
@@ -261,19 +256,15 @@ rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}_temp_InverseW
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+### Citations:
+#### ANTs Registration
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 
 ***
 
 ## Brain extraction
-### Citations:
-#### ANTs Brain Extraction:
-> Avants BB & Tustison NJ. (2018). ANTs/ANTsR brain templates. https://figshare.com/articles/ANTs_ANTsR_Brain_Templates/915436 DOI:10.6084/m9.figshare.915436.v2
-
->Tustison NJ, Cook PA, Klein A, Song G, Das SR, Dud JT, Kandel BM, van Strien N, Stone JR, Gee JC, & Avants BB. (2014). Large-scale evaluation of ANTs and FreeSurfer cortical thickness measurements. Neuroimage, 99, 166-179. DOI:10.1016/j.neuroimage.2014.05.044 PMCID:24879923
-#### FSL Brain Extraction Tool:
-> Smith SM. (2002). Fast robust automated brain extraction. Human Brain Mapping, 17(3), 143-155. DOI:10.1002/hbm.10062 PMCID:12391568
-#### AFNI 3dSkullStrip:
-Cox RW. (1996). AFNI: Software for analysis and visualization of functional magnetic resonance neuroimages. Computational Biomedical Research, 29(3), 162-173. PMCID:8812068
 ### Output:
 ```
 ${researcher}/${project}/derivatives/anat/
@@ -364,6 +355,15 @@ fi
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+### Citations:
+#### ANTs Brain Extraction:
+> Avants BB & Tustison NJ. (2018). ANTs/ANTsR brain templates. https://figshare.com/articles/ANTs_ANTsR_Brain_Templates/915436 DOI:10.6084/m9.figshare.915436.v2
+
+>Tustison NJ, Cook PA, Klein A, Song G, Das SR, Dud JT, Kandel BM, van Strien N, Stone JR, Gee JC, & Avants BB. (2014). Large-scale evaluation of ANTs and FreeSurfer cortical thickness measurements. Neuroimage, 99, 166-179. DOI:10.1016/j.neuroimage.2014.05.044 PMCID:24879923
+#### FSL Brain Extraction Tool:
+> Smith SM. (2002). Fast robust automated brain extraction. Human Brain Mapping, 17(3), 143-155. DOI:10.1002/hbm.10062 PMCID:12391568
+#### AFNI 3dSkullStrip:
+Cox RW. (1996). AFNI: Software for analysis and visualization of functional magnetic resonance neuroimages. Computational Biomedical Research, 29(3), 162-173. PMCID:8812068
 
 ***
 
@@ -405,6 +405,10 @@ mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+#### Citations:
+> Glasser MF & Van Essen DC. (2011). Mapping human cortical areas in vivo based on myelin content as revealed by T1- and T2-weighted MRI. The Journal of Neuroscience, 31(32), 11597-11616, DOI:10.1523/JNEUROSCI.2180-11.2011 PMCID:PMC3167149
+
+>Rilling JK, Glasser MF, Jbabdi S, Andersson J, Preuss TM. (2011). Continuity, divergence, and the evolution of brain language pathways. Frontiers in Evolutionary Neuroscience, 3, 11. DOI:10.3389/fnevo.2011.00011 PMCID:PMC3249609
 
 ***
 
@@ -438,6 +442,8 @@ N4BiasFieldCorrection \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+#### Citations:
+>Tustison NJ, Avants BB, Cook PA, Zheng Y, Egan A, Yushkevich PA, & Gee JC. (2010). N4ITK: Improved N3 bias correction, IEEE Transactions on Medical Imaging, 29(6), 1310-1320. DOI:10.1109/TMI.2010.2046908 PMCID:PMC3071855
 
 ***
 
@@ -483,6 +489,10 @@ mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempSegmentat
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+#### Citations:
+>Tustison NJ, Avants BB, Cook PA, Zheng Y, Egan A, Yushkevich PA, & Gee JC. (2010). N4ITK: Improved N3 bias correction, IEEE Transactions on Medical Imaging, 29(6), 1310-1320. DOI:10.1109/TMI.2010.2046908 PMCID:PMC3071855
+
+>Avants BB, Tustison NJ, Wu J, Cook PA, & Gee JC. (2011). An open source multivariate framework for n-tissue segmentation with evaluation on public data. Neuroinformatics, 9(4). DOI:10.1007/s12021-011-9109-y PMCID:PMC3297199
 
 ***
 
@@ -539,6 +549,8 @@ rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegme
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+#### Citations:
+>Avants BB, Tustison NJ, Wu J, Cook PA, & Gee JC. (2011). An open source multivariate framework for n-tissue segmentation with evaluation on public data. Neuroinformatics, 9(4). DOI:10.1007/s12021-011-9109-y PMCID:PMC3297199
 
 ***
 
@@ -580,6 +592,8 @@ fslmaths \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+#### Citations:
+>Jenkinson M, Beckmann CF, Behrens TE, Woolrich MW, & Smith SM. (2012). FSL. Neuroimage, 62(2), 782-790. DOI:10.1016/j.neuroimage.2011.09.015 PMID:21979382
 
 ## Normalization
 ### Output:
@@ -713,3 +727,9 @@ antsApplyTransforms \
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+### Citations:
+#### ANTs Registration
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
+
