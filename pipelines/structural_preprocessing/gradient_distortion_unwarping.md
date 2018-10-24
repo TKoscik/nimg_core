@@ -1,4 +1,5 @@
-# Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]
+# Gradient distortion unwarping
+## [NOT IMPLEMENTED 2018-10-24]
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
 Can this be don on scanner for GE? for all sequences?
 Jovicich, et al. 2006
