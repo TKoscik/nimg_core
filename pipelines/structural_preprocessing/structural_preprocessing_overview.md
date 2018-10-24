@@ -43,7 +43,7 @@ template=MNI_T1_0.8mm                # which template space to use
 ## T1 / T2 Pipeline:
 1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]  
 2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]
-3. Denoising (Rician)
+3. [Denoising]https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md (Rician)
 4. ACPC alignment
 5. Within-modality average [if multiple images]
 6. Within-session, multimodal coregistration to T1
