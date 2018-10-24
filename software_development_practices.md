@@ -2,6 +2,8 @@
 
 The goal is to create a set of scripts and functions to automate neuroimaging processing using a standardized approach the is standardized and simple enough for "lay-user" interaction as well as flexible enough for easy debugging and paramter manipulation for power users.  
 
+In general, scripts should follow [Google's Shell Style Guide](https://google.github.io/styleguide/shell.xml)
+
 ## User Stories
 In constructing our software our first concern is desiging our code around how users will interact with it.
   * how will this software be used?
@@ -27,13 +29,11 @@ In constructing our software our first concern is desiging our code around how u
         * append to appropriate sub-${subject}_ses-${session}.log
         ```
         ################################################################################
-        date_of_use: ${YYYY-MM-DD_HH-MM-SS}
-        module_name: ${module_name}
-        module_version: ${module_version}
-        parameters: ${default_parameters_or_optional_changes}
-        software_used: ${software_name1}
-        software_version: ${software_version1}
-        software_used: ${software_name2}
-        software_version: ${software_version2}
+        module_description
+        inputs:/Shared/researcher/nifti/1234/1810241305/sub-1234_ses-1810241305_T1w.nii.gz
+        software: ${software_name}
+        version: ${software_version}
+        start_time:date +"%Y-%m-%d_%H-%M-%S"
+        end_time:date +"%Y-%m-%d_%H-%M-%S"
         <blank_line>
         ```
