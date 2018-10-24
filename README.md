@@ -10,7 +10,7 @@ Critically, we aim to have quality control reports available within 72 hours of 
 #### maintenance of 'cutting-edge' imaging techniques  
 Given the fast and sporadic pace of change in the field of neuroimaging, we will continually update methods and build on existing tools to ensure that data processing is maintained at the current standard for the field.
 #### to provide an intuitive data product  
-We are building or neuroimaging tools geared toward improvements in *reproducibility, collaboration, and data-sharing* including using and building upon 'industry standards' and data formats ([BIDS](http://bids.neuroimaging.io/))that can be fed directly into analytic and statistical pipelines.  
+We are building or neuroimaging tools geared toward improvements in *reproducibility, collaboration, and data-sharing* including using and building upon 'industry standards' and data formats (e.g., [BIDS](http://bids.neuroimaging.io/)) that can be fed directly into analytic and statistical pipelines.  
 Our hope is that easier and more rapid access to imaging results will result in shorter time periods between data acquisition and publication, growth in neuroimaging collaborations and projects, and facilitating multi-site collaborations.  
 
 ***
