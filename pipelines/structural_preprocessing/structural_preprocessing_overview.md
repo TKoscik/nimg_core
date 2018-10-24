@@ -9,7 +9,7 @@ Each structural preprocessing script/job should be initialized with a set of use
 ***
 
 ## T1 / T2 Pipeline:
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/edit/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
+[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
 [2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
 [3. Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
 [4. ACPC alignment](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/acpc_alignment.md)  
@@ -24,7 +24,7 @@ Each structural preprocessing script/job should be initialized with a set of use
 [13. Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
 
 ## T1 Only Pipeline:
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/edit/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
+[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
 [2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
 [3. Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
 [4. ACPC alignment](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/acpc_alignment.md)  
@@ -37,7 +37,7 @@ Each structural preprocessing script/job should be initialized with a set of use
 [11. Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
 
 ## T1 + Other Anatomical Modalities Pipeline:
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/edit/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
+[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
 [2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
 [3. Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
 [4. ACPC alignment](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/acpc_alignment.md)  
