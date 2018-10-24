@@ -63,6 +63,7 @@ template=MNI_T1_0.8mm                # which template space to use
 Denoise an image using a spatially adaptive filter.  
 ### Citations
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
+
 >Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 ### Output:
 ```
