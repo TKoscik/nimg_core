@@ -44,7 +44,7 @@ template=MNI_T1_0.8mm                # which template space to use
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
 ### Output:
 ```
- ${researcherRoot}/${projectName}/derivatives/anat/prep/
+ ${researcher}/${project}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-gradunwarp.nii.gz
 ```
 
@@ -53,7 +53,7 @@ template=MNI_T1_0.8mm                # which template space to use
 ## Readout distortion correction [*figure out what this is*]  
 ### Output:
 ```
- ${researcherRoot}/${projectName}/derivatives/anat/prep/
+ ${researcher}/${project}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-readout.nii.gz
 ```
 
@@ -61,7 +61,9 @@ template=MNI_T1_0.8mm                # which template space to use
 
 ## Denoising  
 Denoise an image using a spatially adaptive filter.  
+### Citations
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -140,6 +142,13 @@ echo '' >> ${subject_log}
 ***
 
 ## Within-modality averaging
+### Citations:
+#### buildtemplateparallel.sh
+>Avants BB, Yushkevich P, Pluta J, Minkoff D, Korczykowski M, Detre J, & Gee JC. (2010). The optimal template effect in hippocampus studies of diseased populations. Neuroimage, 49(3), 2957-2466. DOI:10.1016/j.neuroimage.2009.09.062 PMCID:PMC2818274
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
+#### ANTs Registration
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -196,6 +205,10 @@ echo '' >> ${subject_log}
 ***
 
 ## Within-session, multimodal registration
+### Citations:
+#### ANTs Registration
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+>Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 ### Output:
 ```
 ${researcher}/${project}/derivatives/
@@ -244,7 +257,8 @@ echo '' >> ${subject_log}
 
 ***
 
-## Brain extraction  
+## Brain extraction
+### Citations:
 ### Output:
 ```
 ${researcher}/${project}/derivatives/anat/
