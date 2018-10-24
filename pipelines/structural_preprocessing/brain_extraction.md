@@ -91,6 +91,6 @@ echo '' >> ${subject_log}
 
 >Tustison NJ, Cook PA, Klein A, Song G, Das SR, Dud JT, Kandel BM, van Strien N, Stone JR, Gee JC, & Avants BB. (2014). Large-scale evaluation of ANTs and FreeSurfer cortical thickness measurements. Neuroimage, 99, 166-179. DOI:10.1016/j.neuroimage.2014.05.044 PMCID:24879923
 ### FSL Brain Extraction Tool:
-> Smith SM. (2002). Fast robust automated brain extraction. Human Brain Mapping, 17(3), 143-155. DOI:10.1002/hbm.10062 PMCID:12391568
+>Smith SM. (2002). Fast robust automated brain extraction. Human Brain Mapping, 17(3), 143-155. DOI:10.1002/hbm.10062 PMCID:12391568
 ### AFNI 3dSkullStrip:
-Cox RW. (1996). AFNI: Software for analysis and visualization of functional magnetic resonance neuroimages. Computational Biomedical Research, 29(3), 162-173. PMCID:8812068
+>Cox RW. (1996). AFNI: Software for analysis and visualization of functional magnetic resonance neuroimages. Computational Biomedical Research, 29(3), 162-173. PMCID:8812068
