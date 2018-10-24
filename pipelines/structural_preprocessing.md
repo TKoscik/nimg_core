@@ -719,13 +719,13 @@ antsRegistration \
   -c [100x100x70x20,1e-9,10] \
   -f 6x4x2x1 \
   -s 3x2x1x0vox \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_
+  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_temp_
 
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_0GenericAffine.mat \
+mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_temp_0GenericAffine.mat \
   ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_1Warp.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_temp_1Warp.nii.gz \
   ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_1InverseWarp.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_temp_1InverseWarp.nii.gz \
   ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1inverse.mat
 
 antsApplyTransforms \
@@ -770,7 +770,7 @@ antsApplyTransforms \
   -i ${nimg_core_root}/templates/${space}/${template}_air_mask.nii.gz \
   -o ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-air.nii.gz \
   -r ${tissue_mask} \
-  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1invers.mat \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1inverse.mat \
   -t [${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat,1]
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
