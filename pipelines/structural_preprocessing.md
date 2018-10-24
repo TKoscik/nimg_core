@@ -1,15 +1,4 @@
 # Structural Preprocessing Pipeline
-
-## DICOM conversion to NIfTI  
-  * Initialize folder structures  
-  * Extract, sort, and name NIfTIs
-  * Initialize log file with extraction entry
-```
-${researcherRoot}/${projectName}/nifti/${subject}/${ssession}/anat/
-```
-
-***
-
 ## Script Parameters
 ### ARGON HPC header
 ```bash
@@ -75,20 +64,21 @@ Denoise an image using a spatially adaptive filter.
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
 ### Output:
 ```
- ${researcherRoot}/${projectName}/derivatives/anat/prep/
+ ${researcher}/${project}/derivatives/anat/prep/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-denoise.nii.gz
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_image_denoising: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=/nifti/${subject}/${session}/anat
 which_img=sub-${subject}_ses-${session}_T1w
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_image_denoising' >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/${which_img}.nii.gz >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 DenoiseImage \
   -d 3 \
@@ -121,15 +111,16 @@ echo '' >> ${subject_log}
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_acpc_alignment: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep     # location relative to researcher/project/
 which_img=sub-${subject}_ses-${session}_T1w_prep-denoise.nii.gz
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_acpc_alignment' >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/${which_image}.nii.gz >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 antsRegistrationSyN.sh \
   -d 3 \
@@ -156,17 +147,19 @@ echo '' >> ${subject_log}
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_within_modality_average: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep     # location relative to researcher/project/
 which_imgs[0]=sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz
 which_imgs[1]=sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz
 output_name=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_within_modality_average' >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 # Find smallest pixel dimensions in each direction
 pixdim[0]=1000 # arbitrarily large value (must be bigger than actual input)
@@ -215,17 +208,19 @@ ${researcher}/${project}/derivatives/
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_within_session_multimodal_average: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep
 fixed_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 moving_img=sub-${subject}_ses-${session}_T2w_prep-avg.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T2w
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_within_session_multimodal_average' >> ${subject_log}
+echo 'fixed:'${researcher}/${project}/${input_dir}/${fixed_img} >> ${subject_log}
+echo 'moving:'${researcher}/${project}/${input_dir}/${moving_img} >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 antsRegistrationSyN.sh -d 3 \
   -f ${researcher}/${project}/${input_dir}/${fixed_img} \
@@ -254,10 +249,10 @@ echo '' >> ${subject_log}
 ```
 ${researcher}/${project}/derivatives/anat/
   ∟mask/
-    ∟sub-${subject}_ses-${session}_mask-bex0.nii.gz     #preliminary
-    ∟sub-${subject}_ses-${session}_mask-bex0Inverse.nii.gz  #preliminary
-    ∟sub-${subject}_ses-${session}_mask-bex.nii.gz      #final
-    ∟sub-${subject}_ses-${session}_mask-bexInverse.nii.gz   #final
+    ∟sub-${subject}_ses-${session}_mask-bex0Brain.nii.gz     #preliminary
+    ∟sub-${subject}_ses-${session}_mask-bex0Tissue.nii.gz  #preliminary
+    ∟sub-${subject}_ses-${session}_mask-bexBrain.nii.gz      #final
+    ∟sub-${subject}_ses-${session}_mask-bexTissue.nii.gz   #final
   ∟prep/
     ∟sub-${subject}_ses-${session}_*_${mod}_prep-bex0.nii.gz  #preliminary
     ∟sub-${subject}_ses-${session}_*_${mod}_prep-bex.nii.gz   #final
@@ -265,21 +260,23 @@ ${researcher}/${project}/derivatives/anat/
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_within_session_multimodal_average: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'software: FSL' >> ${subject_log}
-echo 'version: 5.10.0' >> ${subject_log}
-echo 'software: AFNI' >> ${subject_log}
-echo 'version: 17.2.07' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep
 t1_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
 suffix=bex0  #change as needed to differentiate iterations, final iteration is bex (no number)
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_within_session_multimodal_average' >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/${t1_img} >> ${subject_log}
+echo 'input:'${researcher}/${project}/${input_dir}/${t2_img} >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'software:FSL' >> ${subject_log}
+echo 'version:5.10.0' >> ${subject_log}
+echo 'software:AFNI' >> ${subject_log}
+echo 'version:17.2.07' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 # ANTs brain extraction
 antsBrainExtraction.sh \
@@ -321,12 +318,12 @@ fslmaths ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${ses
   -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz \
   -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz \
   -thr 2 -bin -ero -dilM -dilM -ero \
-  ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}.nii.gz
+  ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Brain.nii.gz
 
 # Invert brain mask
-fslmaths ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}.nii.gz \
+fslmaths ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Brain.nii.gz \
   -sub 1 -mul 1 \
-  ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Inverse.nii.gz
+  ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Tissue.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
@@ -343,19 +340,22 @@ ${researcherRoot}/${projectName}/derivatives/anat/prep/
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_bias_correction_T1T2: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: FSL' >> ${subject_log}
-echo 'version: 5.10.0' >> ${subject_log}
-echo 'software: bias_field_correct_t1t2.sh' >> ${subject_log}
-echo 'version: 0' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep
 t1_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
 brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_bias_correction_T1T2' >> ${subject_log}
+echo 'input_T1:'${researcher}/${project}/${input_dir}/${t1_img} >> ${subject_log}
+echo 'input_T2:'${researcher}/${project}/${input_dir}/${t2_img} >> ${subject_log}
+echo 'brain_mask:'${researcher}/${project}/${input_dir}/${brain_mask} >> ${subject_log}
+echo 'software:FSL' >> ${subject_log}
+echo 'version:5.10.0' >> ${subject_log}
+echo 'software:bias_field_correct_t1t2.sh' >> ${subject_log}
+echo 'version:0' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 ${nimg_core_root}/bias_field_correct_t1t2.sh \
   -a ${researcher}/${project}/${input_dir}/${t1_img} \
@@ -381,16 +381,17 @@ ${researcherRoot}/${projectName}/derivatives/anat/prep/
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_bias_correction_N4: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep
 which_img=sub-${subject}_ses-${session}_T1w_prep-biasT1T2.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T1w
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_bias_correction_N4' >> ${subject_log}
+echo 'input_img:'${researcher}/${project}/${input_dir}/${which_img} >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 N4BiasFieldCorrection \
   -d 3 \
@@ -408,18 +409,40 @@ echo '' >> ${subject_log}
 ### Output:
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/prep/
-  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasAtroposN4.nii.gz
-  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-biasFieldAtroposN4.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasAtroposN4.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_prep-seg.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_prep-segPosteriors.nii.gz
 ```
 ### Code:
 ```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_bias_correction_AtroposN4: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
 # User-defined (as necessary)
+input_dir=derivatives/anat/prep
+which_img=sub-${subject}_ses-${session}_T1w_prep-biasT1T2.nii.gz
+brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+output_prefix=sub-${subject}_ses-${session}_T1w_prep
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_bias_correction_AtroposN4' >> ${subjectect_log}
+echo 'input_image:'${researcher}/${project}/${input_dir}/${which_img} >> ${subject_log}
+echo 'brain_mask:'${brain_mask} >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+antsAtroposN4.sh \
+  -d 3 \
+  -a ${researcher}/${project}/${input_dir}/${which_img} \
+  -x ${brain_mask} \
+  -c 3 \
+  -o ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-temp
+
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempN4Corrected.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-biasAtroposN4.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempSegmentation.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-seg.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempSegmentationPosteriors.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-segPosteriors.nii.gz
+  
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
@@ -430,13 +453,121 @@ echo '' >> ${subject_log}
 ## Tissue segmentation  
 ### Output:
 ```
-${researcherRoot}/${projectName}/derivatives/anat/
+${researcher}/${project}/derivatives/anat/
   ∟segmentation/
+    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
     ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-CSF.nii.gz
     ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-GM.nii.gz
     ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_seg-WM.nii.gz
   ∟prep/
     ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_prep-?.nii.gz
+```
+### Code:
+```bash
+# User-defined (as necessary)
+input_dir=derivatives/anat/prep
+t1_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
+t2_img=sub-${subject}_ses-${session}_T2w_prep-biasN4.nii.gz
+brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexMask.nii.gz
+output_prefix=sub-${subject}_ses-${session}_T1w_
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'task:structural_segmentation_atropos' >> ${subjectect_log}
+echo 'input_T1_image:'${researcher}/${project}/${input_dir}/${t1_img} >> ${subject_log}
+echo 'input_T2_image:'${researcher}/${project}/${input_dir}/${t2_img} >> ${subject_log}
+echo 'brain_mask:'${brain_mask} >> ${subject_log}
+echo 'software:ANTs' >> ${subject_log}
+echo 'version:2.3.1' >> ${subject_log}
+echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+antsAtroposN4.sh \
+  -d 3 \
+  -a ${researcher}/${project}/${input_dir}/${t1_img} \
+  -a ${researcher}/${project}/${input_dir}/${t2_img} \
+  -x ${brain_mask} \
+  -c 3 \
+  -o ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-temp
+
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentation.nii.gz \
+  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-label.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentationPosteriors1.nii.gz \
+  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-CSFposterior.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentationPosteriors2.nii.gz \
+  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-GMposterior.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentationPosteriors3.nii.gz \
+  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-WMposterior.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentation0N4.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentation1N4.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}prep-tempSegmentationConvergence.txt
+
+echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
+```
+
+***
+
+
+
+
+
+
+
+
+
+## Make Air Mask (for QC)
+### Output:
+```
+${researcher}/${project}/derivatives/anat/
+  ∟mask/
+    ∟sub-${subject}_ses-${session}_mask-bexAir.nii.gz   #final
+  ∟prep/
+    ∟sub-${subject}_ses-${session}_*_${mod}_prep-bexAir.nii.gz   #final
+```
+### Code:
+```bash
+# User-defined (as necessary)
+input_dir=derivatives/anat/prep
+which_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
+output_prefix=sub-${subject}_ses-${session}_T1w_
+
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo 'structural_generate_air_mask' >> ${subject_log}
+echo 'input_img:'${researcher}/${project}/${input_dir}/${which_img} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: 2.3.1' >> ${subject_log}
+echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+
+antsRegistrationSyN.sh -d 3 \
+  -f ${template_dir}/${space}/${template}_tissue_mask.nii.gz \
+  -m ${researcher}/${project}/${input_dir}/${which_img} \
+  -t s \
+  -x ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-bexTissue.nii.gz \
+  -o ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-temp
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempWarped.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempInverseWarped.nii.gz
+
+antsApplyTransforms -d 3 \
+  -i ${progdir}/templates/${space}/${template}_air_mask.nii.gz \
+  -r ${progdir}/templates/${space}/${template}_tissue_mask.nii.gz \
+  -o ${prepdir}/sub-${subject}_ses-${session}_prep-air.nii.gz \
+  -t [${researcher}/${project}/derivatives/anat/prep/${output_prefix}-temp0GenericAffine.mat,1] \
+  -n NearestNeighbor
+```
+
+***
+
+## Apply masks to images
+### Output:
+```
+${researcher}/${project}/derivatives/anat/native/
+  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_brain.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_tissue.nii.gz
+  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
+```
+### Code:
+```bash
+# User-defined (as necessary)
 ```
 
 ## 11. Normalization
@@ -454,43 +585,4 @@ ${researcherRoot}/${projectName}/derivatives/anat/
 ```
 
 
-***
 
-## Make Air Mask (for QC)
-### Output:
-```
-${researcher}/${project}/derivatives/anat/
-  ∟mask/
-    ∟sub-${subject}_ses-${session}_mask-bex0Air.nii.gz  #preliminary
-    ∟sub-${subject}_ses-${session}_mask-bexAir.nii.gz   #final
-  ∟prep/
-    ∟sub-${subject}_ses-${session}_*_${mod}_prep-bex0Air.nii.gz  #preliminary
-    ∟sub-${subject}_ses-${session}_*_${mod}_prep-bexAir.nii.gz   #final
-```
-### Code:
-```bash
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_within_session_multimodal_average: '${input_dir}/${input_file} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
-# User-defined (as necessary)
-input_dir=derivatives/anat/prep
-which_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
-
-antsRegistrationSyN.sh -d 3 \
-  -f ${template_dir}/${space}/${template}_tissue_mask.nii.gz \
-  -m ${researcher}/${project}/${input_dir}/${which_img} \
-  -t s \
-  -x ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-bexInverse.nii.gz \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_T1w_prep-temp
-rm ${researcher}/${project}/derivatives/anat/prep/*temp*.nii.gz
-
-antsApplyTransforms -d 3 \
-  -i ${progdir}/templates/${space}/${template}_air_mask.nii.gz \
-  -r ${progdir}/templates/${space}/${template}_tissue_mask.nii.gz \
-  -o ${prepdir}/sub-${subject}_ses-${session}_prep-air.nii.gz \
-  -t [${prepdir}/sub-${subject}_ses-${session}_T1w_prep-normTissue0GenericAffine.mat,1] \
-  -n NearestNeighbor
-```
