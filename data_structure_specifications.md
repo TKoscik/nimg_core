@@ -141,14 +141,17 @@ ${researcherRoot}/
         |    |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-inverse.nii.gz
         |    |         (normalization registration to template space)
         |    ∟qc/
-        |    |    ∟scan_quality
-        |    |    ∟anat_prep
-        |    |    ∟func_prep
-        |    |    ∟dwi_prep
-        |    |    ∟label
-        |    |    ∟fsurf
-        |    |    ∟mrs
-        |    ∟log/
+        |         ∟scan_quality
+        |         ∟anat_prep
+        |         ∟func_prep
+        |         ∟dwi_prep
+        |         ∟label
+        |         ∟fsurf
+        |         ∟mrs
+        ∟log/
+        |    ∟hpc_output/
+        |    |    ∟${job_name}.o######
+        |    ∟sub-${subject}_ses-${session}.log
         ∟code
         ∟lut
         ∟stimuli
