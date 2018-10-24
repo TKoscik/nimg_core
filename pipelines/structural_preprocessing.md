@@ -3,7 +3,7 @@
 ### ARGON HPC header
 ```bash
 #! /bin/bash
-#$ -N sub-subject_ses-session_jobDescription
+#$ -N sub-subject_ses-session_prep-anat
 #$ -M email-address@for.log
 #$ -m bes
 #$ -q CCOM,PINC,UI
