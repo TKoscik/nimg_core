@@ -325,6 +325,13 @@ fslmaths ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${ses
   -sub 1 -mul 1 \
   ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Tissue.nii.gz
 
+if [[ "${suffix}"="bex" ]]; then
+  mv ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Brain.nii.gz \
+    ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
+  mv ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Tissue.nii.gz \
+    ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-tissue.nii.gz
+fi
+
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
@@ -468,7 +475,7 @@ ${researcher}/${project}/derivatives/anat/
 input_dir=derivatives/anat/prep
 t1_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-biasN4.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexMask.nii.gz
+brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T1w_
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
@@ -518,8 +525,8 @@ ${researcher}/${project}/derivatives/anat/native/
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep
 which_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexMask.nii.gz
-tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexTissue.nii.gz
+brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
+tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-tissue.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T1w_
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
@@ -551,9 +558,9 @@ echo '' >> ${subject_log}
 ∟reg_${space}_${template}/
     ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}.nii.gz
   ∟tform/
-    ∟sub-${subject}_ses-${session}_*_${mod}_ref-${space}_${template}_tform-0affine.mat
-    ∟sub-${subject}_ses-${session}_*_${mod}_ref-${space}_${template}_tform-1syn.nii.gz
-    ∟sub-${subject}_ses-${session}_*_${mod}_ref-${space}_${template}_tform-1inverse.nii.gz
+    ∟sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+    ∟sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.nii.gz
+    ∟sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1inverse.nii.gz
 ```
 ### Code:
 ```bash
@@ -563,11 +570,13 @@ brain_img[0]=sub-${subject}_ses-${session}_T1w_brain.nii.gz
 tissue_img[0]=sub-${subject}_ses-${session}_T1w_tissue.nii.gz
 brain_img[1]=sub-${subject}_ses-${session}_T2w_brain.nii.gz
 tissue_img[1]=sub-${subject}_ses-${session}_T2w_tissue.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexMask.nii.gz
-tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bexTissue.nii.gz
-template[0]=MNI_T1_0.8mm
-template[1]=MNI_T2_0.8mm
-output_prefix=sub-${subject}_ses-${session}_T1w_
+brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
+tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-tissue.nii.gz
+template_mod[0]=MNI_T1_0.8mm
+template_mod[1]=MNI_T2_0.8mm
+output_prefix[0]=sub-${subject}_ses-${session}_T1w_
+output_prefix[1]=sub-${subject}_ses-${session}_T2w_
+
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task:structural_normalization' >> ${subject_log}
@@ -583,6 +592,9 @@ echo 'software:ANTs' >> ${subject_log}
 echo 'version:2.3.1' >> ${subject_log}
 echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
+template_space=${nimg_core_root}/templates/${space}
+img_path=${researcher}/${project}/${input_dir}
+
 antsRegistration \
   -d 3 \
   --float 1 \
@@ -590,112 +602,85 @@ antsRegistration \
   -u 1 \
   -w [0.01,0.99] \
   -z 1 \
-  -r [${nimg_core_root}/templates/${space}/${template[0]}.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[0]},1] \
+  -r [${template_space}/${template[0]}.nii.gz,${img_path}/${brain_img[0]},1] \
   -t Rigid[0.1] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[0]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[0]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[0]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[0]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[1]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[1]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[1]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[1]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[0]}_brain.nii.gz,${img_path}/${brain_img[0]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[0]}_tissue.nii.gz,${img_path}/${tissue_img[0]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[1]}_brain.nii.gz,${img_path}/${brain_img[1]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[1]}_tissue.nii.gz,${img_path}/${tissue_img[1]},1,32,Regular,0.25] \
   -c [1000x500x250x0,1e-6,10] \
   -f 6x4x2x1 \
   -s 4x2x1x0 \
   -t Affine[0.1] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[0]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[0]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[0]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[0]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[1]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[1]},1,32,Regular,0.25] \
-  -m MI[${nimg_core_root}/templates/${space}/${template[1]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[1]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[0]}_brain.nii.gz,${img_path}/${brain_img[0]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[0]}_tissue.nii.gz,${img_path}/${tissue_img[0]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[1]}_brain.nii.gz,${img_path}/${brain_img[1]},1,32,Regular,0.25] \
+  -m MI[${template_space}/${template_mod[1]}_tissue.nii.gz,${img_path}/${tissue_img[1]},1,32,Regular,0.25] \
   -c [1000x500x250x0,1e-6,10] \
   -f 6x4x2x1 \
   -s 4x2x1x0 \
   -t SyN[0.1,3,0] \
-  -m CC[${nimg_core_root}/templates/${space}/${template[0]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[0]},1,4] \
-  -m CC[${nimg_core_root}/templates/${space}/${template[0]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[0]},1,4] \
-  -m CC[${nimg_core_root}/templates/${space}/${template[1]}_brain.nii.gz,${researcher}/${project}/${input_dir}/${brain_img[1]},1,4] \
-  -m CC[${nimg_core_root}/templates/${space}/${template[1]}_tissue.nii.gz,${researcher}/${project}/${input_dir}/${tissue_img[1]},1,4] \
+  -m CC[${template_space}/${template_mod[0]}_brain.nii.gz,${img_path}/${brain_img[0]},1,4] \
+  -m CC[${template_space}/${template_mod[0]}_tissue.nii.gz,${img_path}/${tissue_img[0]},1,4] \
+  -m CC[${template_space}/${template_mod[1]}_brain.nii.gz,${img_path}/${brain_img[1]},1,4] \
+  -m CC[${template_space}/${template_mod[1]}_tissue.nii.gz,${img_path}/${tissue_img[1]},1,4] \
   -c [100x100x70x20,1e-9,10] \
   -f 6x4x2x1 \
   -s 3x2x1x0vox \
   -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_
-  
+
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_0GenericAffine.mat \
+  ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_1Warp.nii.gz \
+  ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}_ses-${session}_temp_1InverseWarp.nii.gz \
+  ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1inverse.mat
+
+antsApplyTransforms \
+  -d 3 \
+  --float 1 \
+  -i ${img_path}/${brain_img[0]} \
+  -o ${researcher}/${project}/derivatives/anat/reg_${space}_${template}/${output_prefix[0]}brain.nii.gz \
+  -r ${template_space}/${template_mod[0]}_brain.nii.gz \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+
+antsApplyTransforms \
+  -d 3 \
+  --float 1 \
+  -i ${img_path}/${tissue_img[0]} \
+  -o ${researcher}/${project}/derivatives/anat/reg_${space}_${template}/${output_prefix[0]}tissue.nii.gz \
+  -r ${template_space}/${template_mod[0]}_tissue.nii.gz \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+
+antsApplyTransforms \
+  -d 3 \
+  --float 1 \
+  -i ${img_path}/${brain_img[1]} \
+  -o ${researcher}/${project}/derivatives/anat/reg_${space}_${template}/${output_prefix[1]}brain.nii.gz \
+  -r ${template_space}/${template_mod[1]}_brain.nii.gz \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+
+antsApplyTransforms \
+  -d 3 \
+  --float 1 \
+  -i ${img_path}/${tissue_img[1]} \
+  -o ${researcher}/${project}/derivatives/anat/reg_${space}_${template}/${output_prefix[1]}tissue.nii.gz \
+  -r ${template_space}/${template_mod[1]}_tissue.nii.gz \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1syn.mat \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat
+
+# make air mask
+antsApplyTransforms \
+  -d 3 \
+  -i ${nimg_core_root}/templates/${space}/${template}_air_mask.nii.gz \
+  -o ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-air.nii.gz \
+  -r ${tissue_mask} \
+  -t ${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-1invers.mat \
+  -t [${researcher}/${project}/derivatives/tform/sub-${subject}_ses-${session}_reg-${space}_${template}_tform-0affine.mat,1]
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
-
-
-
-
-
-
-## Make Air Mask (for QC)
-### Output:
-```
-${researcher}/${project}/derivatives/anat/
-  ∟mask/
-    ∟sub-${subject}_ses-${session}_mask-bexAir.nii.gz   #final
-  ∟prep/
-    ∟sub-${subject}_ses-${session}_*_${mod}_prep-bexAir.nii.gz   #final
-```
-### Code:
-```bash
-# User-defined (as necessary)
-input_dir=derivatives/anat/prep
-which_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
-output_prefix=sub-${subject}_ses-${session}_T1w_
-
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'structural_generate_air_mask' >> ${subject_log}
-echo 'input_img:'${researcher}/${project}/${input_dir}/${which_img} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: 2.3.1' >> ${subject_log}
-echo 'start_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
-
-antsRegistrationSyN.sh -d 3 \
-  -f ${template_dir}/${space}/${template}_tissue_mask.nii.gz \
-  -m ${researcher}/${project}/${input_dir}/${which_img} \
-  -t s \
-  -x ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-bexTissue.nii.gz \
-  -o ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-temp
-rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempWarped.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${output_prefix}-tempInverseWarped.nii.gz
-
-antsApplyTransforms -d 3 \
-  -i ${progdir}/templates/${space}/${template}_air_mask.nii.gz \
-  -r ${progdir}/templates/${space}/${template}_tissue_mask.nii.gz \
-  -o ${prepdir}/sub-${subject}_ses-${session}_prep-air.nii.gz \
-  -t [${researcher}/${project}/derivatives/anat/prep/${output_prefix}-temp0GenericAffine.mat,1] \
-  -n NearestNeighbor
-```
-
-***
-
-## Apply masks to images
-### Output:
-```
-${researcher}/${project}/derivatives/anat/native/
-  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
-  ∟sub-${subject}_ses-${session}_*_${mod}_brain.nii.gz
-  ∟sub-${subject}_ses-${session}_*_${mod}_tissue.nii.gz
-  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
-```
-### Code:
-```bash
-# User-defined (as necessary)
-```
-
-## 11. Normalization
-  *between session registrations, i.e., register to participant baseline or average  
-  *registration to common space  
-### Output:
-```
-${researcherRoot}/${projectName}/derivatives/anat/
-  ∟reg_${space}/
-    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_reg-${space}.nii.gz
-  ∟tform/
-    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-0affine.mat
-    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1syn.nii.gz
-    ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_ref-${space}_tform-1inverse.nii.gz
-```
-
-
-
