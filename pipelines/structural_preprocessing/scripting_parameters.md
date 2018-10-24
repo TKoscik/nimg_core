@@ -30,6 +30,11 @@ ${researcher}/${project} must give you the root directory for all processing ste
 researcher=/Shared/researcher
 project=imaging_project
 ```
+## Subject and Session identifiers
+```bash
+subject=1234
+project=1810241308
+```
 ## Template Space
 ```bash
 template_dir=${nimg_core}/templates
