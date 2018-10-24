@@ -33,7 +33,7 @@ project=imaging_project
 ## Subject and Session identifiers
 ```bash
 subject=1234
-project=1810241308
+session=1810241308
 ```
 ## Template Space
 ```bash
