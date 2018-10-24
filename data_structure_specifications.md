@@ -90,9 +90,11 @@ ${researcherRoot}/
         |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior2.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_prep-segPosterior3.nii.gz
         |    |    |              ∟sub-${subject}_ses-${session}_*_${mod}_prep-norm.nii.gz   #see tform folder
+        |    |    ∟mask/
         |    |    ∟reg_[${space}]/
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_brain.nii.gz
         |    |        ∟sub-${subject}_ses-${session}_${mod}_reg-${space}_tissue.nii.gz
+        |    |    ∟segmentation/
         |    ∟brains2/   
         |    |    ∟sub-${ursi}_ses-${mrqid}_brains2.zip 
         |    ∟baw/  BrainsAutoWorkup-BRAINSTools
