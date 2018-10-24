@@ -40,6 +40,45 @@ template=MNI_T1_0.8mm                # which template space to use
 
 ***
 
+## T1 / T2 Pipeline:
+1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]  
+2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]
+3. Denoising (Rician)
+4. ACPC alignment
+5. Within-modality average [if multiple images]
+6. Within-session, multimodal coregistration to T1
+7. Preliminary brain extraction
+8. Bias field correction - T1/T2
+9. Bias field correction - N4
+10. Brain extraction
+11. Tissue segmentation
+12. Normalization to template space
+
+## T1 Only Pipeline:
+1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]  
+2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]
+3. Denoising (Rician)
+4. ACPC alignment
+5. Within-modality average [if multiple images]
+6. Preliminary brain extraction
+7. Bias field correction - N4 [alternatively use iterative N4-Segmentation]
+8. Brain extraction
+9. Tissue segmentation
+10. Normalization to template space
+
+## T1 + Other Anatomical Modalities Pipeline:
+1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]  
+2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]
+3. Denoising (Rician)
+4. ACPC alignment
+5. Within-modality average [if multiple images]
+6. Within-session, multimodal coregistration to T1
+7. Preliminary brain extraction
+8. Bias field correction - N4 [alternatively use iterative N4-Segmentation]
+9. Brain extraction
+10. Tissue segmentation
+11. Normalization to template space
+
 ## Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]
 [*GradUnwarp [Freesurfer?] https://surfer.nmr.mgh.harvard.edu/fswiki/GradUnwarp*]  
 Can this be don on scanner for GE? for all sequences?
@@ -60,7 +99,7 @@ Jovicich, et al. 2006
 ***
 
 ## Readout distortion correction [NOT IMPLEMENTED 2018-10-24]
-Since this is intended to correct structural images for readout distortion that differs between T1w and T2w images due to readout bandwidth and we create an unbiased average of these images in our pipeline and this distortion is relatively small <= 1mm, is this step necessary? Also requires a fieldmap collected separately.   
+Since this is intended to correct structural images for readout distortion that differs between T1w and T2w images due to readout bandwidth and if we create an unbiased average of these images in our pipeline and this distortion is relatively small <= 1mm, is this step necessary? Also requires a fieldmap collected separately.   
 "Additionally, B0 fieldmaps, B1−, and B1+ maps are acquired for the purpose of correcting readout distortion in the T1w and T2w images and to enable future correction of intensity inhomogeneity by explicitly modeling the B1− receive and B1+ transmit fields."
 >Glasser MF, Sotiropoulos SN, Willson JA, Coalson TS, Fischl B, Andersson JL, Xu J, Jbabdi S, Webster M, Polimeni JR, Van Essen DC, Jenkinson M, & WU-Minn HCP Consortium. (2013). The minimal processing pipelines for the Human Connectome Project. Neuroimage, 80, 105-124. DOI:10.1016/j.neuroimage.2013.04.127 PMCID:PMC3720813
 ### Output:
@@ -607,7 +646,7 @@ echo '' >> ${subject_log}
 #### Citations:
 >Jenkinson M, Beckmann CF, Behrens TE, Woolrich MW, & Smith SM. (2012). FSL. Neuroimage, 62(2), 782-790. DOI:10.1016/j.neuroimage.2011.09.015 PMID:21979382
 
-## Normalization
+## Normalization to template space
 ### Output:
 ```
 ∟reg_${space}_${template}/
