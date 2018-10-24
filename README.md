@@ -22,3 +22,7 @@ Given the fast and sporadic pace of change in the field of neuroimaging, we will
 We are building or neuroimaging tools geared toward improvements in *reproducibility, collaboration, and data-sharing* including using and building upon 'industry standards' and data formats that can be fed directly into analytic and statistical pipelines.  
 
 Our hope is that easier and more rapid access to imaging results will result in shorter time periods between data acquisition and publication, growth in neuroimaging collaborations and projects, and facilitating multi-site collaborations.  
+
+***
+
+copies of citations can be found online [HERE](https://paperpile.com/shared/5aInqX) 
