@@ -107,6 +107,8 @@ echo '' >> ${subject_log}
 ***
 
 ##  ACPC Alignment  
+### Citations
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
 ### Output:
 ```
  ${researcher}/${project}/derivatives/anat/prep/
@@ -146,9 +148,12 @@ echo '' >> ${subject_log}
 ### Citations:
 #### buildtemplateparallel.sh
 >Avants BB, Yushkevich P, Pluta J, Minkoff D, Korczykowski M, Detre J, & Gee JC. (2010). The optimal template effect in hippocampus studies of diseased populations. Neuroimage, 49(3), 2957-2466. DOI:10.1016/j.neuroimage.2009.09.062 PMCID:PMC2818274
+
 >Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
+
 #### ANTs Registration
 >Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+
 >Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 ### Output:
 ```
@@ -209,6 +214,7 @@ echo '' >> ${subject_log}
 ### Citations:
 #### ANTs Registration
 >Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
+
 >Avants BB, Tustison NJ, Song G, Cook PA, Klein A, & Gee JC. (2011). A reproducible evaluation of ANTs similarity metric performance in brain image registration. Neuroimage, 54(3), 2033-2044. DOI:10.1016/j.neuroimage.2010.09.025 PMCID:PMC3065962
 ### Output:
 ```
@@ -260,6 +266,14 @@ echo '' >> ${subject_log}
 
 ## Brain extraction
 ### Citations:
+#### ANTs Brain Extraction:
+> Avants BB & Tustison NJ. (2018). ANTs/ANTsR brain templates. https://figshare.com/articles/ANTs_ANTsR_Brain_Templates/915436 DOI:10.6084/m9.figshare.915436.v2
+
+>Tustison NJ, Cook PA, Klein A, Song G, Das SR, Dud JT, Kandel BM, van Strien N, Stone JR, Gee JC, & Avants BB. (2014). Large-scale evaluation of ANTs and FreeSurfer cortical thickness measurements. Neuroimage, 99, 166-179. DOI:10.1016/j.neuroimage.2014.05.044 PMCID:24879923
+#### FSL Brain Extraction Tool:
+> Smith SM. (2002). Fast robust automated brain extraction. Human Brain Mapping, 17(3), 143-155. DOI:10.1002/hbm.10062 PMCID:12391568
+#### AFNI 3dSkullStrip:
+Cox RW. (1996). AFNI: Software for analysis and visualization of functional magnetic resonance neuroimages. Computational Biomedical Research, 29(3), 162-173. PMCID:8812068
 ### Output:
 ```
 ${researcher}/${project}/derivatives/anat/
