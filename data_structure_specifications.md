@@ -88,7 +88,8 @@ ${researcherRoot}/
       |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-resample.nii.gz
       |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-T1reg.nii.gz
       |  |  ∟reg_${space}_${template}/
-      |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}.nii.gz
+      |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}_brain.nii.gz
+      |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}_tissue.nii.gz
       |  |  ∟segmentation/
       |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-CSF.nii.gz
       |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-GM.nii.gz
