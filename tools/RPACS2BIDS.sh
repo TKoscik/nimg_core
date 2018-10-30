@@ -241,7 +241,7 @@ getType () {
       DTIFlipPhase)     WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}dwi  ;;
       DTIb100045Dir)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-1000_dir-45_dwi  ;;
       DTIb180045Dir)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-1800_dir-45_dwi  ;;
-      fMRIAxRestingState) WriteDir=$DirStub/func; WriteFile=${FRoot}${ACQ}bold  ;;
+      fMRIAxRestingState) WriteDir=$DirStub/func; WriteFile=${FRoot}${ACQ}${Run}bold  ;;
       FieldMap)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}fieldmap  ;;
       LOCFORSPECT)      WriteDir=$DirStub/mrs;   WriteFile=${FRoot}${ACQ}loc  ;;
       MBCRYINGBABY1)    WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
@@ -282,14 +282,14 @@ getType () {
       ORIGSAGMPRAGEPROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T1w  ;;
       ORIGSagCUBEFLAIR)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_FLAIR  ;;
       ORIGSagCUBET2PROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T2w  ;;
-      REST)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
-      RLWM)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
-      RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
+      REST)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
+      RLWM)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
+      RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
       SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      SEEPI)              WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
-      SEEPIALT)           WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
-      SEEPIREVPE)         WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
+      SEEPI)              WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
+      SEEPIALT)           WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
+      SEEPIREVPE)         WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       SNR3DTFL)           WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}TFL    ;;
       SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}FLAIR        ;;
       SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T2w  ;;
@@ -363,7 +363,7 @@ readCD () {
 
 
 logger () {
-   cat $Tmp >> $MRTapeLog
+   cat $Tmp >> /dev/tty
 }
 
 ###################################################################
