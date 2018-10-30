@@ -19,8 +19,8 @@ ${researcherRoot}/
       ∟dicom/			Read-only archive
       |  ∟sub-${subject}_ses-${session}_site-${site}.zip
       ∟nifti/			Read-only archive
-      |  ∟${subject}/
-      |    ∟${session}/
+      |  ∟sub-${subject}/
+      |    ∟ses-${session}/
       |      ∟session_info.tsv
       |      ∟anat/
       |      |  ∟sub-${subject}_ses-${session}_acq-${acq}[_run-${run}]_${mod}.json
@@ -54,8 +54,8 @@ ${researcherRoot}/
       |         ∟sub-${subject}_ses-${session}_qa_acq-${acq}.json
       |         ∟sub-${subject}_ses-${session}_qa_acq-${acq}.nii.gz
       ∟derivatives/
-      |  ∟${subject}/
-      |    ∟${session}/
+      |  ∟sub-${subject}/
+      |    ∟ses-${session}/
       |     ∟anat/
       |     |  ∟native/
       |     |  |  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_air.nii.gz
@@ -107,7 +107,7 @@ ${researcherRoot}/
       |     |            ∟WarpedAtlas2Subject/
       |     ∟dwi/
       ∟fsurf/ (Freesurfer subject directory)
-      |  ∟${ursi}_${mrqid}/
+      |  ∟${ursi}_${mrqid}/  **(sub-${subject}_ses-${session} ?)**
       |  |    ∟label/                 
       |  |    ∟mri/
       |  |    |    ∟orig/
