@@ -149,9 +149,10 @@ ${researcherRoot}/
       |       ∟fsurf
       |       ∟mrs
       ∟log/
-      |    ∟hpc_output/
-      |    |    ∟${job_name}.o######
-      |    ∟sub-${subject}_ses-${session}.log
+      |   ∟hpc_output/
+      |   |    ∟${job_name}.o######
+      |   ∟sub-${subject}_ses-${session}.log
+      |   ∟MRtape.log
       ∟code
       ∟lut
       ∟stimuli
