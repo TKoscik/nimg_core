@@ -14,10 +14,11 @@ export DCMDICTPATH="/Shared/pinc/sharedopt/apps/dcmtk/Linux/x86_64/3.6.0/share/d
 
 
 Usage () {
-   printf 'Usage: %s -[dpl] InputDir OutputDir\n' $0
+   printf 'Usage: %s -[dplz] InputDir OutputDir\n' $0
    printf '     d:  Dry run.  Checks series descriptions vs. internal conversion table.\n'
    printf '     p:  Use Protocol Name instead of Series Description.\n'
    printf '     l:  Enable logging of image/series information.\n'
+   printf '     z:  Zip the InputDir into OutputDir/../dicom/sub-${subject}_ses-${session}_site-${site}.zip\n'
    exit 1
 }
 
@@ -26,12 +27,13 @@ Usage () {
 parse_args () {
    
    [ $# -lt 2 ] && Usage $0
-   DryRun=0;  UseProtocol=0;  Logging=0;
+   DryRun=0;  UseProtocol=0;  Logging=0;  Zipping=0;
    while getopts dpl Opt ; do
       case "$Opt" in
-         d)   DryRun=1          ;;
+         d)   DryRun=1          ;;  ## This should disable Logging and Zipping
          p)   UseProtocol=1     ;;
          l)   Logging=1         ;;
+         z)   Zipping=1          ;;
          ?)   Usage $0          ;;
       esac
    done
@@ -266,7 +268,7 @@ getType () {
       MeanEpi246)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       MeanEpi300)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       ## Multiple runs
-      NBACKAX)          WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;  
+      NBACKAX)          WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${TASK}${Run}bold  ;;  
       NOTDIAGNOSTICTGchange*Calibphantom)      WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
       NOTDIAGNOSTICTGchange*sLASERCalTGPons)   WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
       NOTDIAGNOSTICTGchange*sLASERCalTGCRBLWM) WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
@@ -287,9 +289,9 @@ getType () {
       RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
       SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      SEEPI)              WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
-      SEEPIALT)           WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
-      SEEPIREVPE)         WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
+      SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
+      SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
+      SEEPIREVPE)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
       SNR3DTFL)           WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}TFL    ;;
       SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}FLAIR        ;;
       SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T2w  ;;
@@ -306,7 +308,7 @@ getType () {
       sLASERCRBLWM)       WriteDir=$DirStub/mrs; WriteFile=${FRoot}${ACQ}mrs  ;;
       sLASERPons)         WriteDir=$DirStub/mrs; WriteFile=${FRoot}${ACQ}mrs  ;;
       waterstability8ml)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss  ;;
-      *)        WriteDir=$DirStub/unkn;         WriteFile=${FRoot}${ACQ} 
+      *)        WriteDir=$DirStub/unkn;         WriteFile=${FRoot}${ACQ}unk 
          printf '  Unknown scan description %s: %s\n  Help!\n  Edit %s\n' $Desc $ReadFile $0
          printf '      %s)  WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;\n' $Desc
          printf '   %s\n' $ReadDir
@@ -330,7 +332,44 @@ genFileName () {
    getSesID $1
    getSiteID $1
    getDesc $1
-   getType $1   ## Creates $WriteDir and $WriteFile strings from $DirStub
+   getType $1   ## Creates $WriteDir and $WriteFile strings from $DirStub & 0018,103e SeriesDescription
+                ## unless -p is invoked to use 0018,1030 ProtocolName
+}
+
+logger () {     ## All info is available in $tmp, just 'awk' it out
+   LogDir=`dirname WriteDir`/log
+   LogFile=$LogDir/MRtape.log
+   [ ! -d $LogDir ] && printf 'Creating log folder %s\n' $LogDir && mkdir -p $LogDir
+   [ ! -e $LogFile ] && printf 'Creating log file %s\n' $LogFile && echo -n "" > $LogFile
+   [ ! -e $LogFile ] && printf 'Log file %s creation failed.\n' $LogFile && return 1
+   awk '$1=="(0028,0010)"{Ma=$3}\
+        $1=="(0028,0011)"{Mb=$3}\
+        $1=="(0020,0037)"{n=split($3,T,"\\");          \
+            Plane="Unknown";                            \
+            if(n==6){                                   \
+            for(i=1;i<=n;i++){T[i]=int(T[i]*T[i]+0.5)}  \
+            if((T[1]==1)&&(T[6]==1)){Plane="Coronal"}   \
+            if((T[1]==1)&&(T[5]==1)){Plane="Axial"}     \
+            if((T[2]==1)&&(T[6]==1)){Plane="Sagittal"}  \
+            }}\
+        $1=="(0018,0050)"{Thk=$3}\
+        $1=="(0018,0080)"{TR=$3; Dstr=Dstr"TR="TR" "}\
+        $1=="(0018,0081)"{TE=$3; Dstr=Dstr"TE="TE" "}\
+        $1=="(0018,0082)"{TI=$3; if(TI!=0){Dstr=Dstr"TI="TI" "}}\
+        $1=="(0018,0083)"{NEX=$3; if(NEX!=1){Dstr=Dstr"with "NEX" exictations "}}\
+        $1=="(0018,0091)"{Eco=$3; if(Eco!=1){Dstr=Dstr"and "Eco" echoes "}}\
+        $1=="(0018,1314)"{Flip=$3"°"; Dstr=Dstr"flip angle was "Flip}\
+        $1=="(0028,0030)"{gsub("\\\\","x"); FOV=$3"mm voxels"}\
+        END{printf("The '$Desc' acquisition parameters were:  ");\
+            printf("%s plane %dx%d matrix, %s %dmm thick, ",Plane,Ma,Mb,FOV,Thk);\
+            printf("%s %s %s\n",Dstr,'$WriteDir,$WriteFile')}' $tmp >> $LogFile
+## The " TIMINGTASKRun4" acquisition parameters were: 
+## Axial plane 64x64 matrix, 3.4x3.4mm voxels 4mm thick, 
+## TR=2000 TE=30 flip angle was 80°.
+}
+
+zipper () {
+
 }
 
 readCD () {
@@ -342,6 +381,10 @@ readCD () {
            (P!=$1""$4)&&(NF>0){N++; P=$1""$4}\
             N=='$Select'{print gensub("/[^/]*$","",1,$NF)}'`)
    
+   if [ ${#DirNames[@]} -eq 0 ] ; then
+      printf 'No viable DICOM images found in %s\n' $ReadDir
+      return 0
+   fi
    ## Create BIDS-compliant folder & file names
    ## Dargs="-gert_create_dataset -gert_write_as_nifti -dicom_org gert_to3d_prefix"
    Dargs="-b y -z i "
@@ -355,16 +398,13 @@ readCD () {
       if [ $DryRun -eq 0 ] ; then
          $dcm2niix $Dargs -o $WriteDir -f $WriteFile $ReadDir |& \
             grep -Ev 'pigz|dcm2niiX|Conversion|Found'
+         [ $Logging == 1 ] && logger
       fi
    done
    
    return 0
 }
 
-
-logger () {
-   cat $Tmp >> /dev/tty
-}
 
 ###################################################################
 ##                               Main
@@ -389,9 +429,7 @@ while [ "$Response" != "0" ] ; do
    ############################################
    # Process the specified scan onto disk.
    readCD ${Select}
-   
-   [ $Logging -eq 1 ] && logger ${Select}
-   
+        
 done
 
 exit
