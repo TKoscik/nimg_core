@@ -19,7 +19,7 @@ If you want to run the T1-T2 pipeline use the following script and template file
 
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 ```
-[create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/tools/createFSjobsT1T2.sh)
+[create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1T2.sh)
 ```
 T1-T2 Template:
 ```
@@ -29,11 +29,11 @@ If you want to run the T1 only pipeline use the following script and template fi
 
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 ```
-[create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/createFSjobsT1.sh)
+[create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1.sh)
 ```
 T1-only Template:
 ```
-[T1-only FS Template](https://github.com/TKoscik/nimg_core/tools/TMPLT1FSv60.sh.in)
+[T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
 
 ```
 3. FreeSurfer job status and troubleshooting
