@@ -1,27 +1,24 @@
 # FreeSurfer 6.0 Pipeline
 
 1. FreeSurfer 6.0 Information 
-```
 Everything one would need to know is at this wiki as far as FreeSurfer ins and outs and documetation, how-tos,
 etc:
-```
 
-  [freesurfer wiki](https://surfer.nmr.mgh.harvard.edu/fswiki)
-```
+    [freesurfer wiki](https://surfer.nmr.mgh.harvard.edu/fswiki)
+
 We have found that FreeSurfer works best with Atropos N4 corrected inputs and the following scripts point at 
 these in the bids structure.  This is particularly critical for samples with scans acquired on multiple 
 scanners
 
-```
 2. Create argon submittable jobs scripts for running FreeSurfer and submit jobs
 If you want to run the T1-T2 pipeline use the following script and template files:
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 
-  [create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1T2.sh)
+    [create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1T2.sh)
 
 T1-T2 Template:
 
-  [T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1T2FSv60.sh.in)
+    [T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1T2FSv60.sh.in)
 
 If you want to run the T1 only pipeline use the following script and template files:
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
