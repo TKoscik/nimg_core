@@ -19,11 +19,11 @@ If you want to run the T1-T2 pipeline use the following script and template file
 
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 ```
-[create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/createFSjobsT1T2.sh)
+[create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/tools/createFSjobsT1T2.sh)
 ```
 T1-T2 Template:
 ```
-[T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/TMPLT1T2FSv60.sh.in)
+[T1-T2 FS Template](https://github.com/TKoscik/nimg_core/tools/TMPLT1T2FSv60.sh.in)
 ```
 If you want to run the T1 only pipeline use the following script and template files:
 
@@ -33,7 +33,7 @@ Wrapper script for job creation (creates a separate pbs and sh script for each s
 ```
 T1-only Template:
 ```
-[T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/TMPLT1FSv60.sh.in)
+[T1-only FS Template](https://github.com/TKoscik/nimg_core/tools/TMPLT1FSv60.sh.in)
 
 ```
 3. FreeSurfer job status and troubleshooting
@@ -69,7 +69,6 @@ Pial edits:
 ```
 4. Dataset creation in R via Tim's functions
 
-```
 Examples below of how to generate csv summary datasets for analysis is below
 Launch RStudio
 ###Only 1st time###install.packages("devtools")
