@@ -6,7 +6,7 @@ Everything one would need to know is at this wiki as far as FreeSurfer ins and o
 etc:
 ```
 
-[freesurfer wiki](https://surfer.nmr.mgh.harvard.edu/fswiki)
+  [freesurfer wiki](https://surfer.nmr.mgh.harvard.edu/fswiki)
 ```
 We have found that FreeSurfer works best with Atropos N4 corrected inputs and the following scripts point at 
 these in the bids structure.  This is particularly critical for samples with scans acquired on multiple 
@@ -19,21 +19,21 @@ If you want to run the T1-T2 pipeline use the following script and template file
 
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 ```
-[create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1T2.sh)
+  [create T1-T2 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1T2.sh)
 ```
 T1-T2 Template:
 ```
-[T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1T2FSv60.sh.in)
+  [T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1T2FSv60.sh.in)
 ```
 If you want to run the T1 only pipeline use the following script and template files:
 
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 ```
-[create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1.sh)
+  [create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1.sh)
 ```
 T1-only Template:
 ```
-[T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
+  [T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
 
 ```
 3. FreeSurfer job status and troubleshooting
@@ -55,21 +55,19 @@ mri_convert -i brainmask.nii.gz -it nii -o brainmask.auto.mgz -ot mgz
 cp brainmask.auto.mgz brainmask.mgz
 rm brainmask.nii.gz
 run recon2 and recon3 
-```
 
-```Other fixes one sometimes needs are the following:
-
+Other fixes one sometimes needs are the following:
 Control points:
 ```
-[freeview control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview)
+  [freeview control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview)
 
-[tksurfer control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools)
+  [tksurfer control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools)
 ```
 Pial edits:
 ```
-[freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
+  [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
 
-[tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
+  [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
 ```
 4. Dataset creation in R via Tim's functions
 
