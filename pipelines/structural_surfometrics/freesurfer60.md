@@ -59,9 +59,9 @@ Control points:
 
 Pial edits:
 
-     [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
+  [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
 
-      [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
+  [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
 
 4. Dataset creation in R via Tim's functions
 
