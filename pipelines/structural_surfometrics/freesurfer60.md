@@ -1,6 +1,6 @@
 # FreeSurfer 6.0 Pipeline
 
-#1. FreeSurfer 6.0 Information 
+(#)1. FreeSurfer 6.0 Information 
 Everything one would need to know is at this wiki as far as FreeSurfer ins and outs and documetation, how-tos,
 etc:
 
