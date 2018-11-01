@@ -23,11 +23,11 @@ T1-T2 Template:
 If you want to run the T1 only pipeline use the following script and template files:
 Wrapper script for job creation (creates a separate pbs and sh script for each scan session found):
 
-  [create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1.sh)
+     [create T1 FS jobs](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/createFSjobsT1.sh)
 
 T1-only Template:
 
-  [T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
+     [T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
 
 3. FreeSurfer job status and troubleshooting
 
@@ -53,15 +53,15 @@ run recon2 and recon3
 Other fixes one sometimes needs are the following:
 Control points:
 
-  [freeview control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview)
+      [freeview control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview)
 
-  [tksurfer control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools)
+     [tksurfer control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools)
 
 Pial edits:
 
-  [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
+     [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
 
-  [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
+      [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
 
 4. Dataset creation in R via Tim's functions
 
