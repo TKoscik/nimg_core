@@ -23,7 +23,7 @@ Wrapper script for job creation (creates a separate pbs and sh script for each s
 ```
 T1-T2 Template:
 ```
-[T1-T2 FS Template](https://github.com/TKoscik/nimg_core/tools/TMPLT1T2FSv60.sh.in)
+[T1-T2 FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1T2FSv60.sh.in)
 ```
 If you want to run the T1 only pipeline use the following script and template files:
 
