@@ -8,7 +8,7 @@ Use this script to find all your T1s and T2s and make the desired csv file:
 #2. Create a config file for the projcect you want to run through BRAINSTools BAW   
 Create a config file using this file as your template and edit the lines described in the header:  
 
-  [config file](https://github.com/TKoscik/nimg_core/blob/master/tools/bawBRAINSTools.config)
+  [config file](https://github.com/TKoscik/nimg_core/blob/master/tools/baw/BRAINSTools.config)
 
 #3. Login to argon and start your BRAINSTools processing  
 You will need the csv file from Step 1, the config file from Step 2, and the following runbaw.sh file:  
