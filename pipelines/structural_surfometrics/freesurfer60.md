@@ -55,16 +55,20 @@ mri_convert -i brainmask.nii.gz -it nii -o brainmask.auto.mgz -ot mgz
 cp brainmask.auto.mgz brainmask.mgz
 rm brainmask.nii.gz
 run recon2 and recon3 
+```
 
-Other fixes one sometimes needs are the following:
+```Other fixes one sometimes needs are the following:
+
 Control points:
 ```
 [freeview control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_freeview)
+
 [tksurfer control points](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ControlPoints_tktools)
 ```
 Pial edits:
 ```
 [freeview pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_freeview)
+
 [tksurfer pial edits](https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/PialEdits_tktools)
 ```
 4. Dataset creation in R via Tim's functions
