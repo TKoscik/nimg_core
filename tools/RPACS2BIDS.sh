@@ -289,8 +289,8 @@ getType () {
       RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
       SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
-      SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
+      SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}_ep-AP_fmap  ;;
+      SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}_ep-PA_fmap  ;;
       SEEPIREVPE)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
       SNR3DTFL)           WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}TFL    ;;
       SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}FLAIR        ;;
@@ -362,18 +362,24 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
         $1=="(0028,0030)"{gsub("\\\\","x"); FOV=$3"mm voxels"}\
         END{printf("The '$Desc' acquisition parameters were:  ");\
             printf("%s plane %dx%d matrix, %s %dmm thick, ",Plane,Ma,Mb,FOV,Thk);\
-            printf("%s %s %s\n",Dstr,'$WriteDir,$WriteFile')}' $tmp >> $LogFile
+            printf("%s %s %s\n",Dstr,'$WriteDir,$WriteFile')}' $tmp |\
+            tee -a $Mmp >> $LogFile
 ## The " TIMINGTASKRun4" acquisition parameters were: 
 ## Axial plane 64x64 matrix, 3.4x3.4mm voxels 4mm thick, 
 ## TR=2000 TE=30 flip angle was 80°.
 }
 
 zipper () {
-
+   ZipDir=`dirname WriteDir`/dicom
+   ZipFile=$ZipDir/${SubID}_${SesID}_${SiteID}.zip
+   [ ! -d $ZipDir ] && printf 'Creating dicom folder %s\n' $ZipDir && mkdir -p $ZipDir
+   [ ! -e $ZipFile ] && printf 'Creating dicom/zip file %s\n' $ZipFile && echo -n "" > $ZipFile
+   [ ! -e $ZipFile ] && printf 'Zip file %s creation failed.\n' $ZipFile && return 1
+   zip -r $ZipFile $ReadDir
 }
 
 readCD () {
-
+   ##  logger() loads up $Mmp with scan information
    printf '%s\n' $destinationDir > $Mmp
    # $ScanList is Name, Researcher, Date, Time, Filename, ##
    DirNames=(`echo ${ScanList[@]} | sed 's/##/\n/g' |\
@@ -401,7 +407,8 @@ readCD () {
          [ $Logging == 1 ] && logger
       fi
    done
-   
+   ## Dump scan summary to screen
+   cat $Mmp
    return 0
 }
 
@@ -429,7 +436,7 @@ while [ "$Response" != "0" ] ; do
    ############################################
    # Process the specified scan onto disk.
    readCD ${Select}
-        
+   [ $Zipping == 1 ] && zipper
 done
 
 exit
