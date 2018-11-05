@@ -2,7 +2,7 @@ acronym	location	prefix	description
 HCPMNI07mm	${templates}/HCP	MNI152_T1_0.7mm	Human Connectome Project 0.7mm MNI152 (S1200?)
 HCPMNI08mm	${templates}/HCP	MNI152_T1_0.8mm	Human Connectome Project 0.8mm MNI152 (S1200)?
 MNI1521mm	${templates}/MNI	MNI152_T1_1mm	MNI ICBM 152 non-linear 6th Generation Symmetric Average Brain Stereotaxic Registration Model 1.0mm
-MNI1522mm	${templates}/MNI	MNI152_T1_2mm	MNI152_T1_1mm	MNI ICBM 152 non-linear 6th Generation Symmetric Average Brain Stereotaxic Registration Model 2.0mm
+MNI1522mm	${templates}/MNI	MNI152_T1_2mm	MNI ICBM 152 non-linear 6th Generation Symmetric Average Brain Stereotaxic Registration Model 2.0mm
 MNI2009a	${templates}/MNI	mni_icbm152_t1_tal_nlin_asym_09a	MNI ICBM 152 non-linear 2009a asymmetric 1.0mm
 MNI2009c	${templates}/MNI	mni_icbm152_t1_tal_nlin_asym_09b_hires	MNI ICBM 152 non-linear 2009c asymmetric 0.5mm
 CIT168MNI1mm	${templates}/HCP	CIT168_T1w_1mm_MNI	Human Connectome Project 1.0mm MNI152 transformed (S500) 1.0mm
