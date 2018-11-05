@@ -1,4 +1,4 @@
-type  modality	acronym description
+type 	modality	acronym description
 anat	T1 weighted	T1w
 anat	T2 weighted	T2w
 anat	T1 rho quantitative T1rho brain imaging	T1rho
