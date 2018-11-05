@@ -16,7 +16,7 @@ function printCommandLine {
 }
 
 # Parse Command line arguments
-while getopts ân:p:b:o:hâ OPTION
+while getopts "n:p:b:o:h" OPTION
 do
   case $OPTION in
     h)
