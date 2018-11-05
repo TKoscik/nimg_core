@@ -28,6 +28,10 @@ Wrapper script for job creation (creates a separate pbs and sh script for each s
 T1-only Template:
 
   [T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
+  
+  
+## Do we want to allow for inputs less than 1mm and/or conform to smallest voxel dimension with -cm flag?  
+  
 
 #3. FreeSurfer job status and troubleshooting
 
