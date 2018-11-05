@@ -126,8 +126,8 @@ echo "0 1 0 $dwellTime" > ${outDir}/${outBase}_acq_params.txt
 
 # Define scan parameters for Top/Up
 exampleImage=`ls ${negDir} | grep \.dcm | head -n+1`
-echoSpace=`dicom_hdr ${negDir}/$exampleImage | grep "0043 102c" || awk -F"//" '{print $3}' | tr -d '[[:space:]]'`
-etl=`dicom_hdr ${negDir}/$exampleImage | grep "0019 10b1" || awk -F"//" '{print $3}' | tr -d '[[:space:]]'`
+echoSpace=`dicom_hdr ${negDir}/$exampleImage | grep "0043 102c" | awk -F"//" '{print $3}' | tr -d '[[:space:]]'`
+etl=`dicom_hdr ${negDir}/$exampleImage | grep "0019 10b1" | awk -F"//" '{print $3}' | tr -d '[[:space:]]'`
 dwellTime=`echo "$echoSpace $etl" | awk '{print $1 * $2 / 100000}'`
 echo "0 -1 0 $dwellTime" >> ${outDir}/${outBase}_acq_params.txt
 
