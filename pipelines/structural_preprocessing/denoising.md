@@ -2,7 +2,7 @@
 Denoise an image using a spatially adaptive filter.  
 ## Output:
 ```
- ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/
+ ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-denoise.nii.gz
 ```
 ## Code:
