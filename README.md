@@ -1,4 +1,17 @@
-# Iowa Neuroimaging Data Science Core
+# Iowa Neuroimaging Core
+
+## What We Do
+Our goal is to provide image processing services to support biomedical research that utilizes magnetic resonance imaging (MRI) at the University of Iowa. Our services focus on a few critical components to all MRI studies; these include: (1) 'cleaning' the images, (2) assessing the quality of images, (3) extracting biologically- and research-relevant information, and (4) applying statistical models to test research hyptheses. The steps required to acheive these goals require many niche skills at the intersection of radiology and medicine, psychology, anatomy, computer science, and software development and implementation.
+We plan to provide:  
+  -consultation in study design and planning to ensure high-quality, relevant data collection and customization to researchers needs  
+  -data services, including data organization and data sharing  
+  -process development for novel analytics and to integrate advances in methods  
+  -training for investigators, research assistants, and students to implement MRI processing themselves  
+  -quality control, including easy-to-interpret reports, for each step in our process  
+  -MRI data processing (cleaning the data and extracting meaningful variables)  
+  -MRI data statisical modelling (hypothesis testing, modelling research questions)  
+
+
 ## Tools for streamlined neuroimage processing  
 ### Mission Statement  
 Our goal is to restructure personnel and technologies to streamline neuroimage processing in order to provide:
