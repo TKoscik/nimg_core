@@ -13,7 +13,7 @@ ${researcher}/${project}/derivatives/
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
 fixed_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 moving_img=sub-${subject}_ses-${session}_T2w_prep-avg.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T2w
