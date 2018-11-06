@@ -1,14 +1,14 @@
 # Bias field correction - N4
 ## Output:
 ```
-${researcherRoot}/${projectName}/derivatives/anat/prep/${subject}/${session}/
+${researcherRoot}/${projectName}/derivatives/anat/prep/sub-${subject}/ses-${session}/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasN4.nii.gz
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasN4.nii.gz
 ```
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
 which_img=sub-${subject}_ses-${session}_T1w_prep-biasT1T2.nii.gz
 output_prefix=sub-${subject}_ses-${session}_T1w
 
@@ -23,7 +23,7 @@ N4BiasFieldCorrection \
   -d 3 \
   -i ${researcher}/${project}/${input_dir}/${which_img}
   -r 1 \
-  -o [${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-biasN4.nii.gz,${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-biasFieldN4.nii.gz]
+  -o [${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-biasN4.nii.gz,${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-biasFieldN4.nii.gz]
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
