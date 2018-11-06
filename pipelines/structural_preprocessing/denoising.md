@@ -8,7 +8,7 @@ Denoise an image using a spatially adaptive filter.
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=/nifti/${subject}/${session}/anat
+input_dir=/nifti/sub-${subject}/ses-${session}/anat
 which_img=sub-${subject}_ses-${session}_T1w
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
