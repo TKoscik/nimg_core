@@ -1,14 +1,14 @@
 # Within-modality average
 ## Output:
 ```
-${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/
+${researcher}/${project}/derivatives/anat/prep/sub-${subject}/sub-${session}/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-avg.nii.gz
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-resample.nii.gz
 ```
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/     # location relative to researcher/project/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/     # location relative to researcher/project/
 which_imgs[0]=sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz
 which_imgs[1]=sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz
 output_name=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
@@ -40,14 +40,14 @@ for i in ${which_imgs[@]}; do
   new_prefix=$(basename -- "$i")
   new_prefix="${oname%_*}"
   rs_imgs+=${new_prefix}_prep-resample.nii.gz # append to new array for next step
-  ResampleImage 3 ${researcher}/${project}/${input_dir}/${i} ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${new_prefix}_prep-resample.nii.gz 0 0
+  ResampleImage 3 ${researcher}/${project}/${input_dir}/${i} ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${new_prefix}_prep-resample.nii.gz 0 0
 done
 
 # create unbiased average of images
 buildtemplateparallel.sh \
   -d 3 /
-  -o {researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_name}_prep-avg.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${rs_imgs}
+  -o {researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_name}_prep-avg.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${rs_imgs}
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
