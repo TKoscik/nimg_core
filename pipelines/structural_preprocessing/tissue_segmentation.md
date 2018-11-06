@@ -11,7 +11,7 @@ ${researcher}/${project}/derivatives/anat/
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
 t1_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-biasN4.nii.gz
 brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
@@ -32,19 +32,19 @@ antsAtroposN4.sh \
   -a ${researcher}/${project}/${input_dir}/${t2_img} \
   -x ${brain_mask} \
   -c 3 \
-  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-temp
+  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-temp
 
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentation.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation.nii.gz \
   ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-label.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentationPosteriors1.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors1.nii.gz \
   ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-CSF.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentationPosteriors2.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors2.nii.gz \
   ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-GM.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentationPosteriors3.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors3.nii.gz \
   ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-WM.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentation0N4.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentation1N4.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}prep-tempSegmentationConvergence.txt
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation0N4.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation1N4.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationConvergence.txt
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
