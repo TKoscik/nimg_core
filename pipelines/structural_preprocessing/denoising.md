@@ -22,7 +22,7 @@ DenoiseImage \
   -d 3 \
   -i ${researcher}/${project}/${input_dir}/${which_img}.nii.gz \
   -n Rician \
-  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${which_img}_prep-denoise.nii.gz
+  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${which_img}_prep-denoise.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
