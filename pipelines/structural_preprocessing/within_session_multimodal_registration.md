@@ -3,7 +3,7 @@
 ```
 ${researcher}/${project}/derivatives/
   ∟anat/
-    ∟prep/${subject}/${session}/
+    ∟prep/sub-${subject}/ses-${session}/
       ∟sub-${subject}_ses-${session}_*_${mod}_prep-T1reg.nii.gz
   ∟tform/
     ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-0affine.nii.gz
@@ -29,17 +29,17 @@ echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
 antsRegistrationSyN.sh -d 3 \
   -f ${researcher}/${project}/${input_dir}/${fixed_img} \
   -m ${researcher}/${project}/${input_dir}/${moving_img} \
-  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_temp_ \
+  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_ \
   -t s
 
 # Edit final output names as necesary
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_temp_Warped.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-T1reg.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_temp_0GenericAffine.mat \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_Warped.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-T1reg.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_0GenericAffine.mat \
   ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-0affine.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_temp_1Warp.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_1Warp.nii.gz \
   ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-1syn.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_temp_1InverseWarp.nii.gz \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_1InverseWarp.nii.gz \
   ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-1inverse.nii.gz
 
 echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
