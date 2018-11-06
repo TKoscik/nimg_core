@@ -7,7 +7,7 @@
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/     # location relative to researcher/project/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/     # location relative to researcher/project/
 which_img=sub-${subject}_ses-${session}_T1w_prep-denoise.nii.gz
 output_prefix==sub-${subject}_ses-${session}_T1w_
 
@@ -23,11 +23,11 @@ antsRegistrationSyN.sh \
   -f ${template_dir}/${space}/${template}.nii.gz \
   -m ${researcher}/${project}/${input_dir}/${which_image}.nii.gz \
   -t r \
-  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-acpc
+  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/sub-${session}/${output_prefix}_prep-acpc
     
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-acpcWarped.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-acpc.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/${output_prefix}_prep-acpc0GenericAffine.mat \
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-acpcWarped.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-acpc.nii.gz
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-acpc0GenericAffine.mat \
   ${researcher}/${project}/derivatives/tform/${output_prefix}_ref-${space}_tform-0rigid.mat
 rm ${output_prefix}_prep-acpcInverseWarped.nii.gz
 
