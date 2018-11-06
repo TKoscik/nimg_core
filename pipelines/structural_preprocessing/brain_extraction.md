@@ -11,7 +11,7 @@ ${researcher}/${project}/derivatives/anat/
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
 t1_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 t2_img=sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
 suffix=bex0  #change as needed to differentiate iterations, final iteration is bex (no number)
@@ -36,37 +36,37 @@ antsBrainExtraction.sh \
   -e ${template_dir}/OASIS/T_template0.nii.gz \
   -m ${template_dir}/OASIS/T_template0_BrainCerebellumProbabilityMask.nii.gz \
   -f ${template_dir}/OASIS/T_template0_BrainCerebellumRegistrationMask.nii.gz \
-  -o ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}
+  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}
 
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionMask.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}ANTS.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionBrain.nii.gz 
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionPrior0GenericAffine.mat
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionMask.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}ANTS.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionBrain.nii.gz 
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BrainExtractionPrior0GenericAffine.mat
 
 # FSL brain extraction tool
 bet \
   ${researcher}/${project}/${input_dir}/${t1_img} \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz \
   -A2 ${researcher}/${project}/${input_dir}/${t2_img} \
   -m
 
-mv ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BET_mask.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}*${suffix}BET_*skull*
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}*${suffix}BET_mesh*
-rm ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}*${suffix}BET_out*
+mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BET_mask.nii.gz \
+  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}*${suffix}BET_*skull*
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}*${suffix}BET_mesh*
+rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}*${suffix}BET_out*
 
 # AFNI skull strip
 3dSkullStrip \
   -input ${researcher}/${project}/${input_dir}/${t1_img} \
-  -prefix ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz
-fslmaths ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz \
-  -bin ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz
+  -prefix ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz
+fslmaths ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz \
+  -bin ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz
 
 # Majority-vote brain mask
-fslmaths ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}ANTS.nii.gz \
-  -add ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz \
-  -add ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz \
+fslmaths ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}ANTS.nii.gz \
+  -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}BET.nii.gz \
+  -add ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-${suffix}AFNI.nii.gz \
   -thr 2 -bin -ero -dilM -dilM -ero \
   ${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-${suffix}Brain.nii.gz
 
