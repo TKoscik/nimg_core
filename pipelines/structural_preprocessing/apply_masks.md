@@ -8,7 +8,7 @@ ${researcher}/${project}/derivatives/anat/native/
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/${subject}/${session}/
+input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
 which_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
 brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
 tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-tissue.nii.gz
