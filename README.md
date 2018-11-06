@@ -10,7 +10,7 @@ We plan to provide:
   * training for investigators, research assistants, and students to implement MRI processing themselves  
   * quality control, including easy-to-interpret reports, for each step in our process  
   * MRI data processing (cleaning the data and extracting meaningful variables)  
-  * MRI data statisical modelling (hypothesis testing, modelling research questions)  
+  * MRI data statistical modelling (hypothesis testing, modelling research questions)  
 
 
 ## Tools for streamlined neuroimage processing  
