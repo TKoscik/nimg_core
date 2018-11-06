@@ -1,7 +1,7 @@
 #  ACPC Alignment  
 ## Output:
 ```
- ${researcher}/${project}/derivatives/anat/prep/${subject}/${session}/
+ ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-acpc.nii.gz
 ```
 ## Code:
