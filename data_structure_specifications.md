@@ -17,7 +17,7 @@ ${researcherRoot}/
   ∟${projectName}/
     ∟participants.tsv
       ∟dicom/                   Read-only archive
-      |  ∟sub-${subject}_ses-${session}_site${site}_site-${site}.zip
+      |  ∟sub-${subject}_ses-${session}_site${site}.zip
       ∟nifti/                   Read-only archive
       |  ∟sub-${subject}/
       |    ∟ses-${session}/
