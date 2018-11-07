@@ -16,85 +16,85 @@ updated: September 25, 2018
 ${researcherRoot}/
   ∟${projectName}/
     ∟participants.tsv
-      ∟dicom/			Read-only archive
-      |  ∟sub-${subject}_ses-${session}_site-${site}.zip
-      ∟nifti/			Read-only archive
+      ∟dicom/                   Read-only archive
+      |  ∟sub-${subject}_ses-${session}_site${site}_site-${site}.zip
+      ∟nifti/                   Read-only archive
       |  ∟sub-${subject}/
       |    ∟ses-${session}/
       |      ∟session_info.tsv
       |      ∟anat/
-      |      |  ∟sub-${subject}_ses-${session}_acq-${acq}[_run-${run}]_${mod}.json
-      |      |  ∟sub-${subject}_ses-${session}_acq-${acq}[_run-${run}]_${mod}.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_acq-${acq}[_run-${run}]_${mod}.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_acq-${acq}[_run-${run}]_${mod}.nii.gz
       |      ∟cal/
       |      ∟dwi/
-      |      |  ∟sub-${subject}_ses-${session}_dwi.bval
-      |      |  ∟sub-${subject}_ses-${session}_dwi.bvec
-      |      |  ∟sub-${subject}_ses-${session}_dwi.json
-      |      |  ∟sub-${subject}_ses-${session}_dwi.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_dwi.bval
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_dwi.bvec
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_dwi.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_dwi.nii.gz
       |      ∟fmap/
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_magnitude.json
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_magnitude.nii.gz
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_phase.json
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_phase.nii.gz
-      |      |  ∟sub-${subject}_ses-${session}_pe-AP_spinecho.json
-      |      |  ∟sub-${subject}_ses-${session}_pe-AP_spinecho.nii.gz
-      |      |  ∟sub-${subject}_ses-${session}_pe-PA_spinecho.json
-      |      |  ∟sub-${subject}_ses-${session}_pe-PA_spinecho.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_magnitude.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_magnitude.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_phase.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_phase.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_pe-AP_spinecho.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_pe-AP_spinecho.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_pe-PA_spinecho.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_pe-PA_spinecho.nii.gz
       |      ∟func/
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_run-${run}_bold.json
-      |      |  ∟sub-${subject}_ses-${session}_task-${task}_run-${run}_bold.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_run-${run}_bold.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_task-${task}_run-${run}_bold.nii.gz
       |      ∟mrs/
-      |      |  ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.json
-      |      |  ∟sub-${subject}_ses-${session}_roi-${roi}_mrs.p
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_roi-${roi}_mrs.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_roi-${roi}_mrs.p
       |      ∟orig/ #raw data from scanner (no on scanner processing)
       |      ∟other/
-      |      |  ∟sub-${subject}_ses-${session}_${mod}.json
-      |      |  ∟sub-${subject}_ses-${session}_${mod}.nii.gz
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_${mod}.json
+      |      |  ∟sub-${subject}_ses-${session}_site${site}_${mod}.nii.gz
       |      ∟qa/
-      |         ∟sub-${subject}_ses-${session}_qa_acq-${acq}.json
-      |         ∟sub-${subject}_ses-${session}_qa_acq-${acq}.nii.gz
+      |         ∟sub-${subject}_ses-${session}_site${site}_qa_acq-${acq}.json
+      |         ∟sub-${subject}_ses-${session}_site${site}_qa_acq-${acq}.nii.gz
       ∟derivatives/
       |  ∟sub-${subject}/
       |    ∟ses-${session}/
       |     ∟anat/
       |     |  ∟native/
-      |     |  |  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_air.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_brain.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_acq-${acq}_${mod}_tissue.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_acq-${acq}_${mod}_air.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_acq-${acq}_${mod}_brain.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_acq-${acq}_${mod}_tissue.nii.gz
       |     |  ∟mask/
-      |     |  |  ∟sub-${subject}_ses-${session}_${mod}_mask-air.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_${mod}_mask-bex0Brain.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_${mod}_mask-bex0Tissue.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_${mod}_mask-brain.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_${mod}_mask-tissue.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_${mod}_mask-air.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_${mod}_mask-bex0Brain.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_${mod}_mask-bex0Tissue.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_${mod}_mask-brain.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_${mod}_mask-tissue.nii.gz
       |     |  ∟prep/
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-acpc.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-avg.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bex0AFNI.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bex0ANTS.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bex0FSL.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bexAFNI.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bexANTS.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_prep-bexFSL.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasT1T2.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasT1T2Field.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasN4.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasN4Field.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasAtroposN4.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasAtroposN4Field.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-denoise.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-gradunwarp.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-readout.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-resample.nii.gz
-      |     |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-T1reg.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-acpc.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-avg.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bex0AFNI.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bex0ANTS.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bex0FSL.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bexAFNI.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bexANTS.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_prep-bexFSL.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasT1T2.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasT1T2Field.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasN4.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasN4Field.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasAtroposN4.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-biasAtroposN4Field.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-denoise.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-gradunwarp.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-readout.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-resample.nii.gz
+      |     |  |        ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_prep-T1reg.nii.gz
       |     |  ∟reg_${space}_${template}/
-      |     |  |  ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}_brain.nii.gz
-      |     |  |  ∟sub-${subject}_ses-${session}_*_${mod}_reg-${space}_${template}_tissue.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-${space}_${template}_brain.nii.gz
+      |     |  |  ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-${space}_${template}_tissue.nii.gz
       |     |  ∟segmentation/
-      |     |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-CSF.nii.gz
-      |     |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-GM.nii.gz
-      |     |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-label.nii.gz
-      |     |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
+      |     |     ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_seg-CSF.nii.gz
+      |     |     ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_seg-GM.nii.gz
+      |     |     ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_seg-label.nii.gz
+      |     |     ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_seg-WM.nii.gz
       |     ∟brains2/   
       |     |    ∟sub-${ursi}_ses-${mrqid}_brains2.zip 
       |     ∟baw/  BrainsAutoWorkup-BRAINSTools
@@ -126,19 +126,19 @@ ${researcherRoot}/
       |  |    ∟stb/
       |  ∟mrs/
       |  ∟tform/
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-acpc_tform-0rigid.mat
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-acpc_tform-0rigid.mat
       |  |    |    (initial affine transform)
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-0affine.mat
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-1syn.nii.gz
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-inverse.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-T1_tform-0affine.mat
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-T1_tform-1syn.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-T1_tform-inverse.nii.gz
       |  |    |    (registration between modalities within/between sessions, preceeds normalization)
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-0affine.mat
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-1syn.nii.gz
-      |  |    ∟sub-${subject}_ses-${session}_*_${mod}_reg-${subject}_tform-inverse.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-${subject}_tform-0affine.mat
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-${subject}_tform-1syn.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_*_${mod}_reg-${subject}_tform-inverse.nii.gz
       |  |    |    (registration to subject template, preceeds normalization)
-      |  |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-0affine.mat
-      |  |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-1syn.nii.gz
-      |  |    ∟sub-${subject}_ses-${session}_reg-${space}_tform-inverse.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_reg-${space}_tform-0affine.mat
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_reg-${space}_tform-1syn.nii.gz
+      |  |    ∟sub-${subject}_ses-${session}_site${site}_reg-${space}_tform-inverse.nii.gz
       |  |         (normalization registration to template space)
       |  ∟qc/
       |       ∟scan_quality
@@ -151,7 +151,7 @@ ${researcherRoot}/
       ∟log/
       |   ∟hpc_output/
       |   |    ∟${job_name}.o######
-      |   ∟sub-${subject}_ses-${session}.log
+      |   ∟sub-${subject}_ses-${session}_site${site}.log
       |   ∟MRtape.log
       ∟code
       ∟lut
