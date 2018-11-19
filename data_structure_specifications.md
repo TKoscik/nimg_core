@@ -173,3 +173,5 @@ func/
 sub-${ursi}_ses-${mrqid}[_site-${site}]_task-${task}[_acq-${acq}][_pe-${pe}][_rec-${}][_run-${#}][_echo-${#}]_${mod}.nii.gz
 mod=bold|T1rho
 ```
+
+![Processing Pipelines](https://github.com/TKoscik/nimg_core/blob/master/misc/INC_processing_map.svg)
