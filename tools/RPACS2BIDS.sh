@@ -28,19 +28,23 @@ parse_args () {
    
    [ $# -lt 2 ] && Usage $0
    DryRun=0;  UseProtocol=0;  Logging=0;  Zipping=0;
-   while getopts dpl Opt ; do
+   while getopts dplz Opt ; do
       case "$Opt" in
          d)   DryRun=1          ;;  ## This should disable Logging and Zipping
          p)   UseProtocol=1     ;;
          l)   Logging=1         ;;
-         z)   Zipping=1          ;;
+         z)   Zipping=1         ;;
          ?)   Usage $0          ;;
       esac
    done
    [ "$Opt" != "0" ] && shift $((OPTIND - 1))
    if [ -d $1 ] ; then InputDir=$1 ; else printf 'Not a directory: %s\n' $1 ; exit; fi
    if [ -d $2 ] ; then destinationDir=$2; else printf 'Not a directory: %s\n' $2 ; exit; fi
-   
+   if [ "`basename $destinationDir`" != "nifti" ] ; then 
+      printf 'Invalid BIDS destination:  %s\n' $destinationDir
+      printf '  Path should end in "/nifti"\n'
+      exit 1
+   fi
 }
 
 parse_cd () {
@@ -119,9 +123,11 @@ getSubID () {
    #(0x0010,0x0010) LO Patient's ID
    ### Iowa3T scans have the ID in the PatientName field ###
    if [[ "$Scanner" == "IOWA3T" || "$Scanner" == "GEHCGEHC" ]] ; then
-      SubID=(`awk '$1=="(0010,0010)"{$1=""; $2=""; gsub(" ",""); print "sub-"$1}' $tmp`)
+      SubID=(`awk '$1=="(0010,0010)"{$1=""; $2=""; \
+         gsub("[^[:alnum:]]",""); gsub("[[:blank:]]",""); print "sub-"$1}' $tmp`)
    else
-      SubID=(`awk '$1=="(0010,0020)"{$1=""; $2=""; gsub(" ",""); print "sub-"$1}' $tmp`)
+      SubID=(`awk '$1=="(0010,0020)"{$1=""; $2=""; \
+         gsub("[^[:alnum:]]",""); gsub("[[:blank:]]",""); print "sub-"$1}' $tmp`)
    fi
 
 }
@@ -227,20 +233,19 @@ getType () {
 ## usage: /Shared/pinc/sharedopt/apps/freesurfer/Linux/x86_64/6.0.0/bin/
 ## mri_deface <in volume> <brain template> <face template> <defaced output volume>
       CBF*CDT)          WriteDir=$DirStub/asl;   WriteFile=${FRoot}${ACQ}asl   ;;
-      CORCUBET2)        WriteDir=$DirStub/anat;  WriteFile=${FRoot}T2w         ;;
-      CORCUBET2PROMO)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}${ACQ}T2w   ;;
-      CORFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1w         ;;
-      CUBET2CORONAL)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}T2w         ;;
-      CUBET2Sagittal)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}${ACQ}T2w   ;;
+      CORCUBET2)        WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
+      CORCUBET2PROMO)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
+      CORFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorSpgr_T1w  ;;
+      CUBET2CORONAL)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
+      CUBET2Sagittal)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_T2w  ;;
       Cal32ChHead)      WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}cal  ;;
       CalHNSHead)       WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}cal  ;;
-      CorFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1w         ;;
+      CorFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorSpgr_T1w  ;;
       DDT)              WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold ;;
       ##  sub-${ursi}_ses-${mrqid}[_acq-${acq}][_b-${b}][_dir-${dir}][_pe-${pe}][_run-${#}]_dwi.nii.gz
       ## Perhaps?  (0019,10e0) DS [35.000000]
       DKI30Dirb1000)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-1000_dir-30_dwi  ;;
       DKI30Dirb2000)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-2000_dir-30_dwi  ;;
-      DTIFlipPhase)     WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}dwi  ;;
       DTIb100045Dir)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-1000_dir-45_dwi  ;;
       DTIb180045Dir)    WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-1800_dir-45_dwi  ;;
       fMRIAxRestingState) WriteDir=$DirStub/func; WriteFile=${FRoot}${ACQ}${Run}bold  ;;
@@ -254,47 +259,45 @@ getType () {
       MBDif*B200035DIRREVPE)    WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-35_pe-rev_dwi  ;;
       MBDif*B200036DIR)         WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-fwd_dwi  ;;
       MBDif*B200036DIRREVPE)    WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-rev_dwi  ;;
-      MBDiffusion)              WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}dwi  ;;
-      MBDiffusionB200036DIR17)       WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-fwd_dwi  ;;
-      MBDiffusionB200036DIR17REVPE)  WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-rev_dwi  ;;
-      MBDiffusionRun198DIR)     WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}dwi  ;;
+      MBDif*B200036DIR17)       WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-fwd_dwi  ;;
+      MBDif*B200036DIR17REVPE)  WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-2000_dir-36_pe-rev_dwi  ;;
+      MBDiffusionRun198DIR)     WriteDir=$DirStub/dwi;  WriteFile=${FRoot}${ACQ}b-3000_dir-98_pe-fwd_dwi  ;;
       MBTEST)           WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}bold  ;;
-      MBrsfMRI)         WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Rest_${Run}bold  ;;
-      MBrsfMRIREVPE)    WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Rest_${Run}bold  ;;
-      MPRAGEPROMO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1w  ;;
-      MSDTISCAPCN)      WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}dwi  ;;
+      MBrsfMRI)         WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Rest_pe-fwd_${Run}bold  ;;
+      MBrsfMRIREVPE)    WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Rest_pe-rev_${Run}bold  ;;
+      MSDTISCAPCN)      WriteDir=$DirStub/dwi;   WriteFile=${FRoot}${ACQ}b-unk_dir-unk_pe-unk_dwi  ;;
       MeanEpi135)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       MeanEpi180)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       MeanEpi246)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       MeanEpi300)       WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${ACQ}unk  ;;
       ## Multiple runs
       NBACKAX)          WriteDir=$DirStub/unkn;  WriteFile=${FRoot}${TASK}${Run}bold  ;;  
-      NOTDIAGNOSTICTGchange*Calibphantom)      WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
-      NOTDIAGNOSTICTGchange*sLASERCalTGPons)   WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
-      NOTDIAGNOSTICTGchange*sLASERCalTGCRBLWM) WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
-      NOTDIAGNOSTICsLASERCRBLWM)        WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
-      NOTDIAGNOSTICsLASERPons)          WriteDir=$DirStub/mrs;  WriteFile=${FRoot}${ACQ}mrs  ;;
-      NOTDIAGNOSTICwaterstability8ml)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss  ;;
-      ORIGCORCUBET2)      WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-COR_T2w  ;;
-      ORIGCORFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-COR_T1w  ;;
-      ORIGCUBET2CORONAL)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-COR_T2w  ;;
-      ORIGCUBET2Sagittal) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T2w  ;;
-      ORIGCorFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-COR_T2w  ;;
-      ORIGSAGFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      ORIGSAGMPRAGEPROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      ORIGSagCUBEFLAIR)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_FLAIR  ;;
-      ORIGSagCUBET2PROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SAG_T2w  ;;
+      NOTDIAG*TGchange*Calibphantom)      WriteDir=$DirStub/mrs;  WriteFile=${FRoot}_acq-Phantom_mrs  ;;
+      NOTDIAG*TGchange*sLASERCalTGPons)   WriteDir=$DirStub/mrs;  WriteFile=${FRoot}_acq-sLaser_roi-pons_mrs  ;;
+      NOTDIAG*TGchange*sLASERCalTGCRBLWM) WriteDir=$DirStub/mrs;  WriteFile=${FRoot}_acq-sLaser_roi-crblwm_mrs  ;;
+      NOTDIAG*sLASERCRBLWM)        WriteDir=$DirStub/mrs;  WriteFile=${FRoot}_acq-sLaser_roi-crblwm_mrs  ;;
+      NOTDIAG*sLASERPons)          WriteDir=$DirStub/mrs;  WriteFile=${FRoot}_acq-sLaser_roi-pons_mrs  ;;
+      NOTDIAG*waterstability8ml)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss  ;;
+      ORIGCORCUBET2)      WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T2w    ;;
+      ORIGCORFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T1w    ;;
+      ORIGCUBET2CORONAL)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T2w    ;;
+      ORIGCUBET2Sagittal) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_T2w    ;;
+      ORIGCorFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T1w    ;;
+      ORIGSAGFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagSpgr_T1w    ;;
+      ORIGSAGMPRAGEPROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagRage_T1w    ;;
+      ORIGSagCUBEFLAIR)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_FLAIR  ;;
+      ORIGSagCUBET2PROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_T2w    ;;
       REST)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       RLWM)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
-      SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T1w  ;;
-      SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}_ep-AP_fmap  ;;
-      SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}_ep-PA_fmap  ;;
-      SEEPIREVPE)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}${TASK}${Run}fmap  ;;
+      SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagRage_T1w    ;;
+      SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagSpgr_T1w    ;;
+      SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_${Run}pe-AP_spinecho  ;;
+      SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_${Run}pe-PA_spinecho  ;;
+      SEEPIREVPE)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_${Run}pe-PA_spinecho  ;;
       SNR3DTFL)           WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}TFL    ;;
-      SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}FLAIR        ;;
-      SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SAG_T2w  ;;
+      SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_FLAIR        ;;
+      SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_T2w  ;;
       ScreenSave)         WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss     ;;
       T1rhoSL10)          WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1rho  ;;
       T1rhoSL10*SCAN)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1rho  ;;
@@ -305,8 +308,8 @@ getType () {
       TIMINGTASKRun4)     WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Timing_run-4_bold  ;;
       fMRIRestingState)   WriteDir=$DirStub/func;  WriteFile=${FRoot}task-Rest_${Run}bold  ;;
       passiveAX)          WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
-      sLASERCRBLWM)       WriteDir=$DirStub/mrs; WriteFile=${FRoot}${ACQ}mrs  ;;
-      sLASERPons)         WriteDir=$DirStub/mrs; WriteFile=${FRoot}${ACQ}mrs  ;;
+      sLASERCRBLWM)       WriteDir=$DirStub/mrs; WriteFile=${FRoot}_acq-sLaser_roi-crblwm_mrs  ;;
+      sLASERPons)         WriteDir=$DirStub/mrs; WriteFile=${FRoot}_acq-sLaser_roi-pons_mrs  ;;
       waterstability8ml)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss  ;;
       *)        WriteDir=$DirStub/unkn;         WriteFile=${FRoot}${ACQ}unk 
          printf '  Unknown scan description %s: %s\n  Help!\n  Edit %s\n' $Desc $ReadFile $0
@@ -337,14 +340,17 @@ genFileName () {
 }
 
 logger () {     ## All info is available in $tmp, just 'awk' it out
-   LogDir=`dirname WriteDir`/log
+   LogDir=`dirname $destinationDir`/log
    LogFile=$LogDir/MRtape.log
    [ ! -d $LogDir ] && printf 'Creating log folder %s\n' $LogDir && mkdir -p $LogDir
-   [ ! -e $LogFile ] && printf 'Creating log file %s\n' $LogFile && echo -n "" > $LogFile
+   if [ ! -e $LogFile ] ; then
+      printf 'Creating log file %s\n' $LogFile
+      echo -n "" > $LogFile
+   fi
    [ ! -e $LogFile ] && printf 'Log file %s creation failed.\n' $LogFile && return 1
    awk '$1=="(0028,0010)"{Ma=$3}\
         $1=="(0028,0011)"{Mb=$3}\
-        $1=="(0020,0037)"{n=split($3,T,"\\");          \
+        $1=="(0020,0037)"{n=split($3,T,"\\");           \
             Plane="Unknown";                            \
             if(n==6){                                   \
             for(i=1;i<=n;i++){T[i]=int(T[i]*T[i]+0.5)}  \
@@ -362,7 +368,7 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
         $1=="(0028,0030)"{gsub("\\\\","x"); FOV=$3"mm voxels"}\
         END{printf("The '$Desc' acquisition parameters were:  ");\
             printf("%s plane %dx%d matrix, %s %dmm thick, ",Plane,Ma,Mb,FOV,Thk);\
-            printf("%s %s %s\n",Dstr,'$WriteDir,$WriteFile')}' $tmp |\
+            printf("%s %s %s\n",Dstr,"'$WriteDir'","'$WriteFile'")}' $tmp |\
             tee -a $Mmp >> $LogFile
 ## The " TIMINGTASKRun4" acquisition parameters were: 
 ## Axial plane 64x64 matrix, 3.4x3.4mm voxels 4mm thick, 
@@ -370,12 +376,15 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
 }
 
 zipper () {
-   ZipDir=`dirname WriteDir`/dicom
+   ZipDir=`dirname $destinationDir`/dicom
    ZipFile=$ZipDir/${SubID}_${SesID}_${SiteID}.zip
-   [ ! -d $ZipDir ] && printf 'Creating dicom folder %s\n' $ZipDir && mkdir -p $ZipDir
-   [ ! -e $ZipFile ] && printf 'Creating dicom/zip file %s\n' $ZipFile && echo -n "" > $ZipFile
+   [ ! -d $ZipDir ]  && printf 'Creating dicom folder %s\n' $ZipDir && mkdir -p $ZipDir
+   if [ ! -e $ZipFile ] ; then 
+      zip -qr $ZipFile $ReadDir 
+   else 
+      printf 'Zip file %s exists.\n' $ZipFile
+   fi
    [ ! -e $ZipFile ] && printf 'Zip file %s creation failed.\n' $ZipFile && return 1
-   zip -r $ZipFile $ReadDir
 }
 
 readCD () {
@@ -395,6 +404,7 @@ readCD () {
    ## Dargs="-gert_create_dataset -gert_write_as_nifti -dicom_org gert_to3d_prefix"
    Dargs="-b y -z i "
    dcm2niix="$HOME/src/dcm2niix/dcm2niix-master/console/dcm2niix"
+   mrs2p="/Shared/pinc/sharedopt/apps/nimg_core/ExtractDicomMRS2/ExtractDicomPfile"
    for ReadDir in ${DirNames[@]} ; do
       genFileName $ReadDir
       # echo $ReadDir $WriteDir/$WriteFile
@@ -402,9 +412,15 @@ readCD () {
       ## Dimon $Dargs $WriteFile -infile_prefix $ReadDir/\*.dcm
       # echo $dcm2niix $Dargs -o $WriteDir -f $WriteFile $ReadDir
       if [ $DryRun -eq 0 ] ; then
-         $dcm2niix $Dargs -o $WriteDir -f $WriteFile $ReadDir |& \
-            grep -Ev 'pigz|dcm2niiX|Conversion|Found'
+         if [[ $WriteDir =~ /mrs$ ]] ; then
+            $mrs2p -i $ReadFile -o $WriteDir"/"$WriteFile
+         else
+            $dcm2niix $Dargs -o $WriteDir -f $WriteFile $ReadDir |& \
+               grep -Ev 'pigz|dcm2niiX|Conversion|Found'
+         fi
          [ $Logging == 1 ] && logger
+      else
+         echo $WriteDir/$WriteFile
       fi
    done
    ## Dump scan summary to screen
