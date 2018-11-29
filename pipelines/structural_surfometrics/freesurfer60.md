@@ -29,8 +29,7 @@ T1-only Template:
 
   [T1-only FS Template](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/TMPLT1FSv60.sh.in)
   
-  
-## Do we want to allow for inputs less than 1mm and/or conform to smallest voxel dimension with -cm flag?  
+Note: Have played with -cm flag and preserving sub 1mm voxel size/dimensions for 7T datat with no success.  TBD  
   
 
 #3. FreeSurfer job status and troubleshooting
@@ -83,3 +82,8 @@ For regional summary variables:
 summary.fsurf(data.dir = "/Shared/nopoulos/freesurfer/KIDSHD_v6_2017/FreeSurfer_Subjects",save.dir = "~/",save.csv = TRUE, rois = "all",hemi = "t", file.name = "regionaltotals" )
 
 ```
+#5. Resample FreeSurfer runs into fsaverage space for voxelwise analysis
+
+This script will resample each run into the fsaverage space for preparation for voxelwise analysis:
+ 
+ [Surf-to-Surf](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/surftosurf)
