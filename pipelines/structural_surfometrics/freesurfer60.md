@@ -86,4 +86,4 @@ summary.fsurf(data.dir = "/Shared/nopoulos/freesurfer/KIDSHD_v6_2017/FreeSurfer_
 
 This script will resample each run into the fsaverage space for preparation for voxelwise analysis:
  
- [Surf-to-Surf](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/surftosurf)
+ [Surf-to-Surf](https://github.com/TKoscik/nimg_core/blob/master/tools/freesurfer/resample_fsurf_curv_t1t2.sh)
