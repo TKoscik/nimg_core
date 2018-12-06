@@ -20,9 +20,13 @@
 | -j | merge HPC error output into standard output stream |  
 | -o | location to save output stream |  
 | -e | location to save error stream |  
-## Neuroimaging core root directory
+## Source directories and sourcefiles for software
 ```bash
+# set up software
 nimg_core_root=/Shared/nopoulos/nimg_core
+source /Shared/pinc/sharedopt/apps/sourcefiles/ants_source.sh
+source /Shared/pinc/sharedopt/apps/sourcefiles/afni_source.sh
+source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh
 ```
 ## Root directory for project
 ${researcher}/${project} must give you the root directory for all processing steps
@@ -34,10 +38,16 @@ project=imaging_project
 ```bash
 subject=1234
 session=1810241308
+site=00201
 ```
 ## Template Space
 ```bash
 template_dir=${nimg_core}/templates
 space=HCP                            # folder name for template space to use
 template=MNI_T1_0.8mm                # which template space to use
+```
+## Initialize logs if not already
+```bash
+mkdir -p ${researcher}/${project}/log/hpc_output
+subject_log=${researcher}/${project}/log/sub-${subject}_ses-${session}_site-${site}
 ```
