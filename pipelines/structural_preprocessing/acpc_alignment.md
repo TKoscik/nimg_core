@@ -8,7 +8,7 @@
 ```bash
 # User-defined (as necessary)
 input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}     # location relative to researcher/project/
-which_img=sub-${subject}_ses-${session}_T1w_prep-denoise.nii.gz
+which_img=sub-${subject}_ses-${session}_T1w_prep-denoise
 output_prefix==sub-${subject}_ses-${session}_T1w_
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
