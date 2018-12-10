@@ -45,8 +45,8 @@ esac
 done
 
 for i in ${researcherRoot}/${projectName}/nifti/[a-zA-Z0-9]*/[a-zA-Z0-9]*/orig ; do 
-T1=`find $i -name \*T1w_acq-MPRAGE.nii.gz`
-T2=`find $i -name \*T2w_acq-CUBE.nii.gz`
+T1=`find $i -name \*T1w.nii.gz`
+T2=`find $i -name \*T2w.nii.gz`
 info=(`echo $i | awk '{gsub("/"," "); print $0}'`)
 if [ "$T2" == "" ] ; then
 printf \"${projectName}\",\"${info[4]}\",\"${info[5]}\",\"\{\'T1-30\'\:\[\'$T1\'\]\}\"'\n'
