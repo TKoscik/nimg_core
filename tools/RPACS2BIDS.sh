@@ -3,7 +3,7 @@
 
 ############################################
 #  Global variables ;-)
-
+source ~/.bashrc >& /dev/null
 export tmp=`mktemp /tmp/widgie.XXXXX`
 export Mmp=`mktemp /tmp/Widgim.XXXXX`
 export Tmp=`mktemp /tmp/Widgie.XXXXX`
@@ -132,7 +132,7 @@ getSubID () {
 
 }
 
-getSesID () {
+GetSesID () {
    ## MRQID aka "session" ##
    # Needs date and time #
    ## date ##
@@ -229,18 +229,18 @@ getType () {
       3PlaneLocSSFSE)   WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}loc   ;;
       3PlaneLocFGRE)    WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}loc   ;;
       ASSETcalibration) WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}loc   ;;
-      AxialT1SPGR)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-AxiSpgr_T1w   ;;
+      AxialT1SPGR)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-axiSPGR_T1w   ;;
 ## usage: /Shared/pinc/sharedopt/apps/freesurfer/Linux/x86_64/6.0.0/bin/
 ## mri_deface <in volume> <brain template> <face template> <defaced output volume>
       CBF*CDT)          WriteDir=$DirStub/asl;   WriteFile=${FRoot}${ACQ}asl   ;;
-      CORCUBET2)        WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
-      CORCUBET2PROMO)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
-      CORFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorSpgr_T1w  ;;
-      CUBET2CORONAL)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorCube_T2w  ;;
-      CUBET2Sagittal)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_T2w  ;;
+      CORCUBET2)        WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-corCUBE_T2w  ;;
+      CORCUBET2PROMO)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-corCUBEPROMO_T2w  ;;
+      CORFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-corSPGR_T1w  ;;
+      CUBET2CORONAL)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-corCUBE_T2w  ;;
+      CUBET2Sagittal)   WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-sagCUBE_T2w  ;;
       Cal32ChHead)      WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}cal  ;;
       CalHNSHead)       WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}cal  ;;
-      CorFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-CorSpgr_T1w  ;;
+      CorFSPGRBRAVO)    WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-corSPGR_T1w  ;;
       DDT)              WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold ;;
       ##  sub-${ursi}_ses-${mrqid}[_acq-${acq}][_b-${b}][_dir-${dir}][_pe-${pe}][_run-${#}]_dwi.nii.gz
       ## Perhaps?  (0019,10e0) DS [35.000000]
@@ -278,26 +278,26 @@ getType () {
       NOTDIAG*sLASERCRBLWM)        WriteDir=$DirStub/mrs;  WriteFile=${FRoot}acq-NDsLaser_roi-crblwm_mrs  ;;
       NOTDIAG*sLASERPons)          WriteDir=$DirStub/mrs;  WriteFile=${FRoot}acq-NDsLaser_roi-pons_mrs  ;;
       NOTDIAG*waterstability8ml)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss  ;;
-      ORIGCORCUBET2)      WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T2w    ;;
-      ORIGCORFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T1w    ;;
-      ORIGCUBET2CORONAL)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T2w    ;;
-      ORIGCUBET2Sagittal) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_T2w    ;;
-      ORIGCorFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-CorSpgr_T1w    ;;
-      ORIGSAGFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagSpgr_T1w    ;;
-      ORIGSAGMPRAGEPROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagRage_T1w    ;;
-      ORIGSagCUBEFLAIR)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_FLAIR  ;;
-      ORIGSagCUBET2PROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-SagCube_T2w    ;;
+      ORIGCORCUBET2)      WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-corSPGR_T2w    ;;
+      ORIGCORFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-corSPGR_T1w    ;;
+      ORIGCUBET2CORONAL)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-corSPGR_T2w    ;;
+      ORIGCUBET2Sagittal) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-sagCUBE_T2w    ;;
+      ORIGCorFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-corSPGR_T1w    ;;
+      ORIGSAGFSPGRBRAVO)  WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-sagSPGR_T1w    ;;
+      ORIGSAGMPRAGEPROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-sagMPRAGEPROMO_T1w    ;;
+      ORIGSagCUBEFLAIR)   WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-sagCUBE_FLAIR  ;;
+      ORIGSagCUBET2PROMO) WriteDir=$DirStub/orig;  WriteFile=${FRoot}acq-sagCUBEPROMO_T2w    ;;
       REST)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       RLWM)               WriteDir=$DirStub/func;  WriteFile=${FRoot}${TASK}${Run}bold  ;;
       RestingStatAX)      WriteDir=$DirStub/func;  WriteFile=${FRoot}task-RestAX_${Run}bold  ;;
-      SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagRage_T1w    ;;
-      SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagSpgr_T1w    ;;
+      SAGMPRAGEPROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-sagMPRAGEPROMO_T1w    ;;
+      SAGFSPGRBRAVO)      WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-sagSPGR_T1w    ;;
       SEEPI)              WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_pe-AP_spinecho  ;;
       SEEPIALT)           WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_pe-PA_spinecho  ;;
       SEEPIREVPE)         WriteDir=$DirStub/fmap;  WriteFile=${FRoot}acq-SEEPI_pe-PA_spinecho  ;;
       SNR3DTFL)           WriteDir=$DirStub/cal;   WriteFile=${FRoot}${ACQ}TFL    ;;
-      SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_FLAIR        ;;
-      SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-SagCube_T2w  ;;
+      SagCUBEFLAIR)       WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-sagCUBE_FLAIR        ;;
+      SagCUBET2PROMO)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}acq-sagCUBEPROMO_T2w  ;;
       ScreenSave)         WriteDir=$DirStub/orig;  WriteFile=${FRoot}${ACQ}ss     ;;
       T1rhoSL10)          WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1rho  ;;
       T1rhoSL10*SCAN)     WriteDir=$DirStub/anat;  WriteFile=${FRoot}T1rho  ;;
@@ -331,11 +331,11 @@ genFileName () {
       return 1
    fi
    $dcmdump -M $1/$ReadFile | sed 's,].*$,,g;s,\[,,g' > $tmp
-   getSubID $1
-   getSesID $1
-   getSiteID $1
-   getDesc $1
-   getType $1   ## Creates $WriteDir and $WriteFile strings from $DirStub & 0018,103e SeriesDescription
+   getSubID $tmp
+   getSesID $tmp
+   getSiteID $tmp
+   getDesc $tmp
+   getType $tmp   ## Creates $WriteDir and $WriteFile strings from $DirStub & 0018,103e SeriesDescription
                 ## unless -p is invoked to use 0018,1030 ProtocolName
    Series=`awk '$1=="(0020,0011)"{$1=""; $2=""; \
          gsub("[^[:alnum:]]",""); gsub("[[:blank:]]",""); print}' $tmp`
@@ -349,6 +349,8 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
       printf 'Creating log file %s\n' $LogFile
       echo -n "" > $LogFile
    fi
+   
+
    [ ! -e $LogFile ] && printf 'Log file %s creation failed.\n' $LogFile && return 1
    awk '$1=="(0028,0010)"{Ma=$3}\
         $1=="(0028,0011)"{Mb=$3}\
@@ -364,13 +366,13 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
         $1=="(0018,0080)"{TR=$3; Dstr=Dstr"TR="TR" "}\
         $1=="(0018,0081)"{TE=$3; Dstr=Dstr"TE="TE" "}\
         $1=="(0018,0082)"{TI=$3; if(TI!=0){Dstr=Dstr"TI="TI" "}}\
-        $1=="(0018,0083)"{NEX=$3; if(NEX!=1){Dstr=Dstr"with "NEX" exictations "}}\
+        $1=="(0018,0083)"{NEX=$3; if(NEX!=1){Dstr=Dstr"with "NEX" excitations "}}\
         $1=="(0018,0091)"{Eco=$3; if(Eco!=1){Dstr=Dstr"and "Eco" echoes "}}\
         $1=="(0018,1314)"{Flip=$3"°"; Dstr=Dstr"flip angle was "Flip}\
         $1=="(0028,0030)"{gsub("\\\\","x"); FOV=$3"mm voxels"}\
-        END{printf("The '$Desc' acquisition parameters were:  ");\
+        END{printf("The '"$Desc"' acquisition parameters were:  ");\
             printf("%s plane %dx%d matrix, %s %dmm thick, ",Plane,Ma,Mb,FOV,Thk);\
-            printf("%s %s %s\n",Dstr,"'$WriteDir'","'$WriteFile'")}' $tmp |\
+            printf("%s %s %s\n",Dstr,"'$SubID'","'$SesID'")}' $tmp |\
             tee -a $Mmp >> $LogFile
 ## The " TIMINGTASKRun4" acquisition parameters were: 
 ## Axial plane 64x64 matrix, 3.4x3.4mm voxels 4mm thick, 
