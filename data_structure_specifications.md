@@ -176,18 +176,43 @@ ${researcherRoot}/
         ∟(DM1_bt-volumetrics-wb_20180831.csv)
         ∟(DM1_fsurf-volumetrics-all_20180831.csv)
 ```
+# Common Resources
+```
+${nimg_core_root}/
+  ∟templates/
+    ∟${space}/
+    |  ∟${template}/
+    ∟FSLMNI/
+    ∟HCPMNI2009c/
+    |  ∟1mm/
+    |  |  ∟HCPMNI2009c_1mm_mask-air.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_mask-brain.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_mask-tissue.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T1w.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T1w_brain.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T1w_tissue.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T2w.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T2w_brain.nii.gz
+    |  |  ∟HCPMNI2009c_1mm_T2w_tissue.nii.gz
+    |  ∟2mm/
+    |  ∟700um/
+    |  ∟800um/
+    ∟xfm/
+       ∟from-${space}+${template}_to-${space}+${template}_xfm.nii.gz
+       ∟from-FSLMNI+1mm_to-HCPMNI2009c+1mm_xfm.nii.gz
+       ∟from-HCPMNI2009c+800um_to-HCPMNI2009c+1mm_xfm.nii.gz
+```
 # Filename Fields (and order)
 ```
 anat/
-sub-${ursi}_ses-${mrqid}[_site-${site}][_acq-${acq}][_run-${#}][_echo-${#}]_${mod}
+sub-${subject}_ses-${session}[_site-${site}][_acq-${acq}][_run-${#}][_echo-${#}]_${mod}
 mod=T1w|T2w|T1rho|T1map|T2map|T2star|FLAIR|FLASH|PD|PDT2|inplaneT1|inplaneT2|angio
 
 dwi/
-sub-${ursi}_ses-${mrqid}[_site-${site}][_acq-${acq}][_b-${b}][_dir-${dir}][_pe-${pe}][_run-${#}]_dwi.nii.gz
+sub-${subject}_ses-${session}[_site-${site}][_acq-${acq}][_b-${b}][_dir-${dir}][_pe-${pe}][_run-${#}]_dwi.nii.gz
 
 func/
-sub-${ursi}_ses-${mrqid}[_site-${site}]_task-${task}[_acq-${acq}][_pe-${pe}][_rec-${}][_run-${#}][_echo-${#}]_${mod}.nii.gz
+sub-${subject}_ses-${session}[_site-${site}]_task-${task}[_acq-${acq}][_pe-${pe}][_rec-${}][_run-${#}][_echo-${#}]_${mod}.nii.gz
 mod=bold|T1rho
 ```
 
-![Processing Pipelines](https://github.com/TKoscik/nimg_core/blob/master/misc/INC_processing_map.svg)
