@@ -182,25 +182,27 @@ ${nimg_core_root}/
   ∟templates/
     ∟${space}/
     |  ∟${template}/
-    ∟FSLMNI/
-    ∟HCPMNI2009c/
+    ∟FSLMNI152/
     |  ∟1mm/
-    |  |  ∟HCPMNI2009c_1mm_mask-air.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_mask-brain.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_mask-tissue.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T1w.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T1w_brain.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T1w_tissue.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T2w.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T2w_brain.nii.gz
-    |  |  ∟HCPMNI2009c_1mm_T2w_tissue.nii.gz
+    |  ∟2mm/
+    ∟HCPS1200/
+    |  ∟1mm/
+    |  |  ∟HCPS1200_1mm_mask-air.nii.gz
+    |  |  ∟HCPS1200_1mm_mask-brain.nii.gz
+    |  |  ∟HCPS1200_1mm_mask-tissue.nii.gz
+    |  |  ∟HCPS1200_1mm_T1w.nii.gz
+    |  |  ∟HCPS1200_1mm_T1w_brain.nii.gz
+    |  |  ∟HCPS1200_1mm_T1w_tissue.nii.gz
+    |  |  ∟HCPS1200_1mm_T2w.nii.gz
+    |  |  ∟HCPS1200_1mm_T2w_brain.nii.gz
+    |  |  ∟HCPS1200_1mm_T2w_tissue.nii.gz
     |  ∟2mm/
     |  ∟700um/
     |  ∟800um/
     ∟xfm/
        ∟from-${space}+${template}_to-${space}+${template}_xfm.nii.gz
-       ∟from-FSLMNI+1mm_to-HCPMNI2009c+1mm_xfm.nii.gz
-       ∟from-HCPMNI2009c+800um_to-HCPMNI2009c+1mm_xfm.nii.gz
+       ∟from-FSLMNI152+1mm_to-HCPS1200+1mm_xfm.nii.gz
+       ∟from-HCPS1200+800um_to-HCPS1200+1mm_xfm.nii.gz
 ```
 # Filename Fields (and order)
 ```
