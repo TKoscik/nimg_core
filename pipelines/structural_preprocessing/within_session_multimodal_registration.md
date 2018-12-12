@@ -2,49 +2,60 @@
 ## Output:
 ```
 ${researcher}/${project}/derivatives/
-  ∟anat/
-    ∟prep/sub-${subject}/ses-${session}/
-      ∟sub-${subject}_ses-${session}_*_${mod}_prep-T1reg.nii.gz
-  ∟tform/
-    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-0affine.nii.gz
-    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-1syn.nii.gz
-    ∟sub-${subject}_ses-${session}_*_${mod}_reg-T1_tform-1inverse.nii.gz
+  ∟anat/prep/sub-${subject}/ses-${session}/
+      ∟sub-${subject}_ses-${session}_*_${mod}_prep-rigid.nii.gz
+  ∟xfm/sub-${subject}/ses-${session}/
+    ∟sub-${subject}_ses-${session}_*_from-${mod}+raw_to-T1w+rigid_xfm-affine.mat
+    ∟sub-${subject}_ses-${session}_*_from-${mod}+raw_to-T1w+rigid_xfm-syn.nii.gz
+    ∟sub-${subject}_ses-${session}_*_from-T1w+rigid_to-${mod}+raw_xfm-syn.nii.gz
 ```
 ## Code:
 ```bash
-# User-defined (as necessary)
-input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
-fixed_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
-moving_img=sub-${subject}_ses-${session}_T2w_prep-avg.nii.gz
-output_prefix=sub-${subject}_ses-${session}_T2w
+fixed_image=${dir_prep}/${t1_prefix}_prep-rigid.nii.gz
+moving_image=${dir_raw}/${t2_prefix}.nii.gz
+output_prefix=${t2_prefix}
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'task:structural_within_session_multimodal_average' >> ${subject_log}
-echo 'fixed:'${researcher}/${project}/${input_dir}/${fixed_img} >> ${subject_log}
-echo 'moving:'${researcher}/${project}/${input_dir}/${moving_img} >> ${subject_log}
-echo 'software:ANTs' >> ${subject_log}
-echo 'version:2.3.1' >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'task: structural_within_session_T2w_to_T1w' >> ${subject_log}
+echo 'fixed: '${fixed_image} >> ${subject_log}
+echo 'moving: '${moving_image} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: '${ants_version} >> ${subject_log}
+date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-antsRegistrationSyN.sh -d 3 \
-  -f ${researcher}/${project}/${input_dir}/${fixed_img} \
-  -m ${researcher}/${project}/${input_dir}/${moving_img} \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_ \
-  -t s
+antsRegistration \
+  -d 3 \
+  --float 1 \
+  --verbose 1 \
+  -u 1 \
+  -w [0.01,0.99] \
+  -z 1 \
+  -r [${fixed_image},${moving_image},1] \
+  -t Rigid[0.1] \
+  -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
+  -c [1000x500x250x0,1e-6,10] \
+  -f 6x4x2x1 \
+  -s 4x2x1x0 \
+  -t Affine[0.1] \
+  -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
+  -c [1000x500x250x0,1e-6,10] \
+  -f 6x4x2x1 \
+  -s 4x2x1x0 \
+  -t SyN[0.1,3,0] \
+  -m CC[${fixed_image},${moving_image},1,4] \
+  -c [100x100x70x20,1e-9,10] \
+  -f 6x4x2x1 \
+  -s 3x2x1x0vox \
+  -o [${dir_prep}/temp_,${dir_prep}/${output_prefix}_prep-rigid.nii.gz]
 
-# Edit final output names as necesary
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_Warped.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_prep-T1reg.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_0GenericAffine.mat \
-  ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-0affine.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_1Warp.nii.gz \
-  ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-1syn.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}_temp_1InverseWarp.nii.gz \
-  ${researcher}/${project}/derivatives/tform/${output_prefix}_reg-T1_tform-1inverse.nii.gz
+mv ${dir_prep}/temp_0GenericAffine.mat ${dir_xfm}/${prefix}_from-T2w+raw_to-T1w+rigid_xfm-affine.mat
+mv ${dir_prep}/temp_1Warp.nii.gz ${dir_xfm}/${prefix}_from-T2w+raw_to-T1w+rigid_xfm-syn.nii.gz
+mv ${dir_prep}/temp_1InverseWarp.nii.gz ${dir_xfm}/${prefix}_from-T1w+rigid_to-T2w+raw_xfm-syn.nii.gz
 
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+
 ## Citations:
 ### ANTs Registration
 >Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
