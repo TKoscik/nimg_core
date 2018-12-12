@@ -37,12 +37,12 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [18. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
 [19. T2w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
 [20. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-[21.1. Build transform stacks - T1w+rigid to Template]()  
-[21.2. Build transform stacks - Template to T1w+rigid]()  
-[21.3. Build transform stacks - T2w+raw to T1w+rigid]()  
-[22.1. Apply transforms - processed T1w to Template]()  
-[22.2. Apply transforms - processed T2w to Template]()  
-[22.3. Apply transforms - Template Air Mask to T1w+rigid]()  
+[21.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+[21.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+[21.3. Build transform stacks - T2w+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+[22.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+[22.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+[22.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
 23. __Quality Control Report__  
   
 ## T1 Only Pipeline:
