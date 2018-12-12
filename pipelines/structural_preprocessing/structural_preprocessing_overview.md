@@ -43,6 +43,7 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [22.1. Apply transforms - processed T1w to Template]()  
 [22.2. Apply transforms - processed T2w to Template]()  
 [22.3. Apply transforms - Template Air Mask to T1w+rigid]()  
+23. __Quality Control Report__  
   
 ## T1 Only Pipeline:
 [1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
