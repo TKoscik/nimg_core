@@ -23,16 +23,16 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [9.3. Preliminary brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
 [9.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
 10. __Preliminary Brain Extraction Quality Control__  
-[11. Preliminary brain extraction - Selection]()  
+[11. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
 [12. Bias field correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
 [13.1. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
 [13.2. T2w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[14.1. Brain extraction - AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[14.2. Brain extraction - ANTs](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[14.3. Brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[14.4. Brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-15. __Brain Extraction Quality Control__  
-[16. Brain extraction - Selection]()  
+[14.1. Brain extraction - AFNI, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
+[14.2. Brain extraction - ANTs, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
+[14.3. Brain extraction - FSL BET, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
+[14.4. Brain extraction - MALF, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
+15. __Brain Extraction Quality Control, (as needed)__  
+[16. Brain extraction - Selection, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
 [17. Tissue segmentation](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
 [18. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
 [19. T2w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
