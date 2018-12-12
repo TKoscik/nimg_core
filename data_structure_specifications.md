@@ -199,7 +199,6 @@ ${nimg_core_root}/
     |  |  ∟FSLMNI152_2mm_T1_mask-air.nii.gz
     |  |  ∟FSLMNI152_2mm_T1_mask-brain.nii.gz
     |  |  ∟FSLMNI152_2mm_T1_mask-tissue.nii.gz
-    |  |  ∟FSLMNI152_2mm_T1_skull.nii.gz
     |  ∟500um/
     |  |  ∟FSLMNI152_500um_T1.nii.gz   
     ∟HCPS1200/
