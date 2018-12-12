@@ -186,8 +186,21 @@ ${nimg_core_root}/
     |  ∟1mm/
     |  ∟2mm/
     ∟FSLMNI152/
+    |  ∟500um/
+    |  |  ∟FSLMNI152_500um_T1.nii.gz    
     |  ∟1mm/
-    |  ∟2mm/
+    |  |  ∟FSLMNI152_1mm_T1.nii.gz
+    |  |  ∟FSLMNI152_1mm_T1_brain.nii.gz
+    |  |  ∟FSLMNI152_1mm_T1_mask-air.nii.gz
+    |  |  ∟FSLMNI152_1mm_T1_mask-brain.nii.gz
+    |  |  ∟FSLMNI152_1mm_T1_mask-tissue.nii.gz
+    |  ∟2mm/    
+    |  |  ∟FSLMNI152_2mm_T1.nii.gz
+    |  |  ∟FSLMNI152_2mm_T1_brain.nii.gz
+    |  |  ∟FSLMNI152_2mm_T1_mask-air.nii.gz
+    |  |  ∟FSLMNI152_2mm_T1_mask-brain.nii.gz
+    |  |  ∟FSLMNI152_2mm_T1_mask-tissue.nii.gz
+    |  |  ∟FSLMNI152_2mm_T1_skull.nii.gz
     ∟HCPS1200/
     |  ∟1mm/
     |  |  ∟HCPS1200_1mm_mask-air.nii.gz
