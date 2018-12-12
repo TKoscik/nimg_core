@@ -1,4 +1,5 @@
 # Brain extraction
+## AFNI 3dSkullStrip
 ## Output:
 ```
 ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
