@@ -88,3 +88,11 @@ mkdir -p ${dir_xfm}
 mkdir -p ${dir_norm}
 mkdir -p ${dir_seg}
 ```
+
+## End of Script
+```bash
+echo '#--------------------------------------------------------------------------------' >> ${subject_log}
+echo '#task: structural_preprocessing_pipeline_T1T2' >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo '' >> ${subject_log}
+```
