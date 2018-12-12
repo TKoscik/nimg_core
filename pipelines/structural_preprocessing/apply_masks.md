@@ -7,33 +7,29 @@ ${researcher}/${project}/derivatives/anat/native/
 ```
 ## Code:
 ```bash
-# User-defined (as necessary)
-input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
-which_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
-tissue_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-tissue.nii.gz
-output_prefix=sub-${subject}_ses-${session}_T1w_
+input_image=${dir_native}/${prefix}_T1w.nii.gz
+unset mask
+mask[0]=${dir_mask}/${prefix}_mask-brain.nii.gz
+mask[1]=${dir_mask}/${prefix}_mask-tissue.nii.gz
+unset output_image
+output_image[0]=${dir_native}/${prefix}_T1w_brain.nii.gz
+output_image[1]=${dir_native}/${prefix}_T1w_tissue.nii.gz
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'task:structural_bias_correction_T1T2' >> ${subject_log}
-echo 'input_image:'${researcher}/${project}/${input_dir}/${which_img} >> ${subject_log}
-echo 'brain_mask:'${brain_mask} >> ${subject_log}
-echo 'tissue_mask:'${tissue_mask} >> ${subject_log}
-echo 'software:FSL' >> ${subject_log}
-echo 'version:5.10.0' >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'task: structural_apply_mask' >> ${subject_log}
+echo 'input_image: '${input_image} >> ${subject_log}
+for ((i = 0; i < ${#mask[@]}; ++i)); do
+  echo 'input_mask: '${i} >> ${subject_log}
+done
+echo 'software: FSL' >> ${subject_log}
+echo 'version: '${fsl_version} >> ${subject_log}
+date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-fslmaths \
-  ${researcher}/${project}/${input_dir}/${which_img} \
-  -mas ${brain_mask} \
-  ${researcher}/${project}/derivatives/anat/native/${output_prefix}brain.nii.gz
+for ((i = 0; i < ${#mask[@]}; ++i)); do
+  fslmaths ${input_image} -mas ${mask[${i}]} ${output_image[${i}]}
+done
 
-fslmaths \
-  ${researcher}/${project}/${input_dir}/${which_img} \
-  -mas ${tissue_mask} \
-  ${researcher}/${project}/derivatives/anat/native/${output_prefix}tissue.nii.gz
-
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
