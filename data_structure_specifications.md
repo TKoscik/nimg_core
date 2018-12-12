@@ -202,11 +202,11 @@ ${nimg_core_root}/
     |  ∟2mm/
     |  ∟700um/
     |  ∟800um/
-    ∟ICM2009a/
+    ∟ICBM2009a/
     |  ∟1mm/
-    ∟ICM2009b/
+    ∟ICBM2009b/
     |  ∟500um/
-    ∟ICM2009c/
+    ∟ICBM2009c/
     |  ∟1mm/
     ∟WU7112bTal/
     |  ∟1mm/   
