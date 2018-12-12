@@ -12,71 +12,69 @@ ${researcher}/${project}/derivatives/anat/
 ## Code:
 ```bash
 which_bex="MALF"
+suffix=bex0
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_brain_extraction_selection' >> ${subject_log}
-echo 'input: '${t1_image} >> ${subject_log}
-echo 'input: '${t2_image} >> ${subject_log}
 echo 'software: FSL' >> ${subject_log}
 echo 'version: '${fsl_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-output_mask=${dir_prep}/${prefix}_prep-${suffix}Brain.nii.gz
-if [[ "${which_mask,,}" = "malf" ]]; then
+if [[ ${which_bex,,} = "malf" ]]; then
   cp ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "afni" ]]; then
+elif [[ ${which_bex,,} = "afni" ]]; then
   cp ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "ants" ]]; then
+elif [[ ${which_bex,,} = "ants" ]]; then
   cp ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "bet" ]]; then
+elif [[ ${which_bex,,} = "bet" ]]; then
   cp ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "afni&ants" ]]; then
+elif [[ ${which_bex,,} = "afni&ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "afni&bet" ]]; then
+elif [[ ${which_bex,,} = "afni&bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "afni&malf" ]]; then
+elif [[ ${which_bex,,} = "afni&malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "ants&afni" ]]; then
+elif [[ ${which_bex,,} = "ants&afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "ants&bet" ]]; then
+elif [[ ${which_bex,,} = "ants&bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "ants&malf" ]]; then
+elif [[ ${which_bex,,} = "ants&malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "bet&afni" ]]; then
+elif [[ ${which_bex,,} = "bet&afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "bet&ants" ]]; then
+elif [[ ${which_bex,,} = "bet&ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "bet&malf" ]]; then
+elif [[ ${which_bex,,} = "bet&malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "malf&afni" ]]; then
+elif [[ ${which_bex,,} = "malf&afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "malf&ants" ]]; then
+elif [[ ${which_bex,,} = "malf&ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "malf&bet" ]]; then
+elif [[ ${which_bex,,} = "malf&bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -mul ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz ${output_mask}
-elif [[ "${which_mask,,}" = "afni|ants" ]]; then
+elif [[ ${which_bex,,} = "afni|ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "afni|bet" ]]; then
+elif [[ ${which_bex,,} = "afni|bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "afni|malf" ]]; then
+elif [[ ${which_bex,,} = "afni|malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "ants|afni" ]]; then
+elif [[ ${which_bex,,} = "ants|afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "ants|bet" ]]; then
+elif [[ ${which_bex,,} = "ants|bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "ants|malf" ]]; then
+elif [[ ${which_bex,,} = "ants|malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "bet|afni" ]]; then
+elif [[ ${which_bex,,} = "bet|afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "bet|ants" ]]; then
+elif [[ ${which_bex,,} = "bet|ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "bet|malf" ]]; then
+elif [[ ${which_bex,,} = "bet|malf" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "malf|afni" ]]; then
+elif [[ ${which_bex,,} = "malf|afni" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "malf|ants" ]]; then
+elif [[ ${which_bex,,} = "malf|ants" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -bin ${output_mask}
-elif [[ "${which_mask,,}" = "malf|bet" ]]; then
+elif [[ ${which_bex,,} = "malf|bet" ]]; then
   fslmaths ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -bin ${output_mask}
 fi
 
