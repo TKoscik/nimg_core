@@ -129,7 +129,7 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [8.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
 8.5. __Preliminary Brain Extraction Quality Control__  
 [8.6. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[9.1. Bias field correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md) 
+[9.1. Bias field correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
 9.2. Apply T1/T2 Bias field correction to OTHER, repeat as needed.  
 [10.1. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
 [10.2. T2w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
