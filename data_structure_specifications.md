@@ -182,6 +182,9 @@ ${nimg_core_root}/
   ∟templates/
     ∟${space}/
     |  ∟${template}/
+    ∟CIT168/
+    |  ∟1mm/
+    |  ∟2mm/
     ∟FSLMNI152/
     |  ∟1mm/
     |  ∟2mm/
@@ -199,6 +202,16 @@ ${nimg_core_root}/
     |  ∟2mm/
     |  ∟700um/
     |  ∟800um/
+    ∟ICM2009a/
+    |  ∟1mm/
+    ∟ICM2009b/
+    |  ∟500um/
+    ∟ICM2009c/
+    |  ∟1mm/
+    ∟WU7112bTal/
+    |  ∟1mm/   
+    |  ∟2mm/
+    |  ∟3mm/
     ∟xfm/
        ∟from-${space}+${template}_to-${space}+${template}_xfm.nii.gz
        ∟from-FSLMNI152+1mm_to-HCPS1200+1mm_xfm.nii.gz
