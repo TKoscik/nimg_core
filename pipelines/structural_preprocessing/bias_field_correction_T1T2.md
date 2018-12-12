@@ -3,37 +3,37 @@
 ```
 ${researcherRoot}/${projectName}/derivatives/anat/prep/sub-${subject}/ses-${session}/
   ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasT1T2.nii.gz
-  ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasFieldT1T2.nii.gz
+  ∟sub-${subject}_ses-${session}_*_prep-biasFieldT1T2.nii.gz
 ```
 ## Code:
 ```bash
 # User-defined (as necessary)
-input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
-t1_img=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
-t2_img=sub-${subject}_ses-${session}_T2w_prep-T1reg.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_prep-bex0Mask.nii.gz
+t1_image=${dir_prep}/${t1_prefix}_prep-denoise.nii.gz
+t2_image=${dir_prep}/${t2_prefix}_prep-denoise.nii.gz
+brain_mask=${dir_prep}/${prefix}_prep-bex0Brain.nii.gz
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'task:structural_bias_correction_T1T2' >> ${subject_log}
-echo 'input_T1:'${researcher}/${project}/${input_dir}/${t1_img} >> ${subject_log}
-echo 'input_T2:'${researcher}/${project}/${input_dir}/${t2_img} >> ${subject_log}
-echo 'brain_mask:'${brain_mask} >> ${subject_log}
-echo 'software:FSL' >> ${subject_log}
-echo 'version:5.10.0' >> ${subject_log}
-echo 'software:bias_field_correct_t1t2.sh' >> ${subject_log}
-echo 'version:0' >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'task: structural_bias_correction_T1T2' >> ${subject_log}
+echo 'input_T1: '${t1_image} >> ${subject_log}
+echo 'input_T2: '${t2_image} >> ${subject_log}
+echo 'brain_mask: '${brain_mask} >> ${subject_log}
+echo 'software: FSL' >> ${subject_log}
+echo 'version: '${fsl_version} >> ${subject_log}
+echo 'software: bias_field_correct_t1t2.sh' >> ${subject_log}
+echo 'version: 0' >> ${subject_log}
+date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 ${nimg_core_root}/bias_field_correct_t1t2.sh \
-  -a ${researcher}/${project}/${input_dir}/${t1_img} \
-  -b ${researcher}/${project}/${input_dir}/${t2_img} \
-  -m ${researcher}/${project}/${input_dir}/${brain_mask} \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
+  -a ${t1_image} \
+  -b ${t2_image} \
+  -m ${brain_mask} \
+  -o ${dir_prep}
 
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_T1w_prep-biasFieldT1T2.nii.gz \
-  ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/sub-${subject}_ses-${session}_prep-biasFieldT1T2.nii.gz
+mv ${dir_prep}/biasT1T2_Field.nii.gz ${dir_prep}/${prefix}_prep-biasFieldT1T2.nii.gz
+mv ${dir_prep}/biasT1T2_T1w.nii.gz ${dir_prep}/${t1_prefix}_prep-biasT1T2.nii.gz
+mv ${dir_prep}/biasT1T2_T2w.nii.gz ${dir_prep}/${t2_prefix}_prep-biasT1T2.nii.gz
 
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
