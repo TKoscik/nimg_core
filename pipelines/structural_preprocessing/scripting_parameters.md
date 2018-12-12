@@ -56,6 +56,9 @@ prefix=sub-${subject}_ses-${session}_site-${site}
 
 ## Initial log entry
 ```bash
+#------------------------------------------------------------------------------
+# Initial log entry
+#------------------------------------------------------------------------------
 mkdir -p ${researcher}/${project}/log/hpc_output
 subject_log=${researcher}/${project}/log/sub-${subject}_ses-${session}_site-${site}.log
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
