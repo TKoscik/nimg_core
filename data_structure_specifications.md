@@ -219,22 +219,29 @@ ${nimg_core_root}/
     ∟ICBM2009a/
     |  ∟1mm/    
     |  |  ∟PD
-    |  |  |  ∟ICBM2009a_1mm_PDna_.nii
+    |  |  |  ∟ICBM2009a_1mm_PDna.nii
     |  |  ∟T1
-    |  |  |  ∟ICBM2009a_1mm_T1na_.nii
+    |  |  |  ∟ICBM2009a_1mm_T1na.nii
     |  |  |  ∟ICBM2009a_1mm_T1na_mask-brain.nii
     |  |  ∟T2
-    |  |  |  ∟ICBM2009a_1mm_T2na_.nii
+    |  |  |  ∟ICBM2009a_1mm_T2na.nii
     ∟ICBM2009b/
     |  ∟500um/
     |  |  ∟PD
-    |  |  |  ∟ICBM2009b_500um_PDna_.nii
+    |  |  |  ∟ICBM2009b_500um_PDna.nii
     |  |  ∟T1
-    |  |  |  ∟ICBM2009b_500um_T1na_.nii
+    |  |  |  ∟ICBM2009b_500um_T1na.nii
     |  |  ∟T2
     |  |  |  ∟ICBM2009b_500um_T2na.nii
     ∟ICBM2009c/
-    |  ∟1mm/
+    |  ∟1mm/    
+    |  |  ∟PD
+    |  |  |  ∟ICBM2009c_1mm_PDna.nii
+    |  |  ∟T1
+    |  |  |  ∟ICBM2009c_1mm_T1na.nii
+    |  |  |  ∟ICBM2009c_1mm_T1na_mask-brain.nii
+    |  |  ∟T2
+    |  |  |  ∟ICBM2009c_1mm_T2na.nii
     ∟WU7112bTal/
     |  ∟1mm/   
     |  ∟2mm/
