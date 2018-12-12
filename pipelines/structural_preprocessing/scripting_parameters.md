@@ -34,7 +34,7 @@ source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_source}
 ```
 
 ## Specify variables
-${researcher}/${project} must give you the root directory for all processing steps
+${researcher}/${project} must give you the root directory for all processing steps.  
 __ONLY THE HPC HEADER AND VARIABLE SPECIFICATION SHOULD usually BE EDITED__
 ```bash
 #------------------------------------------------------------------------------
