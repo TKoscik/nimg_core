@@ -10,43 +10,38 @@ ${researcher}/${project}/derivatives/anat/
 ```
 ## Code:
 ```bash
-# User-defined (as necessary)
-input_dir=derivatives/anat/prep/sub-${subject}/ses-${session}/
-t1_img=sub-${subject}_ses-${session}_T1w_prep-biasN4.nii.gz
-t2_img=sub-${subject}_ses-${session}_T2w_prep-biasN4.nii.gz
-brain_mask=${researcher}/${project}/derivatives/anat/mask/sub-${subject}_ses-${session}_mask-brain.nii.gz
-output_prefix=sub-${subject}_ses-${session}_T1w_
+t1_image=${dir_native}/${prefix}_T1w.nii.gz
+t2_image=${dir_native}/${prefix}_T2w.nii.gz
+brain_mask=${dir_mask}/${prefix}_mask-brain.nii.gz
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'task:structural_segmentation_atropos' >> ${subjectect_log}
-echo 'input_T1_image:'${researcher}/${project}/${input_dir}/${t1_img} >> ${subject_log}
-echo 'input_T2_image:'${researcher}/${project}/${input_dir}/${t2_img} >> ${subject_log}
-echo 'brain_mask:'${brain_mask} >> ${subject_log}
-echo 'software:ANTs' >> ${subject_log}
-echo 'version:2.3.1' >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'task: structural_segmentation_atropos' >> ${subject_log}
+echo 'input_T1_image: '${t1_image} >> ${subject_log}
+echo 'input_T2_image: '${t2_image} >> ${subject_log}
+echo 'brain_mask: '${brain_mask} >> ${subject_log}
+echo 'software: ANTS' >> ${subject_log}
+echo 'version: '${ants_version} >> ${subject_log}
+date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
-antsAtroposN4.sh \
-  -d 3 \
-  -a ${researcher}/${project}/${input_dir}/${t1_img} \
-  -a ${researcher}/${project}/${input_dir}/${t2_img} \
-  -x ${brain_mask} \
-  -c 3 \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-temp
+Atropos \
+-d 3 \
+-a ${t1_image} \
+-a ${t2_image} \
+-x ${brain_mask} \
+-o [${dir_seg}/${prefix}_seg-label.nii.gz,${dir_seg}/${prefix}_seg-Posterior%d.nii.gz] \
+-c [5,0.0] \
+-i kmeans[3] \
+-k Gaussian \
+-m [0.1,1x1x1] \
+-r 1 \
+-p Socrates[0] \
+-v 1
 
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation.nii.gz \
-  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-label.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors1.nii.gz \
-  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-CSF.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors2.nii.gz \
-  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-GM.nii.gz
-mv ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationPosteriors3.nii.gz \
-  ${researcher}/${project}/derivatives/anat/segmentation/${output_prefix}seg-WM.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation0N4.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentation1N4.nii.gz
-rm ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_prefix}prep-tempSegmentationConvergence.txt
+mv ${dir_seg}/${prefix}_seg-Posterior1.nii.gz ${dir_seg}/${prefix}_seg-CSF.nii.gz
+mv ${dir_seg}/${prefix}_seg-Posterior2.nii.gz ${dir_seg}/${prefix}_seg-GM.nii.gz
+mv ${dir_seg}/${prefix}_seg-Posterior3.nii.gz ${dir_seg}/${prefix}_seg-WM.nii.gz
 
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
