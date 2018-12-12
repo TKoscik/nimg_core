@@ -7,26 +7,26 @@ Denoise an image using a spatially adaptive filter.
 ```
 ## Code:
 ```bash
-# User-defined (as necessary)
-input_dir=/nifti/sub-${subject}/ses-${session}/anat
-which_img=sub-${subject}_ses-${session}_T1w
+input_image=${dir_prep}/${t1_prefix}_prep-rigid.nii.gz
+output_prefix=${t1_prefix}
 
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
-echo 'task:structural_image_denoising' >> ${subject_log}
-echo 'input:'${researcher}/${project}/${input_dir}/${which_img}.nii.gz >> ${subject_log}
-echo 'software:ANTs' >> ${subject_log}
-echo 'version:2.3.1' >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+echo 'task: structural_image_denoising' >> ${subject_log}
+echo 'input: '${input_image} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: '${ants_version} >> ${subject_log}
+date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 DenoiseImage \
   -d 3 \
-  -i ${researcher}/${project}/${input_dir}/${which_img}.nii.gz \
+  -i ${input_image} \
   -n Rician \
-  -o ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${which_img}_prep-denoise.nii.gz
+  -o ${dir_prep}/${output_prefix}_prep-denoise.nii.gz
 
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
+
 | *arguments* | *description* | *values* | *default* |
 |---|---|---|---|
 | -d | dimensionality | 2/3/4 | - |  
@@ -38,6 +38,7 @@ echo '' >> ${subject_log}
 | -p | patch radius | 1 {1x1x1} | 1 |
 | -r | search radius | 2 {2x2x2} | 2 |
 | -v | verbose | 0/1 | 0 |  
+
 ## Citations
 > Manjon JV, Coupe P, Marti-Bonmati L, Collins DL, & Robles M. (2010). Adaptive non-local means denoising of MR images with spatially varying noise levels. Journal of Magnetic Resonance Imaging, 31, 192-203.  
 
