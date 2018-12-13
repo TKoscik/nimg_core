@@ -15,13 +15,13 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [3. Rigid Alignment T1w to Template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
 [4. Rician Denoising - T1w](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
 [5. Within-session Coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-  * T2w, OTHER modalities
+  * T2w, OTHER modalities  
 [6. Rician Denoising](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-  * T2w, OTHER modalities
+  * T2w, OTHER modalities  
 [7.1. Within-modality Average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
   * T1w, T2w, OTHER modalities  
 [8. Brain extraction]
-  * Use T1w and T2w as available.
+  * Use T1w and T2w as available.  
   [1. AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
   [2. ANTS](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
   [3. BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
@@ -29,7 +29,7 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
   5. __Brain Extraction Quality Control__ (omit in fully automated, non-problematic brain processing)    
   [6. Brain Mask Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
 [9. Bias Field Correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
-  * if T1w AND T2w images acquired
+  * if T1w AND T2w images acquired  
   * apply field correction to OTHER modalities [untested]  
 [10. Bias Field Correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
   * T1w, T2w  
