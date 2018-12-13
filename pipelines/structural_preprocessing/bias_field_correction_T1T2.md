@@ -16,7 +16,7 @@ echo 'task: bias_correction_T1T2' >> ${subject_log}
 echo 'input_T1: '${t1_image} >> ${subject_log}
 echo 'input_T2: '${t2_image} >> ${subject_log}
 echo 'brain_mask: '${brain_mask} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 ${nimg_core_root}/bias_field_correct_t1t2.sh \
   -a ${t1_image} \
@@ -28,7 +28,7 @@ mv ${dir_prep}/biasT1T2_Field.nii.gz ${dir_prep}/${prefix}_prep-biasFieldT1T2.ni
 mv ${dir_prep}/biasT1T2_T1w.nii.gz ${dir_prep}/${t1_prefix}_prep-biasT1T2.nii.gz
 mv ${dir_prep}/biasT1T2_T2w.nii.gz ${dir_prep}/${t2_prefix}_prep-biasT1T2.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
