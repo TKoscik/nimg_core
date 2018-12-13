@@ -14,7 +14,7 @@ fixed_brain=${dir_template}/${space}/${template}/${space}_${template}_T1w_brain.
 fixed_tissue=${dir_template}/${space}/${template}/${space}_${template}_T1w_tissue.nii.gz
 output_prefix=${prefix}
 
-echo 'task: structural_normalization' >> ${subject_log}
+echo 'task: normalization' >> ${subject_log}
 echo 'moving_brain_image: '${moving_brain} >> ${subject_log}
 echo 'moving_tissue_image: '${moving_tissue} >> ${subject_log}
 echo 'moving_brain_image: '${fixed_brain} >> ${subject_log}
