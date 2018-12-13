@@ -15,14 +15,11 @@ unset output_image
 output_image[0]=${dir_native}/${prefix}_T1w_brain.nii.gz
 output_image[1]=${dir_native}/${prefix}_T1w_tissue.nii.gz
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_apply_mask' >> ${subject_log}
 echo 'input_image: '${input_image} >> ${subject_log}
 for ((i = 0; i < ${#mask[@]}; ++i)); do
   echo 'input_mask: '${i} >> ${subject_log}
 done
-echo 'software: FSL' >> ${subject_log}
-echo 'version: '${fsl_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 for ((i = 0; i < ${#mask[@]}; ++i)); do
