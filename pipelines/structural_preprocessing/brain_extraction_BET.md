@@ -15,7 +15,7 @@ suffix=bex0  #change as needed to differentiate iterations, final iteration is b
 echo 'task: brain_extraction_BET' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 echo 'input: '${t2_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 # FSL brain extraction tool ----
 bet ${t1_image} ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -A2 ${t2_image} -m -R
@@ -25,7 +25,7 @@ rm ${dir_prep}/${prefix}*${suffix}BET_*skull*
 rm ${dir_prep}/${prefix}*${suffix}BET_mesh*
 rm ${dir_prep}/${prefix}*${suffix}BET_out*
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
