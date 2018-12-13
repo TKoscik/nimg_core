@@ -19,7 +19,7 @@ echo 'moving_brain_image: '${moving_brain} >> ${subject_log}
 echo 'moving_tissue_image: '${moving_tissue} >> ${subject_log}
 echo 'moving_brain_image: '${fixed_brain} >> ${subject_log}
 echo 'moving_tissue_image: '${fixed_tissue} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 antsRegistration \
   -d 3 \
@@ -56,7 +56,7 @@ mv ${dir_prep}/temp_1Warp.nii.gz \
 mv ${dir_prep}/temp_1InverseWarp.nii.gz \
   ${dir_xfm}/${output_prefix}_from-${space}+${template}_to-T1w+rigid_xfm-syn.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
