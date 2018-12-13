@@ -10,7 +10,7 @@ Denoise an image using a spatially adaptive filter.
 input_image=${dir_prep}/${t1_prefix}_prep-rigid.nii.gz
 output_prefix=${t1_prefix}
 
-echo 'task: structural_image_denoising' >> ${subject_log}
+echo 'task: image_denoising' >> ${subject_log}
 echo 'input: '${input_image} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
