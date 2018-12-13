@@ -13,12 +13,11 @@ xfm[0]=${dir_xfm}/${prefix}_from-${moving}_to-${fixed}_xfm-affine.mat
 xfm[1]=${dir_xfm}/${prefix}_from-${moving}_to-${fixed}_xfm-syn.nii.gz
 ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_transform_stack' >> ${subject_log}
+echo 'moving: '${moving} >> ${subject_log}
+echo 'fixed: '${fixed} >> ${subject_log}
 echo 'xfm: '${xfm[0]} >> ${subject_log}
 echo 'xfm: '${xfm[1]} >> ${subject_log}
-echo 'software: ANTS' >> ${subject_log}
-echo 'version: '${ants_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 antsApplyTransforms -d 3 \
