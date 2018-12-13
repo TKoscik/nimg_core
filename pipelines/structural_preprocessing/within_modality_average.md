@@ -16,7 +16,7 @@ output_name=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 echo 'task:within-modality_average' >> ${subject_log}
 echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz >> ${subject_log}
 echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz >> ${subject_log}
-echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 # Find smallest pixel dimensions in each direction
 pixdim[0]=1000 # arbitrarily large value (must be bigger than actual input)
@@ -46,7 +46,7 @@ buildtemplateparallel.sh \
   -o {researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${output_name}_prep-avg.nii.gz \
   ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/${rs_imgs}
 
-echo 'end_time: 'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
