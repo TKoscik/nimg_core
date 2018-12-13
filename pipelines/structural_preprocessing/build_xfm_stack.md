@@ -18,7 +18,7 @@ echo 'moving: '${moving} >> ${subject_log}
 echo 'fixed: '${fixed} >> ${subject_log}
 echo 'xfm: '${xfm[0]} >> ${subject_log}
 echo 'xfm: '${xfm[1]} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 antsApplyTransforms -d 3 \
   -o [${dir_xfm}/${prefix}_from-${moving}_to-${fixed}_xfm-stack.nii.gz,1] \
@@ -26,7 +26,7 @@ antsApplyTransforms -d 3 \
   -t ${xfm[0]} \
   -r ${ref_image}
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
