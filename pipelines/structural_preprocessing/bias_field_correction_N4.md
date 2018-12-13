@@ -13,7 +13,7 @@ output_prefix=${prefix}_T1w
 
 echo 'task: bias_correction_N4' >> ${subject_log}
 echo 'input_image: '${input_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 N4BiasFieldCorrection \
   -d 3 \
@@ -21,7 +21,7 @@ N4BiasFieldCorrection \
   -r 1 \
   -o [${output_dir}/${output_prefix}.nii.gz,${dir_prep}/${output_prefix}_prep-biasFieldN4.nii.gz]
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
