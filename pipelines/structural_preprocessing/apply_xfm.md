@@ -24,7 +24,7 @@ for ((i = 0; i < ${#input_image[@]}; ++i)); do
   echo 'output_image: '${output_image[${i}]} >> ${subject_log}
 done
 echo 'xfm: '${xfm} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 for ((i = 0; i < ${#input_image[@]}; ++i)); do
   antsApplyTransforms -d 3 \
@@ -34,7 +34,7 @@ for ((i = 0; i < ${#input_image[@]}; ++i)); do
     -r ${ref_image}
 done
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
