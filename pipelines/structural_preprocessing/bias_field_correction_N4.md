@@ -11,7 +11,7 @@ input_image=${dir_prep}/${t1_prefix}_prep-biasT1T2.nii.gz
 output_dir=${dir_native}
 output_prefix=${prefix}_T1w
 
-echo 'task: structural_bias_correction_N4' >> ${subject_log}
+echo 'task: bias_correction_N4' >> ${subject_log}
 echo 'input_image: '${input_image} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
