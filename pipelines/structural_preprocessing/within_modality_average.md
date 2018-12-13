@@ -13,7 +13,7 @@ which_imgs[0]=sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz
 which_imgs[1]=sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz
 output_name=sub-${subject}_ses-${session}_T1w_prep-avg.nii.gz
 
-echo 'task:structural_within_modality_average' >> ${subject_log}
+echo 'task:within-modality_average' >> ${subject_log}
 echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-1_T1w_prep-acpc.nii.gz >> ${subject_log}
 echo 'input:'${researcher}/${project}/${input_dir}/sub-${subject}_ses-${session}_run-2_T1w_prep-acpc.nii.gz >> ${subject_log}
 echo 'start_time:'date +"%Y-%m-%d_%H-%M-%S" >> ${subject_log}
