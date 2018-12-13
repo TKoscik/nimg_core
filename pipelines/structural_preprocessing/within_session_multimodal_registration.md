@@ -15,12 +15,9 @@ fixed_image=${dir_prep}/${t1_prefix}_prep-rigid.nii.gz
 moving_image=${dir_raw}/${t2_prefix}.nii.gz
 output_prefix=${t2_prefix}
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_within_session_T2w_to_T1w' >> ${subject_log}
 echo 'fixed: '${fixed_image} >> ${subject_log}
 echo 'moving: '${moving_image} >> ${subject_log}
-echo 'software: ANTs' >> ${subject_log}
-echo 'version: '${ants_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 antsRegistration \
