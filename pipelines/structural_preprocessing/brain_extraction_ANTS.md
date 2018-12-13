@@ -12,7 +12,7 @@ t1_image=${dir_prep}/${t1_prefix}_prep-denoise.nii.gz
 t2_image=${dir_prep}/${t2_prefix}_prep-denoise.nii.gz
 suffix=bex0  #change as needed to differentiate iterations, final iteration is bex (no number)
 
-echo 'task: brain_extraction_ ANTS' >> ${subject_log}
+echo 'task: brain_extraction_ANTS' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 echo 'input: '${t2_image} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
