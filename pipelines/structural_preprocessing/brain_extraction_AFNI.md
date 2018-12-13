@@ -11,7 +11,7 @@ ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
 t1_image=${dir_prep}/${t1_prefix}_prep-denoise.nii.gz
 suffix=bex0  #change as needed to differentiate iterations, final iteration is bex (no number)
 
-echo 'task: structural_brain_extraction_AFNI' >> ${subject_log}
+echo 'task: brain_extraction_AFNI' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
