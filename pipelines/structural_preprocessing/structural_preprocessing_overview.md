@@ -35,11 +35,11 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
    - T1w, T2w    
 11. __Brain extraction and QC, as needed__ (repeat brain extraction in fully automated script, omit if manual brain extraction is performed)  
 12. Tissue segmentation [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
-   - Use T1w and T2w as available    
+   - Use T1w and T2w as available  
 13. Apply Brain/Tissue Masks [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-   - T1w, T2w, OTHER modalities    
+   - T1w, T2w, OTHER modalities  
 14. Normalization - T1w to Template [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-15.1. Build Transform Stacks [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+15. Build Transform Stacks [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
    - T1w+rigid to Template  
    - Template to T1w+rigid  
    - T2w+raw to T1w+rigid  
