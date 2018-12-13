@@ -15,9 +15,9 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [3. Rigid Alignment T1w to Template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
 [4. Rician Denoising - T1w](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
 [5. Within-session Coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-&ensp;T2w, OTHER modalities    
+	+ T2w, OTHER modalities    
 [6. Rician Denoising](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-&ensp;T2w, OTHER modalities    
+	+ T2w, OTHER modalities    
 [7.1. Within-modality Average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
 &ensp;T1w, T2w, OTHER modalities    
 8. Brain extraction  
