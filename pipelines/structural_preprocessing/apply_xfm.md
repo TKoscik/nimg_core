@@ -18,15 +18,12 @@ unset xfm
 xfm=${dir_xfm}/${prefix}_from-T1w+rigid_to-${space}+${template}_xfm-stack.nii.gz
 ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_apply_transform' >> ${subject_log}
 for ((i = 0; i < ${#input_image[@]}; ++i)); do
   echo 'input_image: '${input_image[${i}]} >> ${subject_log}
   echo 'output_image: '${output_image[${i}]} >> ${subject_log}
 done
 echo 'xfm: '${xfm} >> ${subject_log}
-echo 'software: ANTS' >> ${subject_log}
-echo 'version: '${ants_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 for ((i = 0; i < ${#input_image[@]}; ++i)); do
