@@ -12,7 +12,7 @@ t1_image=${dir_prep}/${t1_prefix}_prep-denoise.nii.gz
 t2_image=${dir_prep}/${t2_prefix}_prep-denoise.nii.gz
 brain_mask=${dir_prep}/${prefix}_prep-bex0Brain.nii.gz
 
-echo 'task: structural_bias_correction_T1T2' >> ${subject_log}
+echo 'task: bias_correction_T1T2' >> ${subject_log}
 echo 'input_T1: '${t1_image} >> ${subject_log}
 echo 'input_T2: '${t2_image} >> ${subject_log}
 echo 'brain_mask: '${brain_mask} >> ${subject_log}
