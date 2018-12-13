@@ -17,7 +17,7 @@ suffix=bex0
 echo 'task: brain_extraction_selection' >> ${subject_log}
 echo 'which_bex: '${which_bex} >> ${subject_log}
 echo 'bex_suffix: '${suffix} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 if [[ ${which_bex,,} = "malf" ]]; then
   cp ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz ${output_mask}
@@ -85,6 +85,6 @@ if [[ "${suffix}"="bex" ]]; then
   mv ${dir_prep}/${prefix}_prep-${suffix}Tissue.nii.gz ${dir_mask}/${prefix}_mask-tissue.nii.gz
 fi
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
