@@ -12,7 +12,7 @@ output_prefix=${t1_prefix}
 
 echo 'task: image_denoising' >> ${subject_log}
 echo 'input: '${input_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 DenoiseImage \
   -d 3 \
@@ -20,7 +20,7 @@ DenoiseImage \
   -n Rician \
   -o ${dir_prep}/${output_prefix}_prep-denoise.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 
