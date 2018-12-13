@@ -14,12 +14,9 @@ brain_mask[1]=${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz
 brain_mask[2]=${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz
 suffix=bex0
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_brain_extraction_malf' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 echo 'input: '${t2_image} >> ${subject_log}
-echo 'software: FSL' >> ${subject_log}
-echo 'version: '${fsl_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 # Majority-vote brain mask
