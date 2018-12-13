@@ -15,7 +15,7 @@ suffix=bex0  #change as needed to differentiate iterations, final iteration is b
 echo 'task: brain_extraction_ANTS' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 echo 'input: '${t2_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 # ANTs brain extraction ----
 antsBrainExtraction.sh \
@@ -31,7 +31,7 @@ mv ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionMask.nii.gz \
 rm ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionBrain.nii.gz 
 rm ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionPrior0GenericAffine.mat
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations:
