@@ -14,7 +14,7 @@ t1_image=${dir_native}/${prefix}_T1w.nii.gz
 t2_image=${dir_native}/${prefix}_T2w.nii.gz
 brain_mask=${dir_mask}/${prefix}_mask-brain.nii.gz
 
-echo 'task: structural_segmentation_atropos' >> ${subject_log}
+echo 'task: segmentation_atropos' >> ${subject_log}
 echo 'input_image: '${t1_image} >> ${subject_log}
 echo 'input_image: '${t2_image} >> ${subject_log}
 echo 'brain_mask: '${brain_mask} >> ${subject_log}
