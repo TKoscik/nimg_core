@@ -11,13 +11,8 @@ ${researcher}/${project}/derivatives/anat/prep/sub-${subject}/ses-${session}/
 t1_image=${dir_prep}/${t1_prefix}_prep-denoise.nii.gz
 suffix=bex0  #change as needed to differentiate iterations, final iteration is bex (no number)
 
-echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_brain_extraction_AFNI' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
-echo 'software: AFNI' >> ${subject_log}
-echo 'version: '${afni_version} >> ${subject_log}
-echo 'software: FSL' >> ${subject_log}
-echo 'version: '${fsl_version} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 
 # AFNI skull strip ----
