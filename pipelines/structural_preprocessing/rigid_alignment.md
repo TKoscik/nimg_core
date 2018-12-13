@@ -18,7 +18,7 @@ output_prefix=${t1_prefix}
 echo 'task: rigid_alignment' >> ${subject_log}
 echo 'fixed_image: '${fixed_image} >> ${subject_log}
 echo 'moving_image: '${moving_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 antsRegistration \
   -d 3 \
@@ -43,7 +43,7 @@ antsApplyTransforms -d 3 \
 
 mv ${dir_prep}/temp_0GenericAffine.mat ${dir_xfm}/${prefix}_from-${target}+raw_to-${space}+${template}_xfm-rigid.mat
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ## Citations
