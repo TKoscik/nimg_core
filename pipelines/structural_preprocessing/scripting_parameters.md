@@ -15,7 +15,7 @@ __ONLY THE HPC HEADER AND VARIABLE SPECIFICATION SHOULD usually BE EDITED__
 
 ## Get timestamp for benchmarking
 ```bash
-pipeline_start=$(date +"%Y-%m-%d_%H-%M-%S") # save time stamp of pipeline start
+pipeline_start=$(date +%Y-%m-%dT%H:%M:%S%z) # save time stamp of pipeline start
 ```
 
 ## Source directories and sourcefiles for software
@@ -98,7 +98,7 @@ mkdir -p ${dir_seg}
 ## End of Script
 ```bash
 echo '#task: structural_preprocessing_pipeline_T1T2' >> ${subject_log}
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo '' >> ${subject_log}
 ```
