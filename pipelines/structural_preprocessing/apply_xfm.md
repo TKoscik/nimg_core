@@ -18,7 +18,7 @@ unset xfm
 xfm=${dir_xfm}/${prefix}_from-T1w+rigid_to-${space}+${template}_xfm-stack.nii.gz
 ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz
 
-echo 'task: structural_apply_transform' >> ${subject_log}
+echo 'task: apply_transform' >> ${subject_log}
 for ((i = 0; i < ${#input_image[@]}; ++i)); do
   echo 'input_image: '${input_image[${i}]} >> ${subject_log}
   echo 'output_image: '${output_image[${i}]} >> ${subject_log}
