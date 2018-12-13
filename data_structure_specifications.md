@@ -213,8 +213,20 @@ ${nimg_core_root}/
     |  |  ∟HCPS1200_1mm_T2w_brain.nii.gz
     |  |  ∟HCPS1200_1mm_T2w_tissue.nii.gz
     |  ∟2mm/
+    |  |  ∟HCPS1200_2mm_T1w.nii.gz
+    |  |  ∟HCPS1200_2mm_T2w.nii.gz
     |  ∟700um/
+    |  |  ∟HCPS1200_700um_T1w.nii.gz
+    |  |  ∟HCPS1200_700um_T1w_brain.nii.gz
+    |  |  ∟HCPS1200_700um_T1w_mask-brain.nii.gz
+    |  |  ∟HCPS1200_700um_T2w.nii.gz
+    |  |  ∟HCPS1200_700um_T2w_brain.nii.gz
     |  ∟800um/
+    |  |  ∟HCPS1200_800um_T1w.nii.gz
+    |  |  ∟HCPS1200_800um_T1w_brain.nii.gz
+    |  |  ∟HCPS1200_800um_T1w_mask-brain.nii.gz
+    |  |  ∟HCPS1200_800um_T2w.nii.gz
+    |  |  ∟HCPS1200_800um_T2w_brain.nii.gz
     ∟ICBM2009ana/
     |  ∟1mm/    
     |  | ∟ICBM2009ana_1mm_PD.nii.gz
