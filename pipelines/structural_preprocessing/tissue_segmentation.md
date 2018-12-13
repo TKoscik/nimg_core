@@ -18,7 +18,7 @@ echo 'task: segmentation_atropos' >> ${subject_log}
 echo 'input_image: '${t1_image} >> ${subject_log}
 echo 'input_image: '${t2_image} >> ${subject_log}
 echo 'brain_mask: '${brain_mask} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 Atropos \
 -d 3 \
@@ -38,7 +38,7 @@ mv ${dir_seg}/${prefix}_seg-Posterior1.nii.gz ${dir_seg}/${prefix}_seg-CSF.nii.g
 mv ${dir_seg}/${prefix}_seg-Posterior2.nii.gz ${dir_seg}/${prefix}_seg-GM.nii.gz
 mv ${dir_seg}/${prefix}_seg-Posterior3.nii.gz ${dir_seg}/${prefix}_seg-WM.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
