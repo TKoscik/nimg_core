@@ -14,7 +14,7 @@ ${researcher}/${project}/derivatives/anat/
 which_bex="MALF"
 suffix=bex0
 
-echo 'task: structural_brain_extraction_selection' >> ${subject_log}
+echo 'task: brain_extraction_selection' >> ${subject_log}
 echo 'which_bex: '${which_bex} >> ${subject_log}
 echo 'bex_suffix: '${suffix} >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
