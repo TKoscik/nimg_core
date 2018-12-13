@@ -18,7 +18,11 @@ DenoiseImage \
   -d 3 \
   -i ${input_image} \
   -n Rician \
-  -o ${dir_prep}/${output_prefix}_prep-denoise.nii.gz
+  -o [${dir_prep}/${output_prefix}_prep-denoise.nii.gz,${dir_prep}/${output_prefix}_prep-noise.nii.gz] \
+  -s 1 \
+  -p 1 \
+  -r 2 \
+  -v 1
 
 date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
