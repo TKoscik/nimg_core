@@ -18,7 +18,7 @@ output_prefix=${t2_prefix}
 echo 'task: within-session_T2w_to_T1w' >> ${subject_log}
 echo 'fixed: '${fixed_image} >> ${subject_log}
 echo 'moving: '${moving_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 antsRegistration \
   -d 3 \
@@ -49,7 +49,7 @@ mv ${dir_prep}/temp_0GenericAffine.mat ${dir_xfm}/${prefix}_from-T2w+raw_to-T1w+
 mv ${dir_prep}/temp_1Warp.nii.gz ${dir_xfm}/${prefix}_from-T2w+raw_to-T1w+rigid_xfm-syn.nii.gz
 mv ${dir_prep}/temp_1InverseWarp.nii.gz ${dir_xfm}/${prefix}_from-T1w+rigid_to-T2w+raw_xfm-syn.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 
