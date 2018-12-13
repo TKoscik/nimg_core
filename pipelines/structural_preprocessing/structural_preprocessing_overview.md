@@ -8,7 +8,7 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 
 ***
 
-# Structural Preprocessing Steps
+### Structural Preprocessing Steps
 0. Scripting Parameters [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
 1. Gradient Distortion Unwarping [NOT IMPLEMENTED 2018-10-24] [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
 2. Readout Distortion Correction [NOT IMPLEMENTED 2018-10-24] [code](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
