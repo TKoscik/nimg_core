@@ -13,7 +13,7 @@ suffix=bex0  #change as needed to differentiate iterations, final iteration is b
 
 echo 'task: brain_extraction_AFNI' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 # AFNI skull strip ----
 3dSkullStrip \
@@ -21,7 +21,7 @@ date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
   -prefix ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz
 fslmaths ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -bin ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 
