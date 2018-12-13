@@ -1,4 +1,4 @@
-# Structural Preprocessing Pipelines
+# Structural Preprocessing Pipeline
 
 Each structural preprocessing script/job should be initialized with a set of user-defined parameters as well as operator specifications to interface with the HPC scheduler.  
 [Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)
@@ -8,149 +8,45 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 
 ***
 
-# T1w + T2w Pipeline:
+# Structural Preprocessing Steps
 [0. Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
-[2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
-[3. T1w - rigid alignment to template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
-[4. T1w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[5. Within-session, T2w coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-[6. T2w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[7.1. T1w - within-modality average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[7.2. T2w - within-modality average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[8.1. Preliminary brain extraction - AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[8.2. Preliminary brain extraction - ANTs](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[8.3. Preliminary brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[8.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-8.5. __Preliminary Brain Extraction Quality Control__  
-[8.6. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[9. Bias field correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
-[10.1. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[10.2. T2w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[11.1. Brain extraction - AFNI, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[11.2. Brain extraction - ANTs, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[11.3. Brain extraction - FSL BET, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[11.4. Brain extraction - MALF, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-11.5. __Brain Extraction Quality Control, (as needed)__  
-[11.6. Brain extraction - Selection, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
+[1. Gradient Distortion Unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
+[2. Readout Distortion Correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
+[3. Rigid Alignment T1w to Template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
+[4. Rician Denoising - T1w](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
+[5. Within-session Coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
+  * T2w, OTHER modalities
+[6. Rician Denoising](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
+  * T2w, OTHER modalities
+[7.1. Within-modality Average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
+  * T1w, T2w, OTHER modalities  
+[8. Brain extraction]
+  * Use T1w and T2w as available.
+  [1. AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
+  [2. ANTS](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
+  [3. BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
+  [4. MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
+  5. __Brain Extraction Quality Control__ (omit in fully automated, non-problematic brain processing)    
+  [6. Brain Mask Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
+[9. Bias Field Correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
+  * if T1w AND T2w images acquired
+  * apply field correction to OTHER modalities [untested]  
+[10. Bias Field Correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
+  * T1w, T2w  
+11. __Brain extraction and QC, as needed__ (repeat brain extraction in fully automated script, omit if manual brain extraction is performed)  
 [12. Tissue segmentation](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
-[13.1. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[13.2. T2w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[14. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-[15.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[15.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[15.3. Build transform stacks - T2w+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[16.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[16.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[16.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+  * Use T1w and T2w as available
+[13. Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
+  * T1w, T2w, OTHER modalities  
+[14. Normalization - T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
+[15.1. Build Transform Stacks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+  * T1w+rigid to Template  
+  * Template to T1w+rigid  
+  * T2w+raw to T1w+rigid  
+  * OTHER+raw to T1w+rigid  
+[16. Apply Transforms](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+  * processed T1w transform and resample to Template
+  * processed T2w transform and resample to Template  
+  * processed OTHER transform and resample to Template  
+  * Template Air Mask to T1w+rigid
 17. __Quality Control Report__  
-  
-## T1w Only Pipeline:
-[0. Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
-[2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
-[3. T1w - rigid alignment to template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
-[4. T1w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[5. T1w - within-modality average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[6.1. Preliminary brain extraction - AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[6.2. Preliminary brain extraction - ANTs](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[6.3. Preliminary brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[6.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-6.5. __Preliminary Brain Extraction Quality Control__  
-[6.6. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[7. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[8.1. Brain extraction - AFNI, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[8.2. Brain extraction - ANTs, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[8.3. Brain extraction - FSL BET, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[8.4. Brain extraction - MALF, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-8.5. __Brain Extraction Quality Control, (as needed)__  
-[8.6. Brain extraction - Selection, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[9. Tissue segmentation](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
-[10. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[11. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-[12.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[12.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[13.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[13.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-14. __Quality Control Report__ 
-
-## T1w + OTHER Pipeline:
-[0. Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
-[2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
-[3. T1w - rigid alignment to template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
-[4. T1w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[5. Within-session, OTHER MODALITY coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-[6. OTHER MODALITY - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[7.1. T1w - within-modality average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[7.1. OTHER MODALITY - within-modality average [if multiple images]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[8.1. Preliminary brain extraction - AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[8.2. Preliminary brain extraction - ANTs](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[8.3. Preliminary brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[8.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-8.5. __Preliminary Brain Extraction Quality Control__  
-[8.6. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[9.1. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[9.2. OTHER MODALITY - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[10.1. Brain extraction - AFNI, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[10.2. Brain extraction - ANTs, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[10.3. Brain extraction - FSL BET, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[10.4. Brain extraction - MALF, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-10.5. __Brain Extraction Quality Control, (as needed)__  
-[10.6. Brain extraction - Selection, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[11. Tissue segmentation](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
-[12.1. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[12.2. OTHER MODALITY - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[13. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-[14.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[14.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[14.3. Build transform stacks - OTHER+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[15.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[15.2. Apply transforms - processed OTHER to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[15.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-16. __Quality Control Report__  
-
-# T1w + T2w + OTHER Modality Pipeline
-[0. Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
-[1. Gradient distortion unwarping [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/gradient_distortion_unwarping.md)  
-[2. Readout distortion correction [NOT IMPLEMENTED 2018-10-24]](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/readout_distortion_correction.md)  
-[3. T1w - rigid alignment to template (retain native spacing)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/rigid_alignment.md)  
-[4. T1w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[5.1. Within-session, T2w coregistration to T1](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-[5.2. Within-session, OTHER coregistration to T1, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_session_multimodal_registration.md)  
-[6.1. T2w - Denoising (Rician)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[6.2. OTHER - Denoising (Rician), repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/denoising.md)  
-[7.1. T1w - within-modality average, if multiple images](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[7.2. T2w - within-modality average, if multiple images](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[7.3. OTHER - within-modality average, if multiple images, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/within_modality_average.md)  
-[8.1. Preliminary brain extraction - AFNI](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[8.2. Preliminary brain extraction - ANTs](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[8.3. Preliminary brain extraction - FSL BET](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[8.4. Preliminary brain extraction - MALF](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-8.5. __Preliminary Brain Extraction Quality Control__  
-[8.6. Preliminary brain extraction - Selection](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[9.1. Bias field correction - T1/T2](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_T1T2.md)  
-9.2. Apply T1/T2 Bias field correction to OTHER, repeat as needed.  
-[10.1. T1w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[10.2. T2w - Bias field correction - N4](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[10.3. OTHER - Bias field correction - N4, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/bias_field_correction_N4.md)  
-[11.1. Brain extraction - AFNI, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_AFNI.md)  
-[11.2. Brain extraction - ANTs, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_ANTS.md)  
-[11.3. Brain extraction - FSL BET, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_BET.md)  
-[11.4. Brain extraction - MALF, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_MALF.md)  
-11.5. __Brain Extraction Quality Control, (as needed)__  
-[11.6. Brain extraction - Selection, (as needed)](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/brain_extraction_selection.md)  
-[12. Tissue segmentation](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/tissue_segmentation.md)  
-[13.1. T1w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[13.2. T2w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[13.3. OTHER - Apply Brain/Tissue Masks, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
-[14. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
-[15.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[15.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[15.3. Build transform stacks - T2w+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)   
-[15.4. Build transform stacks - OTHER+raw to T1w+rigid, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[16.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[16.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[16.3. Apply transforms - processed OTHER to Template, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[16.4. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-17. __Quality Control Report__ 
