@@ -17,11 +17,11 @@ suffix=bex0
 echo 'task: brain_extraction_MALF' >> ${subject_log}
 echo 'input: '${t1_image} >> ${subject_log}
 echo 'input: '${t2_image} >> ${subject_log}
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 # Majority-vote brain mask
-  fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -thr 2 -bin -ero -dilM -dilM -ero ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz
+fslmaths ${dir_prep}/${prefix}_prep-${suffix}ANTS.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}BET.nii.gz -add ${dir_prep}/${prefix}_prep-${suffix}AFNI.nii.gz -thr 2 -bin -ero -dilM -dilM -ero ${dir_prep}/${prefix}_prep-${suffix}MALF.nii.gz
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
