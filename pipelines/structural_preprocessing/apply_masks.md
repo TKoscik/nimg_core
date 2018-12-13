@@ -20,13 +20,13 @@ echo 'input_image: '${input_image} >> ${subject_log}
 for ((i = 0; i < ${#mask[@]}; ++i)); do
   echo 'input_mask: '${i} >> ${subject_log}
 done
-date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
 for ((i = 0; i < ${#mask[@]}; ++i)); do
   fslmaths ${input_image} -mas ${mask[${i}]} ${output_image[${i}]}
 done
 
-date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
+date +"end_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 echo '' >> ${subject_log}
 ```
 ### Citations:
