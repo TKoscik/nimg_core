@@ -63,6 +63,12 @@ mkdir -p ${researcher}/${project}/log/hpc_output
 subject_log=${researcher}/${project}/log/sub-${subject}_ses-${session}_site-${site}.log
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: structural_preprocessing_pipeline_T1T2' >> ${subject_log}
+echo 'software: AFNI' >> ${subject_log}
+echo 'version: '${afni_version} >> ${subject_log}
+echo 'software: ANTs' >> ${subject_log}
+echo 'version: '${ants_version} >> ${subject_log}
+echo 'software: FSL' >> ${subject_log}
+echo 'version: '${fsl_version} >> ${subject_log}
 echo 'start_time: '${pipeline_start} >> ${subject_log}
 echo '' >> ${subject_log}
 ```
