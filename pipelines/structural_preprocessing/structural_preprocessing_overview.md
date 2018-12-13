@@ -38,12 +38,12 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [13.2. T2w - Apply Brain/Tissue Masks](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_masks.md)  
 [14. T1w - Normalization to template space](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/normalization_to_template_space.md)  
 [15.1. Build transform stacks - T1w+rigid to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[16.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[16.3. Build transform stacks - T2w+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
-[17.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[17.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-[17.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-18. __Quality Control Report__  
+[15.2. Build transform stacks - Template to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+[15.3. Build transform stacks - T2w+raw to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/build_xfm_stack.md)  
+[16.1. Apply transforms - processed T1w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+[16.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+[16.3. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
+17. __Quality Control Report__  
   
 ## T1w Only Pipeline:
 [0. Scripting Parameters](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/scripting_parameters.md)  
@@ -153,4 +153,4 @@ copies of citations can be found online [HERE](https://paperpile.com/shared/5aIn
 [16.2. Apply transforms - processed T2w to Template](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
 [16.3. Apply transforms - processed OTHER to Template, repeat as needed](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
 [16.4. Apply transforms - Template Air Mask to T1w+rigid](https://github.com/TKoscik/nimg_core/blob/master/pipelines/structural_preprocessing/apply_xfm.md)  
-18. __Quality Control Report__ 
+17. __Quality Control Report__ 
