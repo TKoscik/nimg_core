@@ -44,11 +44,11 @@ in
 esac
 done
 
-for i in ${researcherRoot}/${projectName}/derivatives/anat/[a-zA-Z0-9]*/[a-zA-Z0-9]* ; do 
- T1bc=`find $i -name \*T1w_acq-MPRAGE_prep-bc.nii.gz`
- T2bc=`find $i -name \*T2w_acq-CUBE_prep-bc.nii.gz`
- SUBJECTID=$(echo $i |awk -F/ '{print $5}')
- MRQID=$(echo $i |awk -F/ '{print $6}')
+for i in ${researcherRoot}/${projectName}/derivatives/anat/prep/[a-zA-Z0-9]*/[a-zA-Z0-9]* ; do 
+ T1bc=`find $i -name \*T1w_prep-biasFieldN4.nii.gz`
+ T2bc=`find $i -name \*T2w_prep-biasFieldN4.nii.gz`
+ SUBJECTID=$(echo $i |awk -F/ '{print $6}')
+ MRQID=$(echo $i |awk -F/ '{print $7}')
  if [ "$T2bc" == "" ] ; then
    echo "Error:  No T2 exists for ${SUBJECTID}/${MRQID} use T1 only scripts"
  else 
