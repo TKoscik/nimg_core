@@ -2,7 +2,7 @@
 subject_log=researcherRoot/projectName/log/sub-SUBJECTID_ses-MRQID_site-site.log
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: FSwbcv6T1' >> ${subject_log}
-echo 't1: 'T1bc >> ${subject_log}
+echo 't1: T1bc >> ${subject_log}
 echo 'software: FreeSurfer' >> ${subject_log}
 echo 'version: 6.0 >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
