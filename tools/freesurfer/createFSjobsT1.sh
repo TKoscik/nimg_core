@@ -48,8 +48,8 @@ done
 for i in ${researcherRoot}/${projectName}/derivatives/anat/prep/[a-zA-Z0-9]*/[a-zA-Z0-9]* ; do 
  T1bc=`find $i -name \*T1w_prep-biasFieldN4.nii.gz`
  T2bc=`find $i -name \*T2w_prep-biasFieldN4.nii.gz`
- SUBJECTID=$(echo $i |awk -F/ '{print $5}')
- MRQID=$(echo $i |awk -F/ '{print $6}')
+ SUBJECTID=$(echo $i |awk -F/ '{print $6}')
+ MRQID=$(echo $i |awk -F/ '{print $7}')
   if [ "$T2bc" != "" ] ; then
    echo "Error:  T2 exists for ${SUBJECTID}/${MRQID} should you use T1-T2 scripts?"
   else 
