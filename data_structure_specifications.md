@@ -34,19 +34,19 @@ ${researcherRoot}/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-${acq}[_run-${run}]_${mod}.nii.gz
     |      ∟cal/
     |      ∟dwi/
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_dwi.bval
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_dwi.bvec
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_dwi.json
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_dwi.nii.gz
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-b${bvalue}v${directions}_dir-${pe}_dwi.bval
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-b${bvalue}v${directions}_dir-${pe}_dwi.bvec
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-b${bvalue}v${directions}_dir-${pe}_dwi.json
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-b${bvalue}v${directions}_dir-${pe}_dwi.nii.gz
     |      ∟fmap/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_magnitude.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_magnitude.nii.gz
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_phase.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_phase.nii.gz
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_pe-AP_spinecho.json
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_pe-AP_spinecho.nii.gz
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_pe-PA_spinecho.json
-    |      |  ∟sub-${subject}_ses-${session}_site-${site}_pe-PA_spinecho.nii.gz
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_mod-bold_dir-AP_spinecho.json
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_mod-bold_dir-AP_spinecho.nii.gz
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_mod-bold_dir-PA_spinecho.json
+    |      |  ∟sub-${subject}_ses-${session}_site-${site}_mod-bold_dir-PA_spinecho.nii.gz
     |      ∟func/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_run-${run}_bold.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_run-${run}_bold.nii.gz
