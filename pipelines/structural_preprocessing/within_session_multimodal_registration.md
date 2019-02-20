@@ -29,20 +29,20 @@ antsRegistration \
   -z 1 \
   -r [${fixed_image},${moving_image},1] \
   -t Rigid[0.1] \
-  -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
-  -c [1000x500x250x0,1e-6,10] \
-  -f 6x4x2x1 \
-  -s 4x2x1x0 \
+  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \
+  -c [2100x1200x1200x0,1e-6,10] \
+  -f 4x2x2x0 \
+  -s 3x2x1x0 \
   -t Affine[0.1] \
-  -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
-  -c [1000x500x250x0,1e-6,10] \
-  -f 6x4x2x1 \
-  -s 4x2x1x0 \
-  -t SyN[0.1,3,0] \
-  -m CC[${fixed_image},${moving_image},1,4] \
-  -c [100x100x70x20,1e-9,10] \
-  -f 6x4x2x1 \
-  -s 3x2x1x0vox \
+  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \
+  -c [2100x1200x1200x0,1e-6,10] \
+  -f 4x2x2x1 \
+  -s 3x2x1x0 \
+  -t SyN[0.2,3,0] \
+  -m Mattes[${fixed_image},${moving_image},1,32] \
+  -c [40x20x0,1e-7,8] \
+  -f 4x2x1 \
+  -s 2x1x0 \
   -o [${dir_prep}/temp_,${dir_prep}/${output_prefix}_prep-rigid.nii.gz]
 
 mv ${dir_prep}/temp_0GenericAffine.mat ${dir_xfm}/${prefix}_from-T2w+raw_to-T1w+rigid_xfm-affine.mat
