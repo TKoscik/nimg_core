@@ -1,10 +1,8 @@
 # DWI Processing
 ## Output:
 ```
-**Not coded yet**
-${researcher}/${project}/derivatives/dwi/native
-  ∟sub-${subject}_ses-${session}_*_${mod}_
-  ∟sub-${subject}_ses-${session}_*_${mod}_
+${researcher}/${project}/derivatives/dwi/scalar
+  ∟sub-${subject}_ses-${session}_*_Scalar_*.nii.gz
 ```
 ## Code:
 ```bash
@@ -23,34 +21,33 @@ site=00201
 # Initialize Output Folders
 #------------------------------------------------------------------------------
 dir_raw=${researcher}/${project}/sub-${subject}/ses-${session}/dwi
+dir_anat_raw=${researcher}/${project}/sub-${subject}/ses-${session}/anat
 
-#dir_native=${researcher}/${project}/derivatives/dwi/native
-#dir_mask=${researcher}/${project}/derivatives/dwi/mask
 dir_prep=${researcher}/${project}/derivatives/dwi/prep/sub-${subject}/ses-${session}
 dir_results=${researcher}/${project}/derivatives/dwi/results/sub-${subject}/ses-${session}
-dir_raw=${researcher}/${project}/sub-${subject}/ses-${session}/dwi
+dir_xfm=${researcher}/${project}/derivatives/xfm/qc/dwi_prep
+dir_scalar=${researcher}/${project}/derivatives/dwi/scalar
 
-#mkdir -p ${dir_native}
-#mkdir -p ${dir_mask}
 mkdir -p ${dir_prep}
 mkdir -p ${dir_results}
+mkdir -p ${dir_xfm}
 
 #------------------------------------------------------------------------------
-# 1. B0 Extraction
+# 1. B0 Extraction, Topup Prep
 #------------------------------------------------------------------------------
-cd ${dir_raw}
-rm ./*_b0.nii.gz \
-  ./*_hifi.nii.gz \
-  ./*_eddy.nii.gz \
-  ./All_b0s.nii.gz \
-  ./allB0sAcqParams.txt \
-  ./*B0sAcqParams.txt
 
-unset allB0Files
-declare -a allB0Files
-touch allB0sAcqParams.txt
+rm ${dir_prep}/*.nii.gz \
+  ${dir_prep}/*.bval \
+  ${dir_prep}/*.bvec \
+  ${dir_prep}/*.json \
+  ${dir_prep}/*.txt
 
-for i in *dwi.nii.gz; do
+cp ${dir_raw}/*.* ${dir_prep}/
+
+unset allDwiFiles
+declare -a allDwiFiles
+
+for i in ${dir_prep}/*dwi.nii.gz; do
   unset dtiFile dtiName B0s numB0s PEDstring PEDSTRING PED EESstring EES AcqMPEstring AcqMPE readoutTime
   dtiFile=$i
   dtiName=${dtiFile::-11}
@@ -69,66 +66,132 @@ for i in *dwi.nii.gz; do
   AcqMPE=${AcqMPEstring::-1}
   readoutTime=$(echo "${EES} * ((${AcqMPE} / 2) - 1)" | bc -l)
   touch ${dtiName}_B0sAcqParams.txt
+  indx=""
   for j in "${B0s[@]}"; do
-    if [ $j -eq 0 ]
-      then 
+    indx="${indx} 1"
+    if [ $j -eq 0 ]; then
       let numB0s=numB0s+1;
       echo "0 ${PED} 0 ${readoutTime}" >> ${dtiName}_B0sAcqParams.txt
     fi
-   done
+  done
+  echo $indx > ${dtiName}_index.txt
   fslroi ${dtiFile} ${dtiName}_b0.nii.gz 0 ${numB0s}
-  allB0Files+=(${dtiName}_b0.nii.gz)
+  allDwiFiles+=(${dtiName})
 done
 
-cat *_B0sAcqParams.txt >> allB0sAcqParams.txt
-fslmerge -t All_b0s.nii.gz ${allB0Files[@]}
+
+for i in ${allDwiFiles[@]}; do
+  unset tempB0Files
+  declare -a tempB0Files
+  unset tempB0AcqFiles
+  declare -a tempB0AcqFiles
+  for j in ${allDwiFiles[@]}; do
+    if [ "$i" != "$j" ]; then
+      tempB0Files+=(${j}_b0.nii.gz)
+      tempB0AcqFiles+=(${j}_B0sAcqParams.txt)
+    fi
+  done
+  fslmerge -t ${i}_all_B0s.nii.gz ${i}_b0.nii.gz ${tempB0Files[@]}
+  cat ${i}_B0sAcqParams.txt ${tempB0AcqFiles[@]} >> ${i}_all_B0sAcqParams.txt
+done
+
 
 #------------------------------------------------------------------------------
 # 2. Topup, Eddy Correction, and DWI Brain Mask
 #------------------------------------------------------------------------------
-topup \
-  --imain=All_b0s.nii.gz \
-  --datain=allB0sAcqParams.txt \
-  --config=b02b0.cnf \
-  --out=topup_results \
-  --iout=all_b0s_hifif_b0.nii.gz
 
-for i in *dwi.nii.gz; do
+rm ${dir_prep}/*brain.nii.gz \
+  ${dir_prep}/*mask.nii.gz \
+  ${dir_prep}/*hifi_b0.nii.gz \
+  ${dir_prep}/*eddy.nii.gz
+
+for i in ${dir_prep}/*_dwi.nii.gz; do
   dtiFile=$i
   dtiName=${dtiFile::-11}
-  rm ${dtiName}_dwi_hifi.nii.gz
-  applytopup \
+  topup \
+    --imain=${dtiName}_all_B0s.nii.gz \
+    --datain=${dtiName}_all_B0sAcqParams.txt \
+    --config=b02b0.cnf \
+    --out=topup_results \
+    --iout=${dtiName}_hifi_b0.nii.gz
+  fslmaths ${dtiName}_hifi_b0.nii.gz -Tmean ${dtiName}_hifi_b0.nii.gz
+  bet ${dtiName}_hifi_b0.nii.gz ${dtiName}_hifi_b0_brain.nii.gz -m
+  eddy \
     --imain=${dtiFile} \
-    --datain=${dtiName}_B0sAcqParams.txt \
-    --inindex=1 \
+    --mask=${dtiName}_hifi_b0_brain_mask.nii.gz \
+    --acqp=${dtiName}_B0sAcqParams.txt \
+    --index=${dtiName}_index.txt \
+    --bvecs=${dtiName}_dwi.bvec \
+    --bvals=${dtiName}_dwi.bval \
     --topup=topup_results \
-    --method=jac \
-    --out=${dtiName}_dwi_hifi.nii.gz
-  rm ${dtiName}_dwi_hifi_eddy.nii.gz ${dtiName}_dwi_hifi_eddy.ecclog
-  eddy_correct ${dtiName}_dwi_hifi.nii.gz ${dtiName}_dwi_hifi_eddy.nii.gz 0
-  rm ${dtiName}_dwi_hifi_eddy_BET.nii.gz ${dtiName}_dwi_hifi_eddy_BET_mask.nii.gz
-  bet \
-    ${dtiName}_dwi_hifi_eddy.nii.gz \
-    ${dtiName}_dwi_hifi_eddy_BET.nii.gz \
-    -m -R
+    --out=${dtiName}_dwi_hifi_eddy.nii.gz
 done
 
 #------------------------------------------------------------------------------
 # 3. DWI Scalars
 #------------------------------------------------------------------------------
-for i in *eddy.nii.gz; do
-  rm ./*Scalar*.nii.gz
+rm ${dir_prep}/*Scalar*.nii.gz
+
+for i in ${dir_prep}/*_eddy.nii.gz; do
   dtiFile=$i
   dtiEddyName=${dtiFile::-7}
-  dtiName=${dtiFile::-17}
+  dtiName=${dtiFile::-12}
   dtifit \
     -k ${dtiFile} \
     -o ${dtiEddyName}_Scalar \
     -r ${dtiName}.bvec \
     -b ${dtiName}.bval \
-    -m ${dtiEddyName}_BET_mask.nii.gz
+    -m ${dtiName}_hifi_b0_brain_mask.nii.gz
 done
+
+#------------------------------------------------------------------------------
+# 4. Register Scalars to Native Space
+#------------------------------------------------------------------------------
+echo 'task: dwi rigid_alignment' >> ${subject_log}
+date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
+
+for i in ${dir_prep}/*dti.nii.gz; do
+  dtiFile=$i
+  dtiName=${dtiFile::-11}
+  fixed_image=${dir_anat_raw}/*T2w.nii.gz
+  moving_image=${dtiName}_dwi_hifi_eddy.nii.gz
+  antsRegistration \
+    -d 3 \
+    --float 1 \
+    --verbose 1 \
+    -u 1 \
+    -w [0.01,0.99] \
+    -z 1 \
+    -r [${fixed_image},${moving_image},1] \
+    -t Rigid[0.1] \
+    -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \
+    -c [2100x1200x1200x0,1e-6,10] \
+    -f 4x2x2x1 \
+    -s 3x2x1x0 \
+    -o ${dtiName}_temp_
+
+  for j in ${dtiName}*Scalar*.nii.gz; do
+    ScalarFile=$j
+    ScalarName=${ScalarFile::-7}
+    antsApplyTransforms -d 3 \
+      -i ${moving_image} \
+      -o ${ScalarName}_prep-rigid.nii.gz \
+      -t ${dtiName}_temp_0GenericAffine.mat \
+      -r ${moving_image}
+  done
+  mv ${dtiName}_temp_0GenericAffine.mat ${dir_xfm}/
+done
+
+#------------------------------------------------------------------------------
+# 5. Move Results
+#------------------------------------------------------------------------------
+for i in ${dir_prep}/*Scalar*; do
+  mv $i ${dir_scalar}/
+done
+
+
 
 ```
 ### Citations:
 >Jenkinson M, Beckmann CF, Behrens TE, Woolrich MW, & Smith SM. (2012). FSL. Neuroimage, 62(2), 782-790. DOI:10.1016/j.neuroimage.2011.09.015 PMID:21979382
+>Avants BB, Tustison NJ, Song G, & Gee JC. (2009). Ants: Open-source tools for normalization and neuroanatomy. Transac Med Imagins Penn Image Comput Sci Lab.
