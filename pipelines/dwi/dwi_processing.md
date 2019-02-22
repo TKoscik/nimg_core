@@ -116,7 +116,7 @@ for i in ${dir_prep}/*_dwi.nii.gz; do
     --iout=${dtiName}_hifi_b0.nii.gz
   fslmaths ${dtiName}_hifi_b0.nii.gz -Tmean ${dtiName}_hifi_b0.nii.gz
   bet ${dtiName}_hifi_b0.nii.gz ${dtiName}_hifi_b0_brain.nii.gz -m
-  eddy \
+  eddy_openmp \
     --imain=${dtiFile} \
     --mask=${dtiName}_hifi_b0_brain_mask.nii.gz \
     --acqp=${dtiName}_B0sAcqParams.txt \
@@ -135,12 +135,12 @@ rm ${dir_prep}/*Scalar*.nii.gz
 for i in ${dir_prep}/*_eddy.nii.gz; do
   dtiFile=$i
   dtiEddyName=${dtiFile::-7}
-  dtiName=${dtiFile::-12}
+  dtiName=${dtiFile::-21}
   dtifit \
     -k ${dtiFile} \
     -o ${dtiEddyName}_Scalar \
-    -r ${dtiName}.bvec \
-    -b ${dtiName}.bval \
+    -r ${dtiName}_dwi.bvec \
+    -b ${dtiName}_dwi.bval \
     -m ${dtiName}_hifi_b0_brain_mask.nii.gz
 done
 
