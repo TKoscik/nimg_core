@@ -91,64 +91,64 @@ echo 'dir_jac=${researcher}/${project}/derivatives/anat/jac_${space}_${template}
 echo 'dir_seg=${researcher}/${project}/derivatives/anat/segmentation' >> ${job_name}
 echo '' >> ${job_name}
 echo 'if [ ! -d "${researcher}/${project}/derivatives" ]; then' >> ${job_name}
-echo 'mkdir -p ${researcher}/${project}/derivatives' >> ${job_name}
-echo 'chgrp -R ${group} ${researcher}/${project}/derivatives' >> ${job_name}
-echo 'chmod -R g+rw ${researcher}/${project}/derivatives' >> ${job_name}
+echo '  mkdir -p ${researcher}/${project}/derivatives' >> ${job_name}
+echo '  chgrp -R ${group} ${researcher}/${project}/derivatives' >> ${job_name}
+echo '  chmod -R g+rw ${researcher}/${project}/derivatives' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${researcher}/${project}/derivatives/anat" ]; then' >> ${job_name}
-echo 'mkdir -p ${researcher}/${project}/derivatives/anat' >> ${job_name}
-echo 'chgrp -R ${group} ${researcher}/${project}/derivatives/anat' >> ${job_name}
-echo 'chmod -R g+rw ${researcher}/${project}/derivatives/anat' >> ${job_name}
+echo '  mkdir -p ${researcher}/${project}/derivatives/anat' >> ${job_name}
+echo '  chgrp -R ${group} ${researcher}/${project}/derivatives/anat' >> ${job_name}
+echo '  chmod -R g+rw ${researcher}/${project}/derivatives/anat' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${researcher}/${project}/derivatives/anat/prep" ]; then' >> ${job_name}
-echo 'mkdir -p ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
-echo 'chgrp -R ${group} ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
-echo 'chmod -R g+rw ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
+echo '  mkdir -p ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
+echo '  chgrp -R ${group} ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
+echo '  chmod -R g+rw ${researcher}/${project}/derivatives/anat/prep' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${researcher}/${project}/derivatives/anat/prep/sub-${subject}" ]; then' >> ${job_name}
-echo 'mkdir -p ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
-echo 'chgrp -R ${group} ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
-echo 'chmod -R g+rw ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
+echo '  mkdir -p ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
+echo '  chgrp -R ${group} ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
+echo '  chmod -R g+rw ${researcher}/${project}/derivatives/anat/prep/sub-${subject}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${researcher}/${project}/derivatives/xfm" ]; then' >> ${job_name}
-echo 'mkdir -p ${researcher}/${project}/derivatives/xfm' >> ${job_name}
-echo 'chgrp -R ${group} ${researcher}/${project}/derivatives/xfm' >> ${job_name}
-echo 'chmod -R g+rw ${researcher}/${project}/derivatives/xfm' >> ${job_name}
+echo '  mkdir -p ${researcher}/${project}/derivatives/xfm' >> ${job_name}
+echo '  chgrp -R ${group} ${researcher}/${project}/derivatives/xfm' >> ${job_name}
+echo '  chmod -R g+rw ${researcher}/${project}/derivatives/xfm' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_native}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_native}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_native}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_native}' >> ${job_name}
+echo '  mkdir -p ${dir_native}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_native}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_native}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_mask}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_mask}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_mask}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_mask}' >> ${job_name}
+echo '  mkdir -p ${dir_mask}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_mask}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_mask}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_prep}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_prep}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_prep}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_prep}' >> ${job_name}
+echo '  mkdir -p ${dir_prep}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_prep}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_prep}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_xfm}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_xfm}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_xfm}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_xfm}' >> ${job_name}
+echo '  mkdir -p ${dir_xfm}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_xfm}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_xfm}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_norm}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_norm}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_norm}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_norm}' >> ${job_name}
+echo '  mkdir -p ${dir_norm}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_norm}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_norm}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_jac}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_jac}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_jac}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_jac}' >> ${job_name}
+echo '  mkdir -p ${dir_jac}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_jac}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_jac}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo 'if [ ! -d "${dir_seg}" ]; then' >> ${job_name}
-echo 'mkdir -p ${dir_seg}' >> ${job_name}
-echo 'chgrp -R ${group} ${dir_seg}' >> ${job_name}
-echo 'chmod -R g+rw ${dir_seg}' >> ${job_name}
+echo '  mkdir -p ${dir_seg}' >> ${job_name}
+echo '  chgrp -R ${group} ${dir_seg}' >> ${job_name}
+echo '  chmod -R g+rw ${dir_seg}' >> ${job_name}
 echo 'fi' >> ${job_name}
 echo '' >> ${job_name}
 echo '#------------------------------------------------------------------------------' >> ${job_name}
@@ -293,7 +293,7 @@ echo '  -f ${dir_template}/OASIS/T_template0_BrainCerebellumRegistrationMask.nii
 echo '  -o ${dir_prep}/${prefix}_prep-${suffix}' >> ${job_name}
 echo '' >> ${job_name}
 echo 'mv ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionMask.nii.gz \' >> ${job_name}
-echo '${dir_prep}/${prefix}_prep-${suffix}Brain.nii.gz' >> ${job_name}
+echo '  ${dir_prep}/${prefix}_prep-${suffix}Brain.nii.gz' >> ${job_name}
 echo 'rm ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionBrain.nii.gz' >> ${job_name}
 echo 'rm ${dir_prep}/${prefix}_prep-${suffix}BrainExtractionPrior0GenericAffine.mat' >> ${job_name}
 echo '' >> ${job_name}
