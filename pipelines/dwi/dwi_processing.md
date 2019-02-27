@@ -21,7 +21,7 @@ site=00201
 # Initialize Output Folders
 #------------------------------------------------------------------------------
 dir_raw=${researcher}/${project}/sub-${subject}/ses-${session}/dwi
-dir_anat_raw=${researcher}/${project}/sub-${subject}/ses-${session}/anat
+dir_anat_native=${researcher}/${project}/derivatices/anat/native/
 
 dir_prep=${researcher}/${project}/derivatives/dwi/prep/sub-${subject}/ses-${session}
 dir_results=${researcher}/${project}/derivatives/dwi/results/sub-${subject}/ses-${session}
@@ -150,11 +150,12 @@ done
 echo 'task: dwi rigid_alignment' >> ${subject_log}
 date +"start_time: %Y-%m-%dT%H:%M:%S%z" >> ${subject_log}
 
-for i in ${dir_prep}/*dti.nii.gz; do
+for i in ${dir_prep}/*_dwi.nii.gz; do
   dtiFile=$i
   dtiName=${dtiFile::-11}
-  fixed_image=${dir_anat_raw}/*T2w.nii.gz
-  moving_image=${dtiName}_dwi_hifi_eddy.nii.gz
+  fixed_image=${dir_anat_native}/sub-${subject}_ses-${session}_site-${site}_T2w_brain.nii.gz
+  moving_image=${dtiName}_dwi_hifi_eddy_Scalar_FA.nii.gz
+
   antsRegistration \
     -d 3 \
     --float 1 \
