@@ -15,6 +15,8 @@ template=1mm
 email="timothy-koscik@uiowa.edu"
 queue=CCOM,UI,PINC
 parallel="-pe 56cpn 56"
+xfm_init_qr=q
+xfm_init_num=1
 # -----------------------------------------------------------------------------
 
 job_dir=${researcher}/${project}/code/structuralPrep_jobs
@@ -170,7 +172,7 @@ echo '  --float 1 \' >> ${job_name}
 echo '  --verbose 1 \' >> ${job_name}
 echo '  -u 1 \' >> ${job_name}
 echo '  -z 1 \' >> ${job_name}
-echo '  -q [${fixed_image},${moving_image},1] \' >> ${job_name}
+echo '  -'${xfm_init_qr}' [${fixed_image},${moving_image},'${xfm_init_num}'] \' >> ${job_name}
 echo '  -t Rigid[0.1] \' >> ${job_name}
 echo '  -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \' >> ${job_name}
 echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
