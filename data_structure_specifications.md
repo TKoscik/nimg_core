@@ -122,8 +122,9 @@ ${researcherRoot}/
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
-    |  |  ∟scalar/
-    |  |  ∟tensor/
+    |  |  ∟scalar_${space}_${template}/
+    |  |  ∟scalar_native/
+    |  |  ∟native/
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟full_ts/
