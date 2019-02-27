@@ -163,12 +163,17 @@ for i in ${dir_prep}/*_dwi.nii.gz; do
     -u 1 \
     -w [0.01,0.99] \
     -z 1 \
-    -r [${fixed_image},${moving_image},1] \
+    -q [${fixed_image},${moving_image},2] \
     -t Rigid[0.1] \
-    -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \
-    -c [2100x1200x1200x0,1e-6,10] \
-    -f 4x2x2x1 \
-    -s 3x2x1x0 \
+    -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
+    -c [1000x500x250x100,1e-6,10] \
+    -f 8x4x2x1 \
+    -s 3x2x1x0vox \
+    -t Affine[0.1] \
+    -m MI[${fixed_image},${moving_image},1,32,Regular,0.25] \
+    -c [1000x500x250x100,1e-6,10] \
+    -f 8x4x2x1 \
+    -s 3x2x1x0vox \
     -o ${dtiName}_temp_
 
   for j in ${dtiName}*Scalar*.nii.gz; do
