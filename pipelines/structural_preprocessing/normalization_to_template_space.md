@@ -26,27 +26,26 @@ antsRegistration \
   --float 1 \
   --verbose 1 \
   -u 1 \
-  -w [0.01,0.99] \
   -z 1 \
   -r [${fixed_brain},${moving_brain},1] \
   -t Rigid[0.1] \
-  -m Mattes[${fixed_brain},${moving_brain},1,32,Regular,0.25] \
-  -m Mattes[${fixed_tissue},${moving_tissue},1,32,Regular,0.25] \
-  -c [2100x1200x1200x0,1e-6,10] \
-  -f 4x2x2x1 \
-  -s 3x2x1x0 \
+  -m MI[${fixed_brain},${moving_brain},1,32,Regular,0.25] \
+  -m MI[${fixed_tissue},${moving_tissue},1,32,Regular,0.25] \
+  -c [100x500x250x100,1e-6,10] \
+  -f 8x4x2x1 \
+  -s 3x2x1x0vox \
   -t Affine[0.1] \
-  -m Mattes[${fixed_brain},${moving_brain},1,32,Regular,0.25] \
-  -m Mattes[${fixed_tissue},${moving_tissue},1,32,Regular,0.25] \
-  -c [2100x1200x1200x0,1e-6,10] \
-  -f 4x2x2x1 \
-  -s 3x2x1x0 \
-  -t SyN[0.2,3,0] \
-  -m Mattes[${fixed_brain},${moving_brain},1,32] \
-  -m Mattes[${fixed_tissue},${moving_tissue},1,32] \
-  -c [40x20x0,1e-7,8] \
-  -f 4x2x1 \
-  -s 2x1x0 \
+  -m MI[${fixed_brain},${moving_brain},1,32,Regular,0.25] \
+  -m MI[${fixed_tissue},${moving_tissue},1,32,Regular,0.25] \
+  -c [100x500x250x100,1e-6,10] \
+  -f 8x4x2x1 \
+  -s 3x2x1x0vox \
+  -t SyN[0.1,3,0] \
+  -m CC[${fixed_brain},${moving_brain},1,4] \
+  -m CC[${fixed_tissue},${moving_tissue},1,4] \
+  -c [100x70x50x20,1e-6,10] \
+  -f 8x4x2x1 \
+  -s 3x2x1x0vox \
   -o ${dir_prep}/temp_
 
 mv ${dir_prep}/temp_0GenericAffine.mat \
