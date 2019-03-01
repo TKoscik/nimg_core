@@ -119,12 +119,12 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
+    |  |  ∟corrected/
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
     |  |  ∟scalar_${space}_${template}/
     |  |  ∟scalar_native/
-    |  |  ∟native/
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟full_ts/
@@ -183,72 +183,38 @@ ${nimg_core_root}/
   ∟templates/
     ∟${space}/
     |  ∟${template}/
+    |     ∟${space}_${template}_mask-air.nii.gz
+    |     ∟${space}_${template}_mask-brain.nii.gz
+    |     ∟${space}_${template}_mask-tissue.nii.gz
+    |     ∟${space}_${template}_T1w.nii.gz
+    |     ∟${space}_${template}_T1w_brain.nii.gz
+    |     ∟${space}_${template}_T1w_tissue.nii.gz
+    |     ∟${space}_${template}_T2w.nii.gz
+    |     ∟${space}_${template}_T2w_brain.nii.gz
+    |     ∟${space}_${template}_T2w_tissue.nii.gz
     ∟CIT168/
-    |  ∟700um/
-    |  ∟1mm/
-    |  ∟2mm/
     ∟FSLMNI152/ 
-    |  ∟1mm/
-    |  |  ∟FSLMNI152_1mm_T1w.nii.gz
-    |  |  ∟FSLMNI152_1mm_T1w_brain.nii.gz
-    |  |  ∟FSLMNI152_1mm_T1w_mask-air.nii.gz
-    |  |  ∟FSLMNI152_1mm_T1w_mask-brain.nii.gz
-    |  |  ∟FSLMNI152_1mm_T1w_mask-tissue.nii.gz
-    |  ∟2mm/    
-    |  |  ∟FSLMNI152_2mm_T1w.nii.gz
-    |  |  ∟FSLMNI152_2mm_T1w_brain.nii.gz
-    |  |  ∟FSLMNI152_2mm_T1w_mask-air.nii.gz
-    |  |  ∟FSLMNI152_2mm_T1w_mask-brain.nii.gz
-    |  |  ∟FSLMNI152_2mm_T1w_mask-tissue.nii.gz
-    |  ∟500um/
-    |  |  ∟FSLMNI152_500um_T1w.nii.gz   
-    ∟HCPS1200/
-    |  ∟1mm/
-    |  |  ∟HCPS1200_1mm_mask-air.nii.gz
-    |  |  ∟HCPS1200_1mm_mask-brain.nii.gz
-    |  |  ∟HCPS1200_1mm_mask-tissue.nii.gz
-    |  |  ∟HCPS1200_1mm_T1w.nii.gz
-    |  |  ∟HCPS1200_1mm_T1w_brain.nii.gz
-    |  |  ∟HCPS1200_1mm_T1w_tissue.nii.gz
-    |  |  ∟HCPS1200_1mm_T2w.nii.gz
-    |  |  ∟HCPS1200_1mm_T2w_brain.nii.gz
-    |  |  ∟HCPS1200_1mm_T2w_tissue.nii.gz
-    |  ∟2mm/
-    |  |  ∟HCPS1200_2mm_T1w.nii.gz
-    |  |  ∟HCPS1200_2mm_T2w.nii.gz
+    ∟HCPICBM/     *This is an unbiased average of 1113 HCP subjects,
+    |  ∟1mm/       registering tissue and brain together but independently,
+    |  ∟2mm/       which has been registered to ICBM2009bna_500um,
+    |  ∟500um/     then resample to different sizes.
     |  ∟700um/
-    |  |  ∟HCPS1200_700um_T1w.nii.gz
-    |  |  ∟HCPS1200_700um_T1w_brain.nii.gz
-    |  |  ∟HCPS1200_700um_T1w_mask-brain.nii.gz
-    |  |  ∟HCPS1200_700um_T2w.nii.gz
-    |  |  ∟HCPS1200_700um_T2w_brain.nii.gz
     |  ∟800um/
-    |  |  ∟HCPS1200_800um_T1w.nii.gz
-    |  |  ∟HCPS1200_800um_T1w_brain.nii.gz
-    |  |  ∟HCPS1200_800um_T1w_mask-brain.nii.gz
-    |  |  ∟HCPS1200_800um_T2w.nii.gz
-    |  |  ∟HCPS1200_800um_T2w_brain.nii.gz
+    ∟HCPMNI2009c/
+    ∟HCPNOBS1/    #unbiased HCP average, tissue and brain registered
+    ∟HCPNOBS1pad/ #unbiased HCP average, tissue and brain registered, 0-padded
+    ∟HCPS1200/
     ∟ICBM2009ana/
-    |  ∟1mm/    
-    |  | ∟ICBM2009ana_1mm_PD.nii.gz
-    |  | ∟ICBM2009ana_1mm_T1w.nii.gz
-    |  | ∟ICBM2009ana_1mm_T1w_mask-brain.nii.gz
-    |  | ∟ICBM2009ana_1mm_T2w.nii.gz
-    ∟ICBM2009b/
-    |  ∟500um/
-    |  | ∟ICBM2009bna_500um_PD.nii.gz
-    |  | ∟ICBM2009bna_500um_T1w.nii.gz
-    |  | ∟ICBM2009bna_500um_T2w.nii.gz
-    ∟ICBM2009c/
-    |  ∟1mm/    
-    |  |  ∟ICBM2009cna_1mm_PD.nii.gz
-    |  |  ∟ICBM2009cna_1mm_T1w.nii.gz
-    |  |  ∟ICBM2009cna_1mm_T1w_mask-brain.nii.gz
-    |  |  ∟ICBM2009cna_1mm_T2w.nii.gz
+    ∟ICBM2009bna/
+    ∟ICBM2009cna/
+    ∟NIHPDa045085
+    ∟NIHPDa045185
+    ∟NIHPDa070110
+    ∟NIHPDa075135
+    ∟NIHPDa100140
+    ∟NIHPDa130185
+    ∟OASIS/        # for ANTs brain extraction
     ∟WU7112bTal/
-    |  ∟1mm/   
-    |  ∟2mm/
-    |  ∟3mm/
     ∟xfm/
        ∟from-${space}+${template}_to-${space}+${template}_xfm.nii.gz
        ∟from-FSLMNI152+1mm_to-HCPS1200+1mm_xfm.nii.gz
