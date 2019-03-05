@@ -63,18 +63,18 @@ ${researcherRoot}/
     |  |  ∟brains2/ #legacy support only
     |  |  |  ∟sub-${ursi}_ses-${mrqid}_brains2.zip
     |  |  ∟baw/
-    |  |  |  ∟ACCUMULATED_POSTERIORS/
-    |  |  |  ∟ACPCAlign/
-    |  |  |  ∟JointFusion/
-    |  |  |  |  ∟allVol/
-    |  |  |  |  ∟lobeVol/
-    |  |  |  ∟TissueClassify/
-    |  |  |  ∟WarpedAtlas2Subject/
+    |  |  |  ∟sub-${subject}_ses-${session}/
+    |  |  |  |  ∟ACCUMULATED_POSTERIORS/
+    |  |  |  |  ∟ACPCAlign/
+    |  |  |  |  ∟JointFusion/
+    |  |  |  |   ∟allVol/
+    |  |  |  |   ∟lobeVol/
+    |  |  |  |  ∟TissueClassify/
+    |  |  |  |  ∟WarpedAtlas2Subject/
     |  |  ∟fsurf/
-    |  |  |   ∟subject_dir/
     |  |  |  |  ∟fsaverage/
     |  |  |  |  ∟sub-${subject}_ses-${session}/
-    |  |  |  ∟resample/
+    |  |  |  |  ∟resample/
     |  |  ∟native/
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
