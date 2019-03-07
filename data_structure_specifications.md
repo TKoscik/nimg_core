@@ -72,9 +72,10 @@ ${researcherRoot}/
     |  |  |  |  ∟TissueClassify/
     |  |  |  |  ∟WarpedAtlas2Subject/
     |  |  ∟fsurf/
+    |  |  |  ∟subject_dir
     |  |  |  |  ∟fsaverage/
     |  |  |  |  ∟sub-${subject}_ses-${session}/
-    |  |  |  |  ∟resample/
+    |  |  |  ∟resample/
     |  |  ∟native/
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
