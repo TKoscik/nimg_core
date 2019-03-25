@@ -120,7 +120,11 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
+    |  |  ∟b0_mean/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_b0_mask-brain.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_b0_mean.nii.gz
     |  |  ∟corrected/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
