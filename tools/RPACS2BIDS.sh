@@ -509,16 +509,17 @@ logger () {     ## All info is available in $tmp, just 'awk' it out
             printf("%s plane %dx%d matrix, %s %dmm thick, ",Plane,Ma,Mb,FOV,Thk);\
             printf("%s %s %s\n",Dstr,"'$SubID'","'$SesID'")}' $tmp |\
             tee -a $Mmp >> $LogFile
-
+### Prior to appending the .json, need to find it (namiing is not set in stone), then
+###   remove the trailiing curly brace "}" to insert additional info.
 #        END{printf("\"TextDescriptionForPubs\": \"%s images were collected on a ",'$Modality') >> JSON; \
 #            printf("%s %s scanner %s using a %s %s", Field, Manuf, Model, SerDesc, Acq) >> JSON;\
 #            if(Acq="2D"){printf("in the %s plane, ", Plane) >> JSON;}\
 #            printf("with the following parameters: acquisition time = %s, ", AcqTTime) >> JSON;\
 #            printf("pulse sequence = %s, matrix = %s, FOV = %g x %g, ", Seq, Matrix, FOVx, FOVy ) >> JSON;\
 #            printf("voxel size = %g x %g x %g, slice spacing = %g, ", Xmm, Ymm, Thk, SliceSpacing ) >> JSON;\
-#            printf("slice order = %s , TR = %d ms, TE = %d ms, ","??",TR,TE,) >> JSON;\
+#            printf("slice order = %s , TR = %d ms, TE = %d ms, ","??",TR,TE) >> JSON;\
 #            printf("TI = %d ms, flip angle = %d degrees, ",TI,Flip) >> JSON;\
-#            printf("bandwidth = %s Hz, phase encoding direction = \"\n",,,) >> JSON;\
+#            printf("bandwidth = %s Hz, phase encoding direction = %s\"\n","??","??") >> JSON;\
 #            }        
 #    Slice order?
 #    https://www.nitrc.org/forum/forum.php?thread_id=8599&forum_id=4703
