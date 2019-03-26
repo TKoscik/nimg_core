@@ -1,0 +1,9 @@
+site	field_strength	vendor	model_name	serial_number	software_version	coil_description	coil_serial	site_code	scanner_code	coil_code	code
+UIHC	3.0	GE	DISCOVERY_MR950	###	v###	head_32_channel	###	1	1	1	1+1+1
+UIHC	3.0	GE	DISCOVERY_MR750w	###	DV26_R01	head_32_channel	###	1	2	1	1+2+1
+UIHC	3.0	GE	DISCOVERY_MR750w	###	DV26_R01	head_24_channel	###	1	2	2	1+2+2
+UIHC	3.0	GE	DISCOVERY_MR750w	###	DV26_R01	head_8_channel	###	1	2	3	1+2+3
+UIHC	7.0	GE	GENESISSIGNA	###	v###	head_2_channel	###	1	3	1	1+3+1
+UIHC	7.0	GE	GENESISSIGNA	###	v###	head_8_channel	###	1	3	2	1+3+2
+UIHC	3.0	Siemens	TrioTim	###	v###	coil_description	###	1	4	1	1+4+1
+UIHC	3.0	Siemens	Avanto	###	v###	coil_description	###	1	5	1	1+5+1
