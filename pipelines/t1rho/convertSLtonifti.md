@@ -1,4 +1,4 @@
-# Convert spin lock files to nifti
+# Convert spin lock files to nifti and check for all data
 ## Output:
 ```
 ${researcher}/${project}/derivatives/tlrho/
@@ -111,5 +111,22 @@ for IDs in `awk -F, 'NR>1{print $1"/"$2}' $DM1_info | sort -u` ; do
          mri_convert --in_type siemens_dicom --out_type nii $dcmPic $rhoDir/TSL${highspintime}.nii.gz
       fi
    fi
+#Check directory for all data
+i=2
+while [[ $i -le $listcount ]]; do
+   echo "${i},${j},${k}"
+   tmpdata=`cat $outdir/DM1_NC_T1rho_subList.csv | head -n+${i} | tail -n-1`
+   ursi=`echo $tmpdata | awk -F"," '{print $1}'`
+   mrqid=`echo $tmpdata | awk -F"," '{print $2}'`
+   rhoDir=$indir/$ursi/$mrqid/T1rho
+   pushd $rhoDir > /dev/null
+   echo "${ursi}/${mrqid}"
+   ls -1
+   echo ""
+   popd $rhoDir > /dev/null
+   let i=i+4
+done
+  #Looks OK now
+  
 ```
 
