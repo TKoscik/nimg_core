@@ -1,4 +1,4 @@
-``
+```
 
 
 #!/bin/bash
@@ -307,4 +307,4 @@ if [ "${native_orient}" != "RIP" ]; then
 else
   echo "...No need to reorient.  Dataset already in RIP orientation."
 fi
-``
+```
