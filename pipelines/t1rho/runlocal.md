@@ -5,7 +5,7 @@ ${researcher}/${project}/derivatives/tlrho/
   ∟T1rhoMap.nii.gz
 ```
 ## Code:
-
+```
 #Run on local hardware
 sg Research-nopouloslab bash
 export PATH=/Shared/pinc/sharedopt/apps/ants/Linux/x86_64/2.1.0:${PATH}
@@ -39,3 +39,4 @@ for Info in `cat $List` ; do
       -i -o $rhoDir |& tee -a $LogFile > /dev/null
    #break
 done
+```
