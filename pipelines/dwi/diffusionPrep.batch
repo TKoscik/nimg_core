@@ -274,14 +274,22 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
   echo '' >> ${job_name}
   echo 'rm ${dir_prep}/*Scalar*.nii.gz' >> ${job_name}
-  echo 'fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
-  echo 'dtifit \' >> ${job_name}
-  echo '  -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
-  echo '  -o ${dir_prep}/All_Scalar \' >> ${job_name}
-  echo '  -r ${dir_prep}/All.bvec \' >> ${job_name}
-  echo '  -b ${dir_prep}/All.bval \' >> ${job_name}
-  echo '  -m ${dir_prep}/All_hifi_b0_brain_mask.nii.gz ' >> ${job_name}
-  echo '' >> ${job_name}
+  echo 'if [ ${smoothing} -eq 0 ]; then' >> ${job_name}
+  echo '  dtifit \' >> ${job_name}
+  echo '    -k ${dir_prep}/All_dwi_hifi_eddy.nii.gz \' >> ${job_name}
+  echo '    -o ${dir_prep}/All_Scalar \' >> ${job_name}
+  echo '    -r ${dir_prep}/All.bvec \' >> ${job_name}
+  echo '    -b ${dir_prep}/All.bval \' >> ${job_name}
+  echo '    -m ${dir_prep}/All_hifi_b0_brain_mask.nii.gz ' >> ${job_name}
+  echo 'else ' >> ${job_name}
+  echo '  fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
+  echo '  dtifit \' >> ${job_name}
+  echo '    -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
+  echo '    -o ${dir_prep}/All_Scalar \' >> ${job_name}
+  echo '    -r ${dir_prep}/All.bvec \' >> ${job_name}
+  echo '    -b ${dir_prep}/All.bval \' >> ${job_name}
+  echo '    -m ${dir_prep}/All_hifi_b0_brain_mask.nii.gz ' >> ${job_name}
+  echo 'fi' >> ${job_name}
   echo 'mv ${dir_prep}/All_Scalar* ${dir_tensor}/' >> ${job_name}
   echo '' >> ${job_name}
   echo 'date +"task:extract_scalars,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
