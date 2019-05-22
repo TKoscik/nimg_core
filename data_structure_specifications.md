@@ -16,6 +16,7 @@ updated: September 25, 2018
 ${researcherRoot}/
   ∟${projectName}/
     ∟participants.tsv
+    ∟site.tsv
     ∟code
     ∟dicom/                   Read-only archive
     |  ∟sub-${subject}_ses-${session}_site-${site}.zip
@@ -28,7 +29,7 @@ ${researcherRoot}/
     ∟nifti/                   Read-only archive
     |  ∟sub-${subject}/
     |    ∟ses-${session}/
-    |      ∟session_info.tsv
+    |      ∟session.tsv
     |      ∟anat/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-${acq}[_run-${run}]_${mod}.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_acq-${acq}[_run-${run}]_${mod}.nii.gz
@@ -132,12 +133,36 @@ ${researcherRoot}/
     |  |  ∟scalar_native/
     |  ∟func/
     |  |  ∟analyses/
-    |  |  ∟full_ts/
+    |  |  ∟label/
+    |  |  ∟mask/
+    |  |  ∟moco/
+    |  |  |  ∟moco_${template}_native/
+    |  |  |  |  ∟avg/
+    |  |  |  |  |  ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_bold.nii.gz 
+    |  |  |  |  ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_bold.nii.gz    
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
-    |  |  ∟rest/
-    |  |  ∟stbeta/
+    |  |  |        ∟blipDir/
+    |  |  |        ∟fmapDir/
+    |  |  |        ∟motionCorr/
+    |  |  |        ∟regressDir/
+    |  |  |           ∟36p/
+    |  |  |           ∟friston/
+    |  |  |           ∟global/
+    |  |  |           ∟tissue/
+    |  |  ∟resid/
+    |  |  |  ∟36pDespike/
+    |  |  |  |  ∟resid_${template}_native
+    |  |  |  |  |  ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_bold.nii.gz  
+    |  |  |  |  ∟resid_${template}_2mm
+    |  |  |  |  |  ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_bold.nii.gz  
+    |  |  |  |  ∟stbs_${template}_2mm
+    |  |  |  |  |  ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_bold.nii.gz  
+    |  |  |  |  ∟ts
+    |  |  |  |     ∟sub-${subject}_ses-${session}_site-${site}_task-rest_*_regressors.1D  
+    |  |  |  ∟CompCor/
+    |  |  |  ∟ICAAROMA/
     |  ∟mrs/
     |  ∟xfm/
     |  |  ∟sub-${subject}/
