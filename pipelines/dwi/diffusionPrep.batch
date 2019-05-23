@@ -236,7 +236,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'date +"task:b0-extraction_topup-prep,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo '' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo '# 2. Topup, Eddy Correction, and DWI Brain Mask' >> ${job_name}
+  echo '# 2. Topup' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
   echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
   echo '' >> ${job_name}
@@ -253,56 +253,14 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  --out=${dir_prep}/topup_results \' >> ${job_name}
   echo '  --iout=${dir_prep}/All_hifi_b0.nii.gz' >> ${job_name}
   echo 'fslmaths ${dir_prep}/All_hifi_b0.nii.gz -Tmean ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
-  echo 'bet ${dir_prep}/All_hifi_b0_mean.nii.gz ${dir_prep}/All_hifi_b0_brain.nii.gz -m' >> ${job_name}
-  echo 'eddy_openmp \' >> ${job_name}
-  echo '  --imain=${dir_prep}/All_dwis.nii.gz \' >> ${job_name}
-  echo '  --mask=${dir_prep}/All_hifi_b0_brain_mask.nii.gz \' >> ${job_name}
-  echo '  --acqp=${dir_prep}/All_dwisAcqParams.txt \' >> ${job_name}
-  echo '  --index=${dir_prep}/All_index.txt \' >> ${job_name}
-  echo '  --bvecs=${dir_prep}/All.bvec \' >> ${job_name}
-  echo '  --bvals=${dir_prep}/All.bval \' >> ${job_name}
-  echo '  --topup=${dir_prep}/topup_results \' >> ${job_name}
-  echo '  --out=${dir_prep}/All_dwi_hifi_eddy.nii.gz' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'cp ${dir_prep}/All_dwi_hifi_eddy.nii.gz ${dir_corrected}/${prefix}_dwi.nii.gz' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'date +"task:topup_eddy-correction,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo '' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo '# 3. DWI Scalars' >> ${job_name}
+  echo '# 4. Brain Mask/T2 registration' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'rm ${dir_prep}/*Scalar*.nii.gz' >> ${job_name}
-  echo 'if [ ${smoothing} -eq 0 ]; then' >> ${job_name}
-  echo '  dtifit \' >> ${job_name}
-  echo '    -k ${dir_prep}/All_dwi_hifi_eddy.nii.gz \' >> ${job_name}
-  echo '    -o ${dir_prep}/All_Scalar \' >> ${job_name}
-  echo '    -r ${dir_prep}/All.bvec \' >> ${job_name}
-  echo '    -b ${dir_prep}/All.bval \' >> ${job_name}
-  echo '    -m ${dir_prep}/All_hifi_b0_brain_mask.nii.gz ' >> ${job_name}
-  echo 'else ' >> ${job_name}
-  echo '  fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
-  echo '  dtifit \' >> ${job_name}
-  echo '    -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
-  echo '    -o ${dir_prep}/All_Scalar \' >> ${job_name}
-  echo '    -r ${dir_prep}/All.bvec \' >> ${job_name}
-  echo '    -b ${dir_prep}/All.bval \' >> ${job_name}
-  echo '    -m ${dir_prep}/All_hifi_b0_brain_mask.nii.gz ' >> ${job_name}
-  echo 'fi' >> ${job_name}
-  echo 'mv ${dir_prep}/All_Scalar* ${dir_tensor}/' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'date +"task:extract_scalars,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
-  echo '' >> ${job_name}
-  echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo '# 4. Register B0 to T2 in native space' >> ${job_name}
-  echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
-  echo '' >> ${job_name}
   echo 'rm ${dir_prep}/*.mat' >> ${job_name}
   echo 'rm ${dir_prep}/*prep-rigid*' >> ${job_name}
   echo '' >> ${job_name}
-  echo 'fixed_image=${dir_anat_native}/sub-${subject}_ses-${session}_site-${site}_T2w_brain.nii.gz' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
   echo 'moving_image=${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
   echo 'antsRegistration \' >> ${job_name}
   echo '  -d 3 \' >> ${job_name}
@@ -322,39 +280,98 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
   echo '  -f 8x4x2x1 \' >> ${job_name}
   echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -o ${dir_prep}/dwi_to_nativeMask_temp_' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_0GenericAffine.mat \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1Warp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-synMask.nii.gz' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1InverseWarp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_anat_mask}/${prefix}_mask-brain.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/DTI_undilatedMask.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz \' >> ${job_name}
+  echo '  -r ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 ${dir_prep}/DTI_mask.nii.gz MD ${dir_prep}/DTI_undilatedMask.nii.gz 5' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 5. Eddy Correction' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'eddy_openmp \' >> ${job_name}
+  echo '  --imain=${dir_prep}/All_dwis.nii.gz \' >> ${job_name}
+  echo '  --mask=${dir_prep}/DTI_mask.nii.gz \' >> ${job_name}
+  echo '  --acqp=${dir_prep}/All_dwisAcqParams.txt \' >> ${job_name}
+  echo '  --index=${dir_prep}/All_index.txt \' >> ${job_name}
+  echo '  --bvecs=${dir_prep}/All.bvec \' >> ${job_name}
+  echo '  --bvals=${dir_prep}/All.bval \' >> ${job_name}
+  echo '  --topup=${dir_prep}/topup_results \' >> ${job_name}
+  echo '  --out=${dir_prep}/All_dwi_hifi_eddy.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'cp ${dir_prep}/All_dwi_hifi_eddy.nii.gz ${dir_corrected}/${prefix}_dwi.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:topup_eddy-correction,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 3. DWI Scalars' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'rm ${dir_prep}/*Scalar*.nii.gz' >> ${job_name}
+  echo 'fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
+  echo 'dtifit \' >> ${job_name}
+  echo '  -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/All_Scalar \' >> ${job_name}
+  echo '  -r ${dir_prep}/All.bvec \' >> ${job_name}
+  echo '  -b ${dir_prep}/All.bval \' >> ${job_name}
+  echo '  -m ${dir_prep}/DTI_mask.nii.gz ' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/All_Scalar* ${dir_tensor}/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:extract_scalars,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 4. Register to native space' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
+  echo 'moving_image1=${dir_prep}/All_Scalar_FA.nii.gz' >> ${job_name}
+  echo 'moving_image2=${dir_prep}/All_Scalar_MD.nii.gz' >> ${job_name}
+  echo 'moving_image3=${dir_prep}/All_Scalar_S0.nii.gz' >> ${job_name}
+  echo 'antsRegistration \' >> ${job_name}
+  echo '  -d 3 \' >> ${job_name}
+  echo '  -x [${dir_anat_mask}/${prefix}_mask-brain.nii.gz,${dir_prep}/DTI_mask.nii.gz] \' >> ${job_name}
+  echo '  --float 1 \' >> ${job_name}
+  echo '  --verbose 1 \' >> ${job_name}
+  echo '  -u 1 \' >> ${job_name}
+  echo '  -w [0.01,0.99] \' >> ${job_name}
+  echo '  -z 1 \' >> ${job_name}
+  echo '  -r [${fixed_image},${moving_image},1] \' >> ${job_name}
+  echo '  -t Rigid[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -t Affine[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
   echo '  -t SyN[0.1,3,0] \' >> ${job_name}
-  echo '  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
   echo '  -c [100x70x50x20,1e-6,10] \' >> ${job_name}
   echo '  -f 8x4x2x1 \' >> ${job_name}
   echo '  -s 3x2x1x0vox \' >> ${job_name}
   echo '  -o ${dir_prep}/dwi_to_native_temp_' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
-  echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
-  echo '  -o ${dir_native_scalars}/FA/${prefix}_reg-T2w+rigid_FA.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
-  echo '  -r ${fixed_image}' >> ${job_name}
-  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
-  echo '  -i ${dir_tensor}/All_Scalar_MD.nii.gz \' >> ${job_name}
-  echo '  -o ${dir_native_scalars}/MD/${prefix}_reg-T2w+rigid_MD.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
-  echo '  -r ${fixed_image}' >> ${job_name}
-  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
-  echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
-  echo '  -o ${dir_native_scalars}/AD/${prefix}_reg-T2w+rigid_AD.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
-  echo '  -r ${fixed_image}' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'fslmaths ${dir_tensor}/All_Scalar_L2.nii.gz -add ${dir_tensor}/All_Scalar_L3.nii.gz -div 2 ${dir_prep}/All_Scalar_RD.nii.gz' >> ${job_name}
-  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
-  echo '  -i ${dir_prep}/All_Scalar_RD.nii.gz \' >> ${job_name}
-  echo '  -o ${dir_native_scalars}/RD/${prefix}_reg-T2w+rigid_RD.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
-  echo '  -r ${fixed_image}' >> ${job_name}
   echo '' >> ${job_name}
   echo 'mv ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
   echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat' >> ${job_name}
@@ -362,6 +379,34 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz' >> ${job_name}
   echo 'mv ${dir_prep}/dwi_to_native_temp_1InverseWarp.nii.gz \' >> ${job_name}
   echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-syn.nii.gz' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/FA/${prefix}_reg-T2w+rigid_FA.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_MD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/MD/${prefix}_reg-T2w+rigid_MD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/AD/${prefix}_reg-T2w+rigid_AD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fslmaths ${dir_tensor}/All_Scalar_L2.nii.gz -add ${dir_tensor}/All_Scalar_L3.nii.gz -div 2 ${dir_prep}/All_Scalar_RD.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/All_Scalar_RD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/RD/${prefix}_reg-T2w+rigid_RD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
   echo '' >> ${job_name}
   echo 'date +"task:register_from-B0_to-T2w+rigid,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo '' >> ${job_name}
@@ -371,15 +416,447 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
   echo '' >> ${job_name}
   echo 'unset xfm' >> ${job_name}
-  echo 'xfm[0]=${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat' >> ${job_name}
-  echo 'xfm[1]=${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz' >> ${job_name}
-  echo 'xfm[2]=${dir_xfm}/${prefix}_from-T1w+rigid_to-${space}+${template}_xfm-stack.nii.gz' >> ${job_name}
+  echo 'rm ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz' >> ${job_name}
   echo 'ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -o [${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz,1] \' >> ${job_name}
-  echo '  -t ${xfm[2]} \' >> ${job_name}
-  echo '  -t ${xfm[1]} \' >> ${job_name}
-  echo '  -t ${xfm[0]} \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-T1w+rigid_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:xfm_stack_b0_to-template,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 6. Apply Transforms - Scalars to Template Space' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'unset xfm' >> ${job_name}#! /bin/bash
+
+researcher=/Shared/!!!
+project=!!!_bids
+group=Research-!!!
+space=HCPICBM
+template=1mm
+smoothing=0
+
+hpc_email=!!!uiowa.edu
+hpc_msgs=bes
+hpc_queue=UI,PINC
+hpc_pe="smp 28"
+
+#------------------------------------------------------------------------------
+subject_tsv=${researcher}/${project}/participants.tsv
+
+unset sub_list
+unset ses_list
+unset site_list
+while IFS=$'\t\r' read -r sub ses site t1w t2w;
+do
+  sub_list+=(${sub})
+  ses_list+=(${ses})
+  site_list+=(${site})
+  t1w_list+=(${t1w})
+  t2w_list+=(${t2w})
+done < ${subject_tsv}
+
+num_scans="${#sub_list[@]}"
+for (( i=1; i<${num_scans}; i++ )); do
+  job_dir=${researcher}/${project}/code/diffusionPrep_jobs
+  mkdir -p ${job_dir}
+  job_name=${job_dir}/sub-${sub_list[${i}]}_ses-${ses_list[${i}]}_site-${site_list[${i}]}_diffusionPrep.job
+
+  echo 'Writing '${job_name}
+  echo '#! /bin/bash' > ${job_name}
+  echo '#$ -M '${hpc_email} >> ${job_name}
+  echo '#$ -m '${hpc_msgs} >> ${job_name}
+  echo '#$ -q '${hpc_queue} >> ${job_name}
+  echo '#$ -pe '${hpc_pe} >> ${job_name}
+  echo '#$ -j y' >> ${job_name}
+  echo '#$ -o '${researcher}/${project}'/log/hpc_output/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'pipeline_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Set Up Software' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'module load OpenBLAS' >> ${job_name}
+  echo 'nimg_core_root=/Shared/nopoulos/nimg_core' >> ${job_name}
+  echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/ants_source.sh' >> ${job_name}
+  echo 'ants_version=$(echo "${ANTSPATH}" | cut -d "/" -f9)' >> ${job_name}
+  echo 'fsl_version=6.0.1_multicore' >> ${job_name}
+  echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_version}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Specify Analysis Variables' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'researcher='${researcher} >> ${job_name}
+  echo 'project='${project} >> ${job_name}
+  echo 'subject='${sub_list[${i}]} >> ${job_name}
+  echo 'session='${ses_list[${i}]} >> ${job_name}
+  echo 'site='${site_list[${i}]} >> ${job_name}
+  echo 'space='${space} >> ${job_name}
+  echo 'template='${template} >> ${job_name}
+  echo 'group='${group} >> ${job_name}
+  echo 'prefix=sub-${subject}_ses-${session}_site-${site}' >> ${job_name}
+  echo 'smoothing='${smoothing} >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Initial Log Entry' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'mkdir -p ${researcher}/${project}/log/hpc_output' >> ${job_name}
+  echo 'subject_log=${researcher}/${project}/log/sub-${subject}_ses-${session}_site-${site}.log' >> ${job_name}
+  echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
+  echo 'echo "task:diffusionPrep_noBlipUpDown" >> ${subject_log}' >> ${job_name}
+  echo 'echo "software:ANTs,version:"${ants_version} >> ${subject_log}' >> ${job_name}
+  echo 'echo "software:FSL,"${fsl_version} >> ${subject_log}' >> ${job_name}
+  echo 'echo "start:"${pipeline_start} >> ${subject_log}' >> ${job_name}
+  echo 'echo "" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Initialize Output Folders' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'dir_template=${nimg_core_root}/templates_human' >> ${job_name}
+  echo 'dir_raw=${researcher}/${project}/nifti/sub-${subject}/ses-${session}/dwi' >> ${job_name}
+  echo 'dir_anat_native=${researcher}/${project}/derivatives/anat/native' >> ${job_name}
+  echo 'dir_xfm=${researcher}/${project}/derivatives/xfm/sub-${subject}/ses-${session}' >> ${job_name}
+  echo 'dir_prep=${researcher}/${project}/derivatives/dwi/prep/sub-${subject}/ses-${session}' >> ${job_name}
+  echo 'dir_corrected=${researcher}/${project}/derivatives/dwi/corrected' >> ${job_name}
+  echo 'dir_tensor=${researcher}/${project}/derivatives/dwi/tensor/sub-${subject}/ses-${session}' >> ${job_name}
+  echo 'dir_native_scalars=${researcher}/${project}/derivatives/dwi/scalars_native' >> ${job_name}
+  echo 'dir_template_scalars=${researcher}/${project}/derivatives/dwi/scalars_${space}_${template}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mkdir -p ${dir_xfm}' >> ${job_name}
+  echo 'mkdir -p ${dir_prep}' >> ${job_name}
+  echo 'mkdir -p ${dir_corrected}' >> ${job_name}
+  echo 'mkdir -p ${dir_tensor}' >> ${job_name}
+  echo 'mkdir -p ${dir_template_scalars}/FA' >> ${job_name}
+  echo 'mkdir -p ${dir_template_scalars}/MD' >> ${job_name}
+  echo 'mkdir -p ${dir_template_scalars}/AD' >> ${job_name}
+  echo 'mkdir -p ${dir_template_scalars}/RD' >> ${job_name}
+  echo 'mkdir -p ${dir_native_scalars}/FA' >> ${job_name}
+  echo 'mkdir -p ${dir_native_scalars}/MD' >> ${job_name}
+  echo 'mkdir -p ${dir_native_scalars}/AD' >> ${job_name}
+  echo 'mkdir -p ${dir_native_scalars}/RD' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 1. B0 Extraction, Topup Prep' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'rm ${dir_prep}/*.nii.gz' >> ${job_name}
+  echo 'rm ${dir_prep}/*.bval' >> ${job_name}
+  echo 'rm ${dir_prep}/*.bvec' >> ${job_name}
+  echo 'rm ${dir_prep}/*.json' >> ${job_name}
+  echo 'rm ${dir_prep}/*.txt' >> ${job_name}
+  echo 'cp ${dir_raw}/*.* ${dir_prep}/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '# Check and Fix Odd Dimensions' >> ${job_name}
+  echo 'for i in ${dir_prep}/*_dwi.nii.gz; do' >> ${job_name}
+  echo '  IFS=x read -r -a dimTemp <<< $(PrintHeader ${i} 2)' >> ${job_name}
+  echo '  dimChk=0' >> ${job_name}
+  echo '  for j in {0..2}; do' >> ${job_name}
+  echo '    if [ $((${dimTemp[${j}]}%2)) -eq 1 ]; then' >> ${job_name}
+  echo '      dimTemp[${j}]=$((${dimTemp[${j}]}-1))' >> ${job_name}
+  echo '      dimChk=1' >> ${job_name}
+  echo '    fi' >> ${job_name}
+  echo '    if [ ${dimChk} -eq 1 ]; then' >> ${job_name}
+  echo '      fslroi ${i} ${dir_prep}/temp.nii.gz 0 ${dimTemp[0]} 0 ${dimTemp[1]} 0 ${dimTemp[2]}' >> ${job_name}
+  echo '      mv ${dir_prep}/temp.nii.gz ${i}' >> ${job_name}
+  echo '    fi' >> ${job_name}
+  echo '  done' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'unset allDwiNames B0s' >> ${job_name}
+  echo 'declare -a allDwiNames' >> ${job_name}
+  echo 'declare -a B0s' >> ${job_name}
+  echo 'for i in ${dir_prep}/*_dwi.nii.gz; do' >> ${job_name}
+  echo '  unset dtiName B0s numB0s PEDstring PEDSTRING PED EESstring EES AcqMPEstring AcqMPE readoutTime' >> ${job_name}
+  echo '  dtiName=${i::-11}' >> ${job_name}
+  echo '  B0s=($(cat ${dtiName}_dwi.bval))' >> ${job_name}
+  echo '  numB0s=0' >> ${job_name}
+  echo '  PEDstring=$(grep '\''"PhaseEncodingDirection"'\'' ${dtiName}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  PEDSTRING=${PEDstring::-4}' >> ${job_name}
+  echo '  if [ -z $PEDSTRING ]; then' >> ${job_name}
+  echo '    PED=1' >> ${job_name}
+  echo '  else' >> ${job_name}
+  echo '    PED=-1' >> ${job_name}
+  echo '  fi' >> ${job_name}
+  echo '  EESstring=$(grep '\''"EffectiveEchoSpacing"'\'' ${dtiName}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  EES=${EESstring::-1}' >> ${job_name}
+  echo '  AcqMPEstring=$(grep '\''"AcquisitionMatrixPE"'\'' ${dtiName}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  AcqMPE=${AcqMPEstring::-1}' >> ${job_name}
+  echo '  readoutTime=$(echo "${EES} * ((${AcqMPE} / 2) - 1)" | bc -l)' >> ${job_name}
+  echo '  touch ${dtiName}_B0sAcqParams.txt' >> ${job_name}
+  echo '  for j in "${B0s[@]}"; do' >> ${job_name}
+  echo '    if [ $j -eq 0 ]; then' >> ${job_name}
+  echo '      let numB0s=numB0s+1;' >> ${job_name}
+  echo '      echo "0 ${PED} 0 ${readoutTime}" >> ${dtiName}_B0sAcqParams.txt' >> ${job_name}
+  echo '    fi' >> ${job_name}
+  echo '  done' >> ${job_name}
+  echo '  fslroi ${i} ${dtiName}_b0.nii.gz 0 ${numB0s}' >> ${job_name}
+  echo '  allDwiNames+=(${dtiName})' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'rm ${dir_prep}/All_dwisAcqParams.txt' >> ${job_name}
+  echo 'rm ${dir_prep}/All.bvec' >> ${job_name}
+  echo 'rm ${dir_prep}/All.bval' >> ${job_name}
+  echo 'rm ${dir_prep}/All_index.txt' >> ${job_name}
+  echo 'rm ${dir_prep}/XVals.txt' >> ${job_name}
+  echo 'rm ${dir_prep}/YVals.txt' >> ${job_name}
+  echo 'rm ${dir_prep}/ZVals.txt' >> ${job_name}
+  echo 'unset acqLine indx TotalBVals TotalXVals TotalYVals TotalZVals' >> ${job_name}
+  echo 'acqLine=1' >> ${job_name}
+  echo 'indx=""' >> ${job_name}
+  echo 'TotalBVals=""' >> ${job_name}
+  echo 'TotalXVals=""' >> ${job_name}
+  echo 'TotalYVals=""' >> ${job_name}
+  echo 'TotalZVals=""' >> ${job_name}
+  echo 'touch ${dir_prep}/All_dwisAcqParams.txt' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'for i in ${allDwiNames[@]}; do' >> ${job_name}
+  echo '  unset BVals XVals YVals ZVals PEDstring PEDSTRING PED EESstring EES AcqMPEstring AcqMPE readoutTime' >> ${job_name}
+  echo '  BVals=($(cat ${i}_dwi.bval))' >> ${job_name}
+  echo '  for j in "${BVals[@]}"; do' >> ${job_name}
+  echo '    indx="${indx} ${acqLine}"' >> ${job_name}
+  echo '  done' >> ${job_name}
+  echo '  XVals=($(sed "1q;d" ${i}_dwi.bvec))' >> ${job_name}
+  echo '  YVals=($(sed "2q;d" ${i}_dwi.bvec))' >> ${job_name}
+  echo '  ZVals=($(sed "3q;d" ${i}_dwi.bvec))' >> ${job_name}
+  echo '  TotalBVals="${TotalBVals} ${BVals[@]}"' >> ${job_name}
+  echo '  echo $TotalBVals' >> ${job_name}
+  echo '  TotalXVals="${TotalXVals} ${XVals[@]}"' >> ${job_name}
+  echo '  TotalYVals="${TotalYVals} ${YVals[@]}"' >> ${job_name}
+  echo '  TotalZVals="${TotalZVals} ${ZVals[@]}"' >> ${job_name}
+  echo '  PEDstring=$(grep '\''"PhaseEncodingDirection"'\'' ${i}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  PEDSTRING=${PEDstring::-4}' >> ${job_name}
+  echo '  if [ -z $PEDSTRING ]; then' >> ${job_name}
+  echo '    PED=1' >> ${job_name}
+  echo '  else' >> ${job_name}
+  echo '    PED=-1' >> ${job_name}
+  echo '  fi' >> ${job_name}
+  echo '  EESstring=$(grep '\''"EffectiveEchoSpacing"'\'' ${i}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  EES=${EESstring::-1}' >> ${job_name}
+  echo '  AcqMPEstring=$(grep '\''"AcquisitionMatrixPE"'\'' ${i}_dwi.json | awk '\''{print $2}'\'')' >> ${job_name}
+  echo '  AcqMPE=${AcqMPEstring::-1}' >> ${job_name}
+  echo '  readoutTime=$(echo "${EES} * ((${AcqMPE} / 2) - 1)" | bc -l)' >> ${job_name}
+  echo '  echo "0 ${PED} 0 ${readoutTime}" >> ${dir_prep}/All_dwisAcqParams.txt' >> ${job_name}
+  echo '  acqLine=$(echo "${acqLine} + 1" | bc -l)' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo 'echo $indx > ${dir_prep}/All_index.txt' >> ${job_name}
+  echo 'echo $TotalBVals > ${dir_prep}/All.bval' >> ${job_name}
+  echo 'echo $TotalXVals > ${dir_prep}/XVals.txt' >> ${job_name}
+  echo 'echo $TotalYVals > ${dir_prep}/YVals.txt' >> ${job_name}
+  echo 'echo $TotalZVals > ${dir_prep}/ZVals.txt' >> ${job_name}
+  echo 'cat ${dir_prep}/XVals.txt ${dir_prep}/YVals.txt ${dir_prep}/ZVals.txt >> ${dir_prep}/All.bvec' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'firstName=${allDwiNames[0]}' >> ${job_name}
+  echo 'unset tempB0Files tempB0AcqFiles tempDwiFiles' >> ${job_name}
+  echo 'declare -a tempB0Files' >> ${job_name}
+  echo 'declare -a tempB0AcqFiles' >> ${job_name}
+  echo 'declare -a tempDwiFiles' >> ${job_name}
+  echo 'for j in ${allDwiNames[@]}; do' >> ${job_name}
+  echo '  if [ "${firstName}" != "$j" ]; then' >> ${job_name}
+  echo '    tempB0Files+=(${j}_b0.nii.gz)' >> ${job_name}
+  echo '    tempDwiFiles+=(${j}_dwi.nii.gz)' >> ${job_name}
+  echo '    tempB0AcqFiles+=(${j}_B0sAcqParams.txt)' >> ${job_name}
+  echo '  fi' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo 'fslmerge -t ${dir_prep}/All_B0s.nii.gz ${firstName}_b0.nii.gz ${tempB0Files[@]}' >> ${job_name}
+  echo 'fslmerge -t ${dir_prep}/All_dwis.nii.gz ${firstName}_dwi.nii.gz ${tempDwiFiles[@]}' >> ${job_name}
+  echo 'cat ${firstName}_B0sAcqParams.txt ${tempB0AcqFiles[@]} >> ${dir_prep}/All_B0sAcqParams.txt' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:b0-extraction_topup-prep,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 2. Topup' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'rm ${dir_prep}/*brain.nii.gz' >> ${job_name}
+  echo 'rm ${dir_prep}/*mask.nii.gz' >> ${job_name}
+  echo 'rm ${dir_prep}/*hifi_b0*.nii.gz' >> ${job_name}
+  echo 'rm ${dir_prep}/*eddy*' >> ${job_name}
+  echo 'rm ${dir_prep}/*topup*' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'topup \' >> ${job_name}
+  echo '  --imain=${dir_prep}/All_B0s.nii.gz \' >> ${job_name}
+  echo '  --datain=${dir_prep}/All_B0sAcqParams.txt \' >> ${job_name}
+  echo '  --config=b02b0.cnf \' >> ${job_name}
+  echo '  --out=${dir_prep}/topup_results \' >> ${job_name}
+  echo '  --iout=${dir_prep}/All_hifi_b0.nii.gz' >> ${job_name}
+  echo 'fslmaths ${dir_prep}/All_hifi_b0.nii.gz -Tmean ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 4. Brain Mask/T2 registration' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'rm ${dir_prep}/*.mat' >> ${job_name}
+  echo 'rm ${dir_prep}/*prep-rigid*' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo 'moving_image=${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
+  echo 'antsRegistration \' >> ${job_name}
+  echo '  -d 3 \' >> ${job_name}
+  echo '  --float 1 \' >> ${job_name}
+  echo '  --verbose 1 \' >> ${job_name}
+  echo '  -u 1 \' >> ${job_name}
+  echo '  -w [0.01,0.99] \' >> ${job_name}
+  echo '  -z 1 \' >> ${job_name}
+  echo '  -r [${fixed_image},${moving_image},1] \' >> ${job_name}
+  echo '  -t Rigid[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -t Affine[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -o ${dir_prep}/dwi_to_nativeMask_temp_' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_0GenericAffine.mat \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1Warp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-synMask.nii.gz' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1InverseWarp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_anat_mask}/${prefix}_mask-brain.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/DTI_undilatedMask.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz \' >> ${job_name}
+  echo '  -r ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 ${dir_prep}/DTI_mask.nii.gz MD ${dir_prep}/DTI_undilatedMask.nii.gz 5' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 5. Eddy Correction' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'eddy_openmp \' >> ${job_name}
+  echo '  --imain=${dir_prep}/All_dwis.nii.gz \' >> ${job_name}
+  echo '  --mask=${dir_prep}/DTI_mask.nii.gz \' >> ${job_name}
+  echo '  --acqp=${dir_prep}/All_dwisAcqParams.txt \' >> ${job_name}
+  echo '  --index=${dir_prep}/All_index.txt \' >> ${job_name}
+  echo '  --bvecs=${dir_prep}/All.bvec \' >> ${job_name}
+  echo '  --bvals=${dir_prep}/All.bval \' >> ${job_name}
+  echo '  --topup=${dir_prep}/topup_results \' >> ${job_name}
+  echo '  --out=${dir_prep}/All_dwi_hifi_eddy.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'cp ${dir_prep}/All_dwi_hifi_eddy.nii.gz ${dir_corrected}/${prefix}_dwi.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:topup_eddy-correction,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 3. DWI Scalars' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'rm ${dir_prep}/*Scalar*.nii.gz' >> ${job_name}
+  echo 'fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
+  echo 'dtifit \' >> ${job_name}
+  echo '  -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/All_Scalar \' >> ${job_name}
+  echo '  -r ${dir_prep}/All.bvec \' >> ${job_name}
+  echo '  -b ${dir_prep}/All.bval \' >> ${job_name}
+  echo '  -m ${dir_prep}/DTI_mask.nii.gz ' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/All_Scalar* ${dir_tensor}/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:extract_scalars,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 4. Register to native space' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
+  echo 'moving_image1=${dir_prep}/All_Scalar_FA.nii.gz' >> ${job_name}
+  echo 'moving_image2=${dir_prep}/All_Scalar_MD.nii.gz' >> ${job_name}
+  echo 'moving_image3=${dir_prep}/All_Scalar_S0.nii.gz' >> ${job_name}
+  echo 'antsRegistration \' >> ${job_name}
+  echo '  -d 3 \' >> ${job_name}
+  echo '  -x [${dir_anat_mask}/${prefix}_mask-brain.nii.gz,${dir_prep}/DTI_mask.nii.gz] \' >> ${job_name}
+  echo '  --float 1 \' >> ${job_name}
+  echo '  --verbose 1 \' >> ${job_name}
+  echo '  -u 1 \' >> ${job_name}
+  echo '  -w [0.01,0.99] \' >> ${job_name}
+  echo '  -z 1 \' >> ${job_name}
+  echo '  -r [${fixed_image},${moving_image},1] \' >> ${job_name}
+  echo '  -t Rigid[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -t Affine[0.1] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [1000x500x250x100,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -t SyN[0.1,3,0] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image3},1,32,Regular,0.25] \' >> ${job_name}
+  echo '  -c [100x70x50x20,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x4x2x1 \' >> ${job_name}
+  echo '  -s 3x2x1x0vox \' >> ${job_name}
+  echo '  -o ${dir_prep}/dwi_to_native_temp_' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_native_temp_0GenericAffine.mat \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz' >> ${job_name}
+  echo 'mv ${dir_prep}/dwi_to_native_temp_1InverseWarp.nii.gz \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-syn.nii.gz' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/FA/${prefix}_reg-T2w+rigid_FA.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_MD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/MD/${prefix}_reg-T2w+rigid_MD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/AD/${prefix}_reg-T2w+rigid_AD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fslmaths ${dir_tensor}/All_Scalar_L2.nii.gz -add ${dir_tensor}/All_Scalar_L3.nii.gz -div 2 ${dir_prep}/All_Scalar_RD.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/All_Scalar_RD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/RD/${prefix}_reg-T2w+rigid_RD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:register_from-B0_to-T2w+rigid,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 5. Stack Transform to Template Space' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'unset xfm' >> ${job_name}
+  echo 'rm ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz' >> ${job_name}
+  echo 'ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -o [${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz,1] \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-T1w+rigid_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
   echo '' >> ${job_name}
   echo 'date +"task:xfm_stack_b0_to-template,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
@@ -395,22 +872,22 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
   echo '  -o ${dir_template_scalars}/FA/${prefix}_reg-${space}+${template}_FA.nii.gz \' >> ${job_name}
-  echo '  -t ${xfm[0]} \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_tensor}/All_Scalar_MD.nii.gz \' >> ${job_name}
   echo '  -o ${dir_template_scalars}/MD/${prefix}_reg-${space}+${template}_MD.nii.gz \' >> ${job_name}
-  echo '  -t ${xfm[0]} \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
   echo '  -o ${dir_template_scalars}/AD/${prefix}_reg-${space}+${template}_AD.nii.gz \' >> ${job_name}
-  echo '  -t ${xfm[0]} \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_prep}/All_Scalar_RD.nii.gz \' >> ${job_name}
   echo '  -o ${dir_template_scalars}/RD/${prefix}_reg-${space}+${template}_RD.nii.gz \' >> ${job_name}
-  echo '  -t ${xfm[0]} \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
   echo '' >> ${job_name}
   echo 'date +"task:apply_xfm_scalars_to-template,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
@@ -424,9 +901,46 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'echo "task:diffusionPrep_noBlipUpDown" >> ${subject_log}' >> ${job_name}
   echo 'date +"end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
-  echo 'echo '' >> ${subject_log}' >> ${job_name}
-  echo '' >> ${job_name}
-  qsub ${job_name}
+  echo 'echo  >> ${subject_log}' >> ${job_name}
 
+  qsub ${job_name}
 done
 
+  echo 'xfm[0]=${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz' >> ${job_name}
+  echo 'ref_image=${dir_template}/${space}/${template}/${space}_${template}_T1w.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_template_scalars}/FA/${prefix}_reg-${space}+${template}_FA.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_MD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_template_scalars}/MD/${prefix}_reg-${space}+${template}_MD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_template_scalars}/AD/${prefix}_reg-${space}+${template}_AD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/All_Scalar_RD.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_template_scalars}/RD/${prefix}_reg-${space}+${template}_RD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'date +"task:apply_xfm_scalars_to-template,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 7. End of processing, set file permissions' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'chgrp -R ${group} ${researcher}/${project}/derivatives > /dev/null 2>&1' >> ${job_name}
+  echo 'chmod -R g+rw ${researcher}/${project}/derivatives > /dev/null 2>&1' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'echo "task:diffusionPrep_noBlipUpDown" >> ${subject_log}' >> ${job_name}
+  echo 'date +"end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
+  echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
+  echo 'echo  >> ${subject_log}' >> ${job_name}
+
+  qsub ${job_name}
+done
