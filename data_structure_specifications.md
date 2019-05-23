@@ -63,42 +63,34 @@ ${researcherRoot}/
     |  |  ∟analyses/
     |  |  ∟brains2/ #legacy support only
     |  |  |  ∟sub-${ursi}_ses-${mrqid}_brains2.zip
-    |  |  ∟baw/
-    |  |  |  ∟sub-${subject}_ses-${session}/
-    |  |  |  |  ∟ACCUMULATED_POSTERIORS/
-    |  |  |  |  ∟ACPCAlign/
-    |  |  |  |  ∟JointFusion/
-    |  |  |  |   ∟allVol/
-    |  |  |  |   ∟lobeVol/
-    |  |  |  |  ∟TissueClassify/
-    |  |  |  |  ∟WarpedAtlas2Subject/
     |  |  ∟fsurf/
     |  |  |  ∟subject_dir
     |  |  |  |  ∟fsaverage/
     |  |  |  |  ∟sub-${subject}_ses-${session}/
     |  |  |  ∟resample/
+    |  |  ∟jac_${space}_${template}/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${space}_${template}_jac.nii.gz
+    |  |  ∟label/
+    |  |  |  ∟baw+label/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+label.nii.gz
+    |  |  |  ∟baw+fs/
+    |  |  |  ∟baw+lobe/
+    |  |  ∟mask/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-air.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-brain.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-tissue.nii.gz
     |  |  ∟native/
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_brain.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_tissue.nii.gz
-    |  |  ∟mask/
-    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-air.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-brain.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_mask-tissue.nii.gz
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-acpc.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-avg.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bex0AFNI.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bex0ANTS.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bex0BET.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bex0Brain.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bex0Tissue.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bexAFNI.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bexANTS.nii.gz
-    |  |  |        ∟sub-${subject}_ses-${session}_*_prep-bexBET.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasT1T2.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasT1T2Field.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-biasN4.nii.gz
@@ -131,6 +123,7 @@ ${researcherRoot}/
     |  |  |     ∟ses-${session}/
     |  |  ∟scalar_${space}_${template}/
     |  |  ∟scalar_native/
+    |  |  ∟tensor/
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟label/
