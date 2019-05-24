@@ -92,6 +92,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'dir_tensor=${researcher}/${project}/derivatives/dwi/tensor/sub-${subject}/ses-${session}' >> ${job_name}
   echo 'dir_native_scalars=${researcher}/${project}/derivatives/dwi/scalars_native' >> ${job_name}
   echo 'dir_template_scalars=${researcher}/${project}/derivatives/dwi/scalars_${space}_${template}' >> ${job_name}
+  echo 'dir_anat_mask=${researcher}/${project}/derivatives/anat/mask' >> ${job_name}
   echo '' >> ${job_name}
   echo 'mkdir -p ${dir_xfm}' >> ${job_name}
   echo 'mkdir -p ${dir_prep}' >> ${job_name}
@@ -284,15 +285,11 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '' >> ${job_name}
   echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_0GenericAffine.mat \' >> ${job_name}
   echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat' >> ${job_name}
-  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1Warp.nii.gz \' >> ${job_name}
-  echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-synMask.nii.gz' >> ${job_name}
-  echo 'mv ${dir_prep}/dwi_to_nativeMask_temp_1InverseWarp.nii.gz \' >> ${job_name}
-  echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_anat_mask}/${prefix}_mask-brain.nii.gz \' >> ${job_name}
   echo '  -o ${dir_prep}/DTI_undilatedMask.nii.gz \' >> ${job_name}
-  echo '  -t ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-synMask.nii.gz \' >> ${job_name}
+  echo '  -t [${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat,1] \' >> ${job_name}
   echo '  -r ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
   echo 'ImageMath 3 ${dir_prep}/DTI_mask.nii.gz MD ${dir_prep}/DTI_undilatedMask.nii.gz 5' >> ${job_name}
