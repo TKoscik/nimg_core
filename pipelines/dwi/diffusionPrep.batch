@@ -7,7 +7,7 @@ space=HCPICBM
 template=1mm
 smoothing=0
 
-hpc_email=!!!uiowa.edu
+hpc_email=!!!@uiowa.edu
 hpc_msgs=bes
 hpc_queue=UI,PINC
 hpc_pe="smp 28"
@@ -67,6 +67,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'group='${group} >> ${job_name}
   echo 'prefix=sub-${subject}_ses-${session}_site-${site}' >> ${job_name}
   echo 'smoothing='${smoothing} >> ${job_name}
+  echo 'JHUTemplateLabels=/Shared/pinc/sharedopt/apps/fsl/Linux/x86_64/6.0.0_multicore/data/atlases/JHU/JHU-ICBM-labels-1mm.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
   echo '# Initial Log Entry' >> ${job_name}
@@ -93,6 +94,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'dir_native_scalars=${researcher}/${project}/derivatives/dwi/scalars_native' >> ${job_name}
   echo 'dir_template_scalars=${researcher}/${project}/derivatives/dwi/scalars_${space}_${template}' >> ${job_name}
   echo 'dir_anat_mask=${researcher}/${project}/derivatives/anat/mask' >> ${job_name}
+  echo 'dir_JHU_native=${researcher}/${project}/derivatives/dwi/JHU_native' >> ${job_name}
   echo '' >> ${job_name}
   echo 'mkdir -p ${dir_xfm}' >> ${job_name}
   echo 'mkdir -p ${dir_prep}' >> ${job_name}
@@ -102,10 +104,13 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'mkdir -p ${dir_template_scalars}/MD' >> ${job_name}
   echo 'mkdir -p ${dir_template_scalars}/AD' >> ${job_name}
   echo 'mkdir -p ${dir_template_scalars}/RD' >> ${job_name}
+  echo 'mkdir -p ${dir_template_scalars}/S0' >> ${job_name}
   echo 'mkdir -p ${dir_native_scalars}/FA' >> ${job_name}
   echo 'mkdir -p ${dir_native_scalars}/MD' >> ${job_name}
   echo 'mkdir -p ${dir_native_scalars}/AD' >> ${job_name}
   echo 'mkdir -p ${dir_native_scalars}/RD' >> ${job_name}
+  echo 'mkdir -p ${dir_native_scalars}/S0' >> ${job_name}
+  echo 'mkdir -p ${dir_JHU_native}' >> ${job_name}
   echo '' >> ${job_name}
   echo '#------------------------------------------------------------------------------' >> ${job_name}
   echo '# 1. B0 Extraction, Topup Prep' >> ${job_name}
@@ -334,13 +339,23 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '#------------------------------------------------------------------------------' >> ${job_name}
   echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
   echo '' >> ${job_name}
-  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
-  echo 'moving_image1=${dir_prep}/All_Scalar_FA.nii.gz' >> ${job_name}
-  echo 'moving_image2=${dir_prep}/All_Scalar_MD.nii.gz' >> ${job_name}
-  echo 'moving_image3=${dir_prep}/All_Scalar_S0.nii.gz' >> ${job_name}
+  echo 'rm ${dir_prep}/*.mat ${dir_prep}/dwi_to_native_temp_1Warp.nii.gz ${dir_prep}/dwi_to_native_temp_1InverseWarp.nii.gz' >> ${job_name}
+  echo 'rm ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-syn.nii.gz ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/DTI_mask.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/${prefix}_mask-brain_native.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat \' >> ${job_name}
+  echo '  -r ${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo 'moving_image1=${dir_tensor}/All_Scalar_FA.nii.gz' >> ${job_name}
+  echo 'moving_image2=${dir_tensor}/All_Scalar_MD.nii.gz' >> ${job_name}
+  echo 'moving_image3=${dir_tensor}/All_Scalar_S0.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
   echo 'antsRegistration \' >> ${job_name}
   echo '  -d 3 \' >> ${job_name}
-  echo '  -x [${dir_anat_mask}/${prefix}_mask-brain.nii.gz,${dir_prep}/DTI_mask.nii.gz] \' >> ${job_name}
+  echo '  -x [${dir_prep}/${prefix}_mask-brain_native.nii.gz,${dir_prep}/DTI_undilatedMask.nii.gz] \' >> ${job_name}
   echo '  --float 1 \' >> ${job_name}
   echo '  --verbose 1 \' >> ${job_name}
   echo '  -u 1 \' >> ${job_name}
@@ -376,8 +391,8 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz' >> ${job_name}
   echo 'mv ${dir_prep}/dwi_to_native_temp_1InverseWarp.nii.gz \' >> ${job_name}
   echo '  ${dir_xfm}/${prefix}_from-T2w+rigid_to-dwi+b0_xfm-syn.nii.gz' >> ${job_name}
-  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
+  echo 'fixed_image=${dir_anat_native}/${prefix}_T2w_brain.nii.gz' >> ${job_name}
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_tensor}/All_Scalar_FA.nii.gz \' >> ${job_name}
   echo '  -o ${dir_native_scalars}/FA/${prefix}_reg-T2w+rigid_FA.nii.gz \' >> ${job_name}
@@ -393,6 +408,12 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'antsApplyTransforms -d 3 \' >> ${job_name}
   echo '  -i ${dir_tensor}/All_Scalar_L1.nii.gz \' >> ${job_name}
   echo '  -o ${dir_native_scalars}/AD/${prefix}_reg-T2w+rigid_AD.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
+  echo '  -r ${fixed_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_tensor}/All_Scalar_S0.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_scalars}/S0/${prefix}_reg-T2w+rigid_S0.nii.gz \' >> ${job_name}
   echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-syn.nii.gz \' >> ${job_name}
   echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affine.mat \' >> ${job_name}
   echo '  -r ${fixed_image}' >> ${job_name}
@@ -452,6 +473,11 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -o ${dir_template_scalars}/RD/${prefix}_reg-${space}+${template}_RD.nii.gz \' >> ${job_name}
   echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
   echo '  -r ${ref_image}' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/All_Scalar_S0.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_template_scalars}/S0/${prefix}_reg-${space}+${template}_S0.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-dwi+b0_to-${space}+${template}_xfm-stack.nii.gz \' >> ${job_name}
+  echo '  -r ${ref_image}' >> ${job_name}
   echo '' >> ${job_name}
   echo 'date +"task:apply_xfm_scalars_to-template,start:"${proc_start}",end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo '' >> ${job_name}
@@ -465,6 +491,47 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'date +"end:%Y-%m-%dT%H:%M:%S%z" >> ${subject_log}' >> ${job_name}
   echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
   echo 'echo  >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 8. Summarizer' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'unset xfm' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'xfm[0]=${dir_xfm}/${prefix}_from-T1w+rigid_to-HCPICBM+1mm_xfm-affine.mat' >> ${job_name}
+  echo 'xfm[1]=${dir_xfm}/${prefix}_from-HCPICBM+1mm_to-T1w+rigid_xfm-syn.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${JHUTemplateLabels} \' >> ${job_name}
+  echo '  -o ${dir_JHU_native}/${prefix}_JHU_native_labels.nii.gz \' >> ${job_name}
+  echo '  -t [${xfm[0]},1] \' >> ${job_name}
+  echo '  -t ${xfm[1]} \' >> ${job_name}
+  echo '  -n NearestNeighbor \' >> ${job_name}
+  echo '  -r ${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'module load R' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'for map in FA MD RD AD S0; do' >> ${job_name}
+  echo '  label_nii=${researcher}/${project}/derivatives/baw/sub-${subject}/ses-${session}/JointFusion/JointFusion_HDAtlas20_2015_dustCleaned_label.nii.gz' >> ${job_name}
+  echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/baw_summarizer.tsv' >> ${job_name}
+  echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/${prefix}_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
+  echo '  Rscript \' >> ${job_name}
+  echo '  -e '\''library(nifti.bids)'\'' \' >> ${job_name}
+  echo '  -e '\''library(nifti.io)'\'' \' >> ${job_name}
+  echo '  -e '\''library(R.utils)'\'' \' >> ${job_name}
+  echo '  -e '\''library(tools)'\'' \' >> ${job_name}
+  echo '  -e '\''library(moments)'\'' \' >> ${job_name}
+  echo '  -e '\''label.summary(save.prefix="'\''${project}_${map}'\''", data.nii="'\''${data_nii}'\''", save.dir="'\''${researcher}/${project}/summary'\''", save.stats=c("mean", "median", "sd", "mad"), label.nii="'\''${label_nii}'\''", label.key="'\''${label_key}'\''", scratch.dir="'\''~'\''")'\''' >> ${job_name}
+  echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/JHU_summarizer.tsv' >> ${job_name}
+  echo '  label_nii=${dir_JHU_native}/${prefix}_JHU_native_labels.nii.gz' >> ${job_name}
+  echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/${prefix}_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
+  echo '  Rscript \' >> ${job_name}
+  echo '  -e '\''library(nifti.bids)'\'' \' >> ${job_name}
+  echo '  -e '\''library(nifti.io)'\'' \' >> ${job_name}
+  echo '  -e '\''library(R.utils)'\'' \' >> ${job_name}
+  echo '  -e '\''library(tools)'\'' \' >> ${job_name}
+  echo '  -e '\''library(moments)'\'' \' >> ${job_name}
+  echo '  -e '\''label.summary(save.prefix="'\''${project}_${map}'\''", data.nii="'\''${data_nii}'\''", save.dir="'\''${researcher}/${project}/summary'\''", save.stats=c("mean", "median", "sd", "mad"), label.nii="'\''${label_nii}'\''", label.key="'\''${label_key}'\''", scratch.dir="'\''~'\''")'\''' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo '' >> ${job_name}
 
   qsub ${job_name}
 done
