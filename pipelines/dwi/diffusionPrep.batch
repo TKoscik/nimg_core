@@ -9,7 +9,7 @@ smoothing=0
 
 hpc_email=!!!@uiowa.edu
 hpc_msgs=bes
-hpc_queue=UI,PINC
+hpc_queue=UI,PINC,CCOM
 hpc_pe="smp 28"
 
 #------------------------------------------------------------------------------
