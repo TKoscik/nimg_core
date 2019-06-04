@@ -9,7 +9,7 @@ smoothing=0
 
 hpc_email=!!!@uiowa.edu
 hpc_msgs=bes
-hpc_queue=UI,PINC,CCOM
+hpc_queue=UI,PINC
 hpc_pe="smp 28"
 
 #------------------------------------------------------------------------------
@@ -295,6 +295,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -i ${dir_anat_mask}/${prefix}_mask-brain.nii.gz \' >> ${job_name}
   echo '  -o ${dir_prep}/DTI_undilatedMask.nii.gz \' >> ${job_name}
   echo '  -t [${dir_xfm}/${prefix}_from-dwi+b0_to-T2w+rigid_xfm-affineMask.mat,1] \' >> ${job_name}
+  echo '  -n NearestNeighbor \' >> ${job_name}
   echo '  -r ${dir_prep}/All_hifi_b0_mean.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
   echo 'ImageMath 3 ${dir_prep}/DTI_mask.nii.gz MD ${dir_prep}/DTI_undilatedMask.nii.gz 5' >> ${job_name}
@@ -322,9 +323,15 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'proc_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
   echo '' >> ${job_name}
   echo 'rm ${dir_prep}/*Scalar*.nii.gz' >> ${job_name}
-  echo 'fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
+  if [ "${smoothing}" != 0 ]; then
+    echo 'fslmaths ${dir_prep}/All_dwi_hifi_eddy.nii.gz -s ${smoothing} ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz' >> ${job_name}
+  fi
   echo 'dtifit \' >> ${job_name}
-  echo '  -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
+  if [ "${smoothing}" != 0 ]; then
+    echo '  -k ${dir_prep}/All_dwi_hifi_eddy_smoothed.nii.gz \' >> ${job_name}
+  else
+    echo '  -k ${dir_prep}/All_dwi_hifi_eddy.nii.gz \' >> ${job_name}
+  fi
   echo '  -o ${dir_prep}/All_Scalar \' >> ${job_name}
   echo '  -r ${dir_prep}/All.bvec \' >> ${job_name}
   echo '  -b ${dir_prep}/All.bval \' >> ${job_name}
@@ -361,7 +368,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -u 1 \' >> ${job_name}
   echo '  -w [0.01,0.99] \' >> ${job_name}
   echo '  -z 1 \' >> ${job_name}
-  echo '  -r [${fixed_image},${moving_image},1] \' >> ${job_name}
+  echo '  -r [${fixed_image},${moving_image1},1] \' >> ${job_name}
   echo '  -t Rigid[0.1] \' >> ${job_name}
   echo '  -m Mattes[${fixed_image},${moving_image1},1,32,Regular,0.25] \' >> ${job_name}
   echo '  -m Mattes[${fixed_image},${moving_image2},1,32,Regular,0.25] \' >> ${job_name}
