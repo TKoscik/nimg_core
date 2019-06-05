@@ -499,46 +499,6 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
   echo 'echo  >> ${subject_log}' >> ${job_name}
   echo '' >> ${job_name}
-  echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo '# 8. Summarizer' >> ${job_name}
-  echo '#------------------------------------------------------------------------------' >> ${job_name}
-  echo 'unset xfm' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'xfm[0]=${dir_xfm}/${prefix}_from-T1w+rigid_to-HCPICBM+1mm_xfm-affine.mat' >> ${job_name}
-  echo 'xfm[1]=${dir_xfm}/${prefix}_from-HCPICBM+1mm_to-T1w+rigid_xfm-syn.nii.gz' >> ${job_name}
-  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
-  echo '  -i ${JHUTemplateLabels} \' >> ${job_name}
-  echo '  -o ${dir_JHU_native}/${prefix}_JHU_native_labels.nii.gz \' >> ${job_name}
-  echo '  -t [${xfm[0]},1] \' >> ${job_name}
-  echo '  -t ${xfm[1]} \' >> ${job_name}
-  echo '  -n NearestNeighbor \' >> ${job_name}
-  echo '  -r ${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'module load R' >> ${job_name}
-  echo '' >> ${job_name}
-  echo 'for map in FA MD RD AD S0; do' >> ${job_name}
-  echo '  label_nii=${researcher}/${project}/derivatives/baw/sub-${subject}/ses-${session}/JointFusion/JointFusion_HDAtlas20_2015_dustCleaned_label.nii.gz' >> ${job_name}
-  echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/baw_summarizer.tsv' >> ${job_name}
-  echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/${prefix}_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
-  echo '  Rscript \' >> ${job_name}
-  echo '  -e '\''library(nifti.bids)'\'' \' >> ${job_name}
-  echo '  -e '\''library(nifti.io)'\'' \' >> ${job_name}
-  echo '  -e '\''library(R.utils)'\'' \' >> ${job_name}
-  echo '  -e '\''library(tools)'\'' \' >> ${job_name}
-  echo '  -e '\''library(moments)'\'' \' >> ${job_name}
-  echo '  -e '\''label.summary(save.prefix="'\''${project}_${map}'\''", data.nii="'\''${data_nii}'\''", save.dir="'\''${researcher}/${project}/summary'\''", save.stats=c("mean", "median", "sd", "mad"), label.nii="'\''${label_nii}'\''", label.key="'\''${label_key}'\''", scratch.dir="'\''~'\''")'\''' >> ${job_name}
-  echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/JHU_summarizer.tsv' >> ${job_name}
-  echo '  label_nii=${dir_JHU_native}/${prefix}_JHU_native_labels.nii.gz' >> ${job_name}
-  echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/${prefix}_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
-  echo '  Rscript \' >> ${job_name}
-  echo '  -e '\''library(nifti.bids)'\'' \' >> ${job_name}
-  echo '  -e '\''library(nifti.io)'\'' \' >> ${job_name}
-  echo '  -e '\''library(R.utils)'\'' \' >> ${job_name}
-  echo '  -e '\''library(tools)'\'' \' >> ${job_name}
-  echo '  -e '\''library(moments)'\'' \' >> ${job_name}
-  echo '  -e '\''label.summary(save.prefix="'\''${project}_${map}'\''", data.nii="'\''${data_nii}'\''", save.dir="'\''${researcher}/${project}/summary'\''", save.stats=c("mean", "median", "sd", "mad"), label.nii="'\''${label_nii}'\''", label.key="'\''${label_key}'\''", scratch.dir="'\''~'\''")'\''' >> ${job_name}
-  echo 'done' >> ${job_name}
-  echo '' >> ${job_name}
 
   qsub ${job_name}
 done
