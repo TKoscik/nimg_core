@@ -1,18 +1,18 @@
 #! /bin/bash
 
-researcher=/Shared/hothlab
-project=copd_bids
-group=Research-hohtlab
+researcher=/Shared/!!!
+project=!!!_bids
+group=Research-!!!
 space=HCPICBM
 template=1mm
 
-hpc_email=ajmetzger@healthcare.uiowa.edu
+hpc_email=!!!@.uiowa.edu
 hpc_msgs=bes
 hpc_queue=UI,PINC
 hpc_pe="smp 28"
 
 #------------------------------------------------------------------------------
-subject_tsv=${researcher}/${project}/participantsR01.tsv
+subject_tsv=${researcher}/${project}/participants.tsv
 
 unset sub_list
 unset ses_list
