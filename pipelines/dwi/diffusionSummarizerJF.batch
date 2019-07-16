@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# replace !!!
+
 researcher=/Shared/!!!
 project=!!!_bids
 group=Research-!!!
@@ -8,7 +10,7 @@ template=1mm
 
 hpc_email=!!!@uiowa.edu
 hpc_msgs=bes
-hpc_queue=UI,PINC
+hpc_queue=UI,PINC,CCOM
 hpc_pe="smp 28"
 
 #------------------------------------------------------------------------------
@@ -114,7 +116,7 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -r ${fixed_image}' >> ${job_name}
   echo '' >> ${job_name}
 
-  echo 'for map in FA MD RD AD; do' >> ${job_name}
+  echo 'for map in FA MD RD AD S0; do' >> ${job_name}
   echo '  label_nii='${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_labels.nii.gz' >> ${job_name}
   echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/baw_summarizer.tsv' >> ${job_name}
   echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/'${prefix}'_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
