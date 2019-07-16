@@ -1,0 +1,169 @@
+#! /bin/bash
+
+researcher=/Shared/!!!
+project=!!!_bids
+group=Research-!!!
+space=HCPICBM
+template=1mm
+
+hpc_email=!!!uiowa.edu
+hpc_msgs=n
+hpc_queue=UI,PINC,CCOM
+hpc_pe="smp 14"
+
+#------------------------------------------------------------------------------
+subject_tsv=${researcher}/${project}/participants.tsv
+
+unset sub_list
+unset ses_list
+unset site_list
+while IFS=$'\t\r' read -r sub ses site t1w t2w;
+do
+  sub_list+=(${sub})
+  ses_list+=(${ses})
+  site_list+=(${site})
+  t1w_list+=(${t1w})
+  t2w_list+=(${t2w})
+done < ${subject_tsv}
+
+num_scans="${#sub_list[@]}"
+for (( i=1; i<${num_scans}; i++ )); do
+  job_dir=${researcher}/${project}/code/asl_jobs
+  mkdir -p ${job_dir}
+  rm ${job_dir}/sub-${sub_list[${i}]}_ses-${ses_list[${i}]}_site-${site_list[${i}]}_asl.job
+  job_name=${job_dir}/sub-${sub_list[${i}]}_ses-${ses_list[${i}]}_site-${site_list[${i}]}_asl.job
+
+  echo 'Writing '${job_name}
+  echo '#! /bin/bash' > ${job_name}
+  echo '#$ -M '${hpc_email} >> ${job_name}
+  echo '#$ -m '${hpc_msgs} >> ${job_name}
+  echo '#$ -q '${hpc_queue} >> ${job_name}
+  echo '#$ -pe '${hpc_pe} >> ${job_name}
+  echo '#$ -j y' >> ${job_name}
+  echo '#$ -o '${researcher}/${project}'/log/hpc_output/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'pipeline_start=$(date +%Y-%m-%dT%H:%M:%S%z)' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Set Up Software' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'module load OpenBLAS' >> ${job_name}
+  echo 'nimg_core_root=/Shared/nopoulos/nimg_core' >> ${job_name}
+  echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/ants_source.sh' >> ${job_name}
+  echo 'ants_version=$(echo "${ANTSPATH}" | cut -d "/" -f9)' >> ${job_name}
+  echo 'fsl_version=6.0.1_multicore' >> ${job_name}
+  echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_version}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Specify Analysis Variables' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'researcher='${researcher} >> ${job_name}
+  echo 'project='${project} >> ${job_name}
+  echo 'subject='${sub_list[${i}]} >> ${job_name}
+  echo 'session='${ses_list[${i}]} >> ${job_name}
+  echo 'site='${site_list[${i}]} >> ${job_name}
+  echo 'space='${space} >> ${job_name}
+  echo 'template='${template} >> ${job_name}
+  echo 'group='${group} >> ${job_name}
+  echo 'prefix=sub-${subject}_ses-${session}_site-${site}' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Initial Log Entry' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'mkdir -p ${researcher}/${project}/log/hpc_output' >> ${job_name}
+  echo 'subject_log=${researcher}/${project}/log/sub-${subject}_ses-${session}_site-${site}.log' >> ${job_name}
+  echo 'echo "#--------------------------------------------------------------------------------" >> ${subject_log}' >> ${job_name}
+  echo 'echo "task:ASL" >> ${subject_log}' >> ${job_name}
+  echo 'echo "software:ANTs,version:"${ants_version} >> ${subject_log}' >> ${job_name}
+  echo 'echo "software:FSL,"${fsl_version} >> ${subject_log}' >> ${job_name}
+  echo 'echo "start:"${pipeline_start} >> ${subject_log}' >> ${job_name}
+  echo 'echo "" >> ${subject_log}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Initialize Output Folders' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'dir_template=${nimg_core_root}/templates_human' >> ${job_name}
+  echo 'dir_raw=${researcher}/${project}/nifti/sub-${subject}/ses-${session}/asl' >> ${job_name}
+  echo 'dir_anat_native=${researcher}/${project}/derivatives/anat/native' >> ${job_name}
+  echo 'dir_xfm=${researcher}/${project}/derivatives/xfm/sub-${subject}/ses-${session}' >> ${job_name}
+  echo 'dir_prep=${researcher}/${project}/derivatives/asl/prep/sub-${subject}/ses-${session}' >> ${job_name}
+  echo 'dir_native_CBF=${researcher}/${project}/derivatives/asl/CBF_native' >> ${job_name}
+  echo 'dir_anat_mask=${researcher}/${project}/derivatives/anat/mask' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mkdir -p ${dir_xfm}' >> ${job_name}
+  echo 'mkdir -p ${dir_prep}' >> ${job_name}
+  echo 'mkdir -p ${dir_native_CBF}' >> ${job_name}
+  echo '' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# 1. Registration' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'rm ${dir_prep}/*' >> ${job_name}
+  echo 'rm ${dir_native_CBF}/${prefix}_CBF_native.nii.gz' >> ${job_name}
+  echo 'rm ${dir_xfm}/${prefix}_from-asl+raw_to-T2w+rigid_xfm.mat' >> ${job_name}
+  echo 'cp ${dir_raw}/*.* ${dir_prep}/' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'for i in ${dir_prep}/*.nii.gz; do' >> ${job_name}
+  echo '  unset ControlTest' >> ${job_name}
+  echo '  aslName=${i::-7}' >> ${job_name}
+  echo '  ControlTest=$(grep '\''"ORIGINAL"'\'' ${aslName}.json | awk '\''{print $1}'\'')' >> ${job_name}
+  echo '  if [ "${ControlTest}" == '\''"ImageType":'\'' ]; then' >> ${job_name}
+  echo '    cp ${i} ${dir_prep}/${prefix}_control.nii.gz' >> ${job_name}
+  echo '    cp ${aslName}.json ${dir_prep}/${prefix}_control.json' >> ${job_name}
+  echo '  fi' >> ${job_name}
+  echo '  CBFTest=$(grep '\''"ASL"'\'' ${aslName}.json | awk '\''{print $1}'\'')' >> ${job_name}
+  echo '  if [ "${ControlTest}" != '\''"ImageType":'\'' ]; then' >> ${job_name}
+  echo '    cp ${i} ${dir_prep}/${prefix}_CBF.nii.gz' >> ${job_name}
+  echo '    cp ${aslName}.json ${dir_prep}/${prefix}_CBF.json' >> ${job_name}
+  echo '  fi' >> ${job_name}
+  echo 'done' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'N4BiasFieldCorrection -i ${dir_prep}/${prefix}_control.nii.gz -o ${dir_prep}/${prefix}_control_BC.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'cp ${dir_anat_native}/${prefix}_T2w.nii.gz ${dir_prep}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -i ${dir_prep}/${prefix}_T2w.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/${prefix}_T2w_FOV.nii.gz \' >> ${job_name}
+  echo '  -r ${dir_prep}/${prefix}_control_BC.nii.gz \' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 ${dir_prep}/Control_BC_Norm.nii.gz Normalize ${dir_prep}/${prefix}_control_BC.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 ${dir_prep}/Control_Multiplied.nii.gz m ${dir_prep}/Control_BC_Norm.nii.gz ${dir_prep}/Control_BC_Norm.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'moving_image=${dir_prep}/Control_Multiplied.nii.gz' >> ${job_name}
+  echo 'fixed_image=${dir_prep}/${prefix}_T2w_FOV.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsRegistration \' >> ${job_name}
+  echo '  -d 3 \' >> ${job_name}
+  echo '  --float 1 \' >> ${job_name}
+  echo '  --verbose 1 \' >> ${job_name}
+  echo '  -u 0 \' >> ${job_name}
+  echo '  -w [0.01,0.99] \' >> ${job_name}
+  echo '  -z 1 \' >> ${job_name}
+  echo '  -r [${fixed_image},${moving_image},1] \' >> ${job_name}
+  echo '  -t Rigid[0.2] \' >> ${job_name}
+  echo '  -m Mattes[${fixed_image},${moving_image},1,32,Regular,0.75] \' >> ${job_name}
+  echo '  -c [2000x2000x2000x2000x2000,1e-6,10] \' >> ${job_name}
+  echo '  -f 8x8x4x2x1 \' >> ${job_name}
+  echo '  -s 4x3x2x1x0vox \' >> ${job_name}
+  echo '  -o ${dir_prep}/ASL_to_native_temp_' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'mv ${dir_prep}/ASL_to_native_temp_0GenericAffine.mat \' >> ${job_name}
+  echo '  ${dir_xfm}/${prefix}_from-asl+raw_to-T2w+rigid_xfm.mat' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -n BSpline[3] \' >> ${job_name}
+  echo '  -i ${dir_prep}/${prefix}_control_BC.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_prep}/${prefix}_control_BC_native.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-asl+raw_to-T2w+rigid_xfm.mat \' >> ${job_name}
+  echo '  -r ${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'antsApplyTransforms -d 3 \' >> ${job_name}
+  echo '  -n BSpline[3] \' >> ${job_name}
+  echo '  -i ${dir_prep}/${prefix}_CBF.nii.gz \' >> ${job_name}
+  echo '  -o ${dir_native_CBF}/${prefix}_CBF.nii.gz \' >> ${job_name}
+  echo '  -t ${dir_xfm}/${prefix}_from-asl+raw_to-T2w+rigid_xfm.mat \' >> ${job_name}
+  echo '  -r ${dir_anat_native}/${prefix}_T2w.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+
+  qsub ${job_name}
+done
+
