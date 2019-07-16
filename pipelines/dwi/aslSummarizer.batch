@@ -1,0 +1,88 @@
+#! /bin/bash
+
+researcher=/Shared/!!!
+project=!!!_bids
+group=Research-!!!
+space=HCPICBM
+template=1mm
+
+hpc_email=!!!uiowa.edu
+hpc_msgs=n
+hpc_queue=UI,PINC,CCOM
+hpc_pe="smp 28"
+
+#------------------------------------------------------------------------------
+subject_tsv=${researcher}/${project}/participants.tsv
+
+unset sub_list
+unset ses_list
+unset site_list
+while IFS=$'\t\r' read -r sub ses site t1w t2w;
+do
+  sub_list+=(${sub})
+  ses_list+=(${ses})
+  site_list+=(${site})
+  t1w_list+=(${t1w})
+  t2w_list+=(${t2w})
+done < ${subject_tsv}
+
+job_dir=${researcher}/${project}/code
+job_name=${job_dir}/aslSummarizer.job
+echo 'Writing '${job_name}
+echo '#! /bin/bash' > ${job_name}
+echo '#$ -M '${hpc_email} >> ${job_name}
+echo '#$ -m '${hpc_msgs} >> ${job_name}
+echo '#$ -q '${hpc_queue} >> ${job_name}
+echo '#$ -pe '${hpc_pe} >> ${job_name}
+echo '#$ -j y' >> ${job_name}
+echo '#$ -o '${researcher}/${project}'/log/hpc_output/' >> ${job_name}
+echo '' >> ${job_name}
+echo '#------------------------------------------------------------------------------' >> ${job_name}
+echo '# Set Up Software' >> ${job_name}
+echo '#------------------------------------------------------------------------------' >> ${job_name}
+echo 'module load OpenBLAS' >> ${job_name}
+echo 'nimg_core_root=/Shared/nopoulos/nimg_core' >> ${job_name}
+echo 'module load R' >> ${job_name}
+echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/ants_source.sh' >> ${job_name}
+echo 'ants_version=$(echo "${ANTSPATH}" | cut -d "/" -f9)' >> ${job_name}
+echo 'fsl_version=6.0.1_multicore' >> ${job_name}
+echo 'source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_version}' >> ${job_name}
+echo '' >> ${job_name}
+
+num_scans="${#sub_list[@]}"
+for (( i=1; i<${num_scans}; i++ )); do
+
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo '# Specify Analysis Variables' >> ${job_name}
+  echo '#------------------------------------------------------------------------------' >> ${job_name}
+  echo 'researcher='${researcher} >> ${job_name}
+  echo 'project='${project} >> ${job_name}
+  echo 'space='${space} >> ${job_name}
+  echo 'template='${template} >> ${job_name}
+  echo 'group='${group} >> ${job_name}
+
+  subject=${sub_list[i]}
+  session=${ses_list[i]}
+  prefix=sub-${subject}_ses-${session}_site-00201
+  dir_native_scalars=${researcher}/${project}/derivatives/dwi/scalars_native
+
+
+  echo 'ThresholdImage 3 ${researcher}/${project}/derivatives/asl/CBF_native/'${prefix}'_CBF.nii.gz '${dir_native_scalars}'/JF_labels/'${prefix}'_ASL_mask.nii.gz  -1 0.001 0 1' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 '${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_ASL_labels.nii.gz m '${dir_native_scalars}'/JF_labels/'${prefix}'_ASL_mask.nii.gz '${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_labels.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+
+  echo '  label_nii='${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_ASL_labels.nii.gz' >> ${job_name}
+  echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/baw_summarizer.tsv' >> ${job_name}
+  echo '  data_nii=${researcher}/${project}/derivatives/asl/CBF_native/'${prefix}'_CBF.nii.gz' >> ${job_name}
+  echo '  Rscript \' >> ${job_name}
+  echo '  -e '\''library(nifti.bids)'\'' \' >> ${job_name}
+  echo '  -e '\''library(nifti.io)'\'' \' >> ${job_name}
+  echo '  -e '\''library(R.utils)'\'' \' >> ${job_name}
+  echo '  -e '\''library(tools)'\'' \' >> ${job_name}
+  echo '  -e '\''library(moments)'\'' \' >> ${job_name}
+  echo '  -e '\''label.summary(save.prefix="'\''${project}_${map}'\''", data.nii="'\''${data_nii}'\''", save.dir="'\''${researcher}/${project}/summary'\''", save.stats=c("mean", "median", "sd", "mad"), label.nii="'\''${label_nii}'\''", label.key="'\''${label_key}'\''", scratch.dir="'\''~'\''")'\''' >> ${job_name}
+  echo '' >> ${job_name}
+done
+
+qsub ${job_name}
