@@ -115,9 +115,15 @@ for (( i=1; i<${num_scans}; i++ )); do
   echo '  -n NearestNeighbor \' >> ${job_name}
   echo '  -r ${fixed_image}' >> ${job_name}
   echo '' >> ${job_name}
+  
+  echo 'ThresholdImage 3 ${researcher}/${project}/derivatives/dwi/scalars_native/${map}/'${prefix}'_reg-T2w+rigid_FA.nii.gz '${dir_native_scalars}'/JF_labels/'${prefix}'_DTI_mask.nii.gz  -1 0.001 0 1' >> ${job_name}
+  echo '' >> ${job_name}
+  echo 'ImageMath 3 '${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_DTI_labels.nii.gz m '${dir_native_scalars}'/JF_labels/'${prefix}'_DTI_mask.nii.gz '${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_labels.nii.gz' >> ${job_name}
+  echo '' >> ${job_name}
+
 
   echo 'for map in FA MD RD AD S0; do' >> ${job_name}
-  echo '  label_nii='${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_labels.nii.gz' >> ${job_name}
+  echo '  label_nii='${dir_native_scalars}'/JF_labels/'${prefix}'_JF_native_DTI_labels.nii.gz' >> ${job_name}
   echo '  label_key=/Shared/nopoulos/nimg_core/atlas_human/baw_summarizer.tsv' >> ${job_name}
   echo '  data_nii=${researcher}/${project}/derivatives/dwi/scalars_native/${map}/'${prefix}'_reg-T2w+rigid_${map}.nii.gz' >> ${job_name}
   echo '  Rscript \' >> ${job_name}
