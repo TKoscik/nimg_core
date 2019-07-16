@@ -7,7 +7,7 @@ project=!!!_bids
 group=Research-!!!
 space=HCPICBM
 template=1mm
-smoothing=!!! # or 1.414
+smoothing=0 # or 1.414
 
 hpc_email=!!!.uiowa.edu
 hpc_msgs=n
