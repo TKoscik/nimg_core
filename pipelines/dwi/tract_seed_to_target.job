@@ -1,0 +1,43 @@
+#! /bin/bash
+#$ -M !!!uiowa.edu
+#$ -m n
+#$ -q UI,PINC,CCOM
+#$ -pe smp 56
+#$ -j y
+#$ -o !!!
+
+# this requires outputs from DTI processing
+
+module load OpenBLAS
+fsl_version=5.0.8_multicore
+source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_version}
+
+researcher=!!!
+project=!!!
+subject=!!!
+session=!!!
+site=!!!
+group=Research-!!!
+prefix=sub-${subject}_ses-${session}_site-${site}
+
+dir_prep=${researcher}/${project}/derivatives/dwi/prep/sub-${subject}/ses-${session}
+dir_corrected=${researcher}/${project}/derivatives/dwi/corrected
+TractDir=${researcher}/${project}/derivatives/dwi/tract/sub-${subject}/ses-${session}
+
+mkdir ${TractDir}
+
+cp ${dir_corrected}/${prefix}_dwi.nii.gz ${dir_prep}/All.bvec ${dir_prep}/All.bval ${dir_prep}/DTI_mask.nii.gz ${TractDir}
+mv ${TractDir}/${prefix}_dwi.nii.gz ${TractDir}/data.nii.gz
+mv ${TractDir}/All.bvec ${TractDir}/bvecs
+mv ${TractDir}/All.bval ${TractDir}/bvals
+mv ${TractDir}/DTI_mask.nii.gz ${TractDir}/nodif_brain_mask.nii.gz
+
+bedpostx ${TractDir}
+
+seedVol=!!!  #This should be the full path to a binary mask with voxels in your seed region = 1 
+targetVol=!!!  #This should be the full path to a binary mask with voxels in your target region = 1 
+
+echo ${seedVol} >> ${TractDir}/seeds.txt
+echo ${targetVol} >> ${TractDir}/targets.txt
+
+probtrackx2 -s bedpostx ${TractDir}.bedpostX/merged -m bedpostx ${TractDir}/nodif_brain_mask.nii.gz -x bedpostx ${TractDir}/seeds.txt -o bedpostx ${TractDir}/Output.nii.gz --targetmasks=bedpostx ${TractDir}/targets.txt
