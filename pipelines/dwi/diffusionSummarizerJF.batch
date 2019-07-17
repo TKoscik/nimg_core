@@ -72,6 +72,8 @@ for (( i=1; i<${num_scans}; i++ )); do
   dir_prep=${researcher}/${project}/derivatives/dwi/prep/sub-${subject}/ses-${session}
   dir_native_scalars=${researcher}/${project}/derivatives/dwi/scalars_native
 
+  echo 'mkdir -p '${dir_native_scalars}'/JF_labels' >> ${job_name}
+
   echo 'fixed_image='${dir_anat_native}/${prefix}'_T1w.nii.gz' >> ${job_name}
   echo 'moving_image='${dir_baw}'/TissueClassify/t1_average_BRAINSABC.nii.gz' >> ${job_name}
   echo '' >> ${job_name}
