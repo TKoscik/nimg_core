@@ -20,6 +20,13 @@ ${researcherRoot}/
     ∟code
     ∟dicom/                   Read-only archive
     |  ∟sub-${subject}_ses-${session}_site-${site}.zip
+    ∟histology/
+    |  ∟sub-${subject}/
+    |    ∟ses-block/
+    |       ∟sub-${subject}_ses-${session}_block-##_face-rostral.tif
+    |       ∟sub-${subject}_ses-${session}_block-##_face-caudal.tif
+    |    ∟ses-section/
+    |       ∟sub-${subject}_ses-${session}_block-##_section-##_cutdir-rostral.tif
     ∟log/
     |   ∟hpc_output/
     |   |    ∟${job_name}.o######
