@@ -22,11 +22,9 @@ ${researcherRoot}/
     |  ∟sub-${subject}_ses-${session}_site-${site}.zip
     ∟histology/
     |  ∟sub-${subject}/
-    |    ∟ses-block/
-    |       ∟sub-${subject}_ses-${session}_block-##_face-rostral.tif
-    |       ∟sub-${subject}_ses-${session}_block-##_face-caudal.tif
-    |    ∟ses-section/
-    |       ∟sub-${subject}_ses-${session}_block-##_section-##_cutdir-rostral.tif
+    |    ∟sub-${subject}_block-##_face-rostral.jpg
+    |    ∟sub-${subject}_block-##_face-caudal.jpg
+    |    ∟sub-${subject}_block-##_section-##_cutdir-rostral_stain-nissl.vsi
     ∟log/
     |   ∟hpc_output/
     |   |    ∟${job_name}.o######
