@@ -1,5 +1,5 @@
 #!/bin/bash
-subject_log=researcherRoot/projectName/log/sub-SUBJECTID_ses-MRQID_site-site.log
+subject_log=${researcherRoot}/${projectName}/log/sub-${SUBJECTID}_ses-${MRQID}_site-site.log
 echo '#--------------------------------------------------------------------------------' >> ${subject_log}
 echo 'task: FSwbcv6T1T2' >> ${subject_log}
 echo 't1: T1bc >> ${subject_log}
@@ -8,8 +8,8 @@ echo 'software: FreeSurfer' >> ${subject_log}
 echo 'version: 6.0 >> ${subject_log}
 date +"start_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 export FREESURFER_HOME=/Shared/pinc/sharedopt/apps/freesurfer/Linux/x86_64/6.0.0
-export SUBJECTS_DIR=researcherRoot/projectName/derivatives/fsurf
+export SUBJECTS_DIR=${researcherRoot}/${projectName}/derivatives/fsurf
 source ${FREESURFER_HOME}/FreeSurferEnv.sh
-recon-all -subject projectName_v6wbcT1T2_SUBJECTID_MRQID -i T1bc -T2 T2bc -cw256 -T2pial -all
+recon-all -subject ${projectName}_v6wbcT1T2_${SUBJECTID}_${MRQID} -i ${T1bc} -T2 ${T2bc} -cw256 -T2pial -all
 date +"end_time: %Y-%m-%d_%H-%M-%S" >> ${subject_log}
 echo '' >> ${subject_log}
