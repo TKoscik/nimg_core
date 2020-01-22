@@ -118,17 +118,31 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
-    |  |  ∟b0_mean/
-    |  |  |  ∟sub-${subject}_ses-${session}_*_b0_mask-brain.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_b0_mean.nii.gz
-    |  |  ∟corrected/
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
     |  |  ∟scalar_${space}_${template}/
+    |  |  |  ∟AD/
+    |  |  |  ∟B0_mean/
+    |  |  |  ∟FA/
+    |  |  |  ∟MD/
+    |  |  |  ∟RD/
+    |  |  |  ∟S0/
     |  |  ∟scalar_native/
-    |  |  ∟tensor/
+    |  |  |  ∟AD/
+    |  |  |  ∟B0_mean/
+    |  |  |  ∟FA/
+    |  |  |  ∟MD/
+    |  |  |  ∟RD/
+    |  |  |  ∟S0/
+    |  |  ∟tensor_${space}_${template}/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
+    |  |  ∟tensor_native/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟label/
