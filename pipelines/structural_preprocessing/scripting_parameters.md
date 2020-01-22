@@ -29,7 +29,7 @@ source /Shared/pinc/sharedopt/apps/sourcefiles/afni_source.sh
 afni_version=${AFNIDIR##*/}
 source /Shared/pinc/sharedopt/apps/sourcefiles/ants_source.sh
 ants_version=$(echo "${ANTSPATH}" | cut -d "/" -f9)
-fsl_version=6.0.0_multicore
+fsl_version=6.0.1_multicore
 source /Shared/pinc/sharedopt/apps/sourcefiles/fsl_source.sh ${fsl_source}
 ```
 
