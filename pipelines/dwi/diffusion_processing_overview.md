@@ -20,7 +20,13 @@ Each diffusion processing script/job should be initialized with a set of user-de
 10. Register corrected, mean B0 to native space T2w
 11. Apply transforms to DWI to both DWI-native space and normalized template space  
 12. Calculate scalars for both spacings  
-
+13. Convert to DSIstudio SRC file: dsi_studio --action=src --source=4d_image.nii --bval=bvals --bvec=bvals --output=1.src.gz
+14. ??DSIstudio QC: dsi_studio --action=qc --source=directory_storing_src_files
+15. DSIstudio reconstruction:  dsi_studio --action=rec --source=20081006_M025Y_1Shell.src.gz --mask=mask100.nii --method=4 --param0=1.25
+16. DSIstudio Fiber Tracking:
+  a. 2 ROIs and wholBrain.nii: dsi_studio --action=trk --source=subject1.fib --seed=wholeBrain.nii --roi=my_roi1.nii --roi2=myroi2.nii --seed_count=5000 --fa_threshold=0.0241 --turning_angle=80 --step_size=.5 --smoothing=0.85 --min_length=20 --max_length=140 --output=track.txt
+  b. dsi_studio --action=trk --source=CMU_60_20130923build.fib.mean.fib.gz --fiber_count=1000000 --output=no_file --connectivity=FreeSurferDKT
+  c. Fibre tracking with output along track FA, stats and TDI: dsi_studio --action=trk --source=CMU_60_20130923build.fib.mean.fib.gz --fiber_count=1000000 --output=tracks.trk.gz --export=qa,dti_fa,stat,tdi
 
 
 
