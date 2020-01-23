@@ -118,6 +118,13 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
+    |  |  ∟dsistudio/
+    |  |  |  ∟connectivity/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_*_dwi-conmx+FreeSurferDKT.tsv
+    |  |  |  |  ∟sub-${subject}_ses-${session}_*_dwi-conmx+BAW.tsv
+    |  |  |  |  ∟sub-${subject}_ses-${session}_*_dwi-conmx+Bruss400.tsv
+    |  |  |  ∟src/
+    |  |  |  ∟fib/
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
@@ -128,18 +135,12 @@ ${researcherRoot}/
     |  |  |  ∟MD/
     |  |  |  ∟RD/
     |  |  |  ∟S0/
-    |  |  ∟scalar_native/
-    |  |  |  ∟AD/
-    |  |  |  ∟B0_mean/
-    |  |  |  ∟FA/
-    |  |  |  ∟MD/
-    |  |  |  ∟RD/
-    |  |  |  ∟S0/
-    |  |  ∟tensor_${space}_${template}/
+    |  |  ∟scalar_native/ [*not in default output, same subfolders as other scalars]
+    |  |  ∟tensor_${space}_${template}/ [corrected dwi data, in template space]
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
-    |  |  ∟tensor_native/
+    |  |  ∟tensor_native/ [corrected dwi data, retaining native spacing in native, anatomical space]
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
     |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
