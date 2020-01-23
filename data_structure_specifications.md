@@ -73,22 +73,17 @@ ${researcherRoot}/
     |  |  |  |  ∟fsaverage/
     |  |  |  |  ∟sub-${subject}_ses-${session}/
     |  |  |  ∟resample/
-    |  |  ∟jac_${space}_${template}/
-    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${space}_${template}_jac.nii.gz
+    |  |  ∟jac_${template}_${space}/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_jac.nii.gz
     |  |  ∟label/
-    |  |  |  ∟baw+label/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+label.nii.gz
-    |  |  |  ∟baw+fs/
-    |  |  |  ∟baw+lobe/
+    |  |  |  ∟baw_1mm/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+label.nii.gz
     |  |  ∟mask/
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-air.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-brain.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-tissue.nii.gz
     |  |  ∟native/
     |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_air.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_brain.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_${mod}_tissue.nii.gz
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
@@ -107,10 +102,8 @@ ${researcherRoot}/
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-readout.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-resample.nii.gz
     |  |  |        ∟sub-${subject}_ses-${session}_*_${mod}_prep-T1reg.nii.gz
-    |  |  ∟reg_${space}_${template}/
-    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${space}_${template}_${mod}.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${space}_${template}_${mod}_brain.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${space}_${template}_${mod}_tissue.nii.gz
+    |  |  ∟reg_${template}_${space}/
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_${mod}.nii.gz
     |  |  ∟segmentation/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-CSF.nii.gz
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-GM.nii.gz
@@ -118,6 +111,14 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
+    |  |  ∟corrected_${template}_${space}/ [corrected dwi data, in template space]
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_dwi.bval
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_dwi.bvec
+    |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_dwi.nii.gz/
+    |  |  ∟corrected_native/ [corrected dwi data, retaining native spacing in native, anatomical space]
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
+    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
     |  |  ∟dsistudio/
     |  |  |  ∟connectivity/
     |  |  |  |  ∟sub-${subject}_ses-${session}_*_dwi-conmx+FreeSurferDKT.tsv
@@ -128,22 +129,20 @@ ${researcherRoot}/
     |  |  ∟prep/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
-    |  |  ∟scalar_${space}_${template}/
+    |  |  ∟scalar_${template}_${space}/
     |  |  |  ∟AD/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_AD.nii.gz
     |  |  |  ∟B0_mean/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_B0+mean.nii.gz
     |  |  |  ∟FA/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_FA.nii.gz
     |  |  |  ∟MD/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_MD.nii.gz
     |  |  |  ∟RD/
+    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_RD.nii.gz
     |  |  |  ∟S0/
+    |  |  |     ∟sub-${subject}_ses-${session}_reg-${template}+${space}_S0.nii.gz
     |  |  ∟scalar_native/ [*not in default output, same subfolders as other scalars]
-    |  |  ∟tensor_${space}_${template}/ [corrected dwi data, in template space]
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
-    |  |  ∟tensor_native/ [corrected dwi data, retaining native spacing in native, anatomical space]
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bval
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.bvec
-    |  |  |  ∟sub-${subject}_ses-${session}_*_dwi.nii.gz
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟label/
