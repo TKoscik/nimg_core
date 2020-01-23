@@ -130,19 +130,33 @@ ${researcherRoot}/
     |  |  |  ∟sub-${subject}/
     |  |  |     ∟ses-${session}/
     |  |  ∟scalar_${template}_${space}/
-    |  |  |  ∟AD/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_AD.nii.gz
-    |  |  |  ∟B0_mean/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_B0+mean.nii.gz
-    |  |  |  ∟FA/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_FA.nii.gz
-    |  |  |  ∟MD/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_MD.nii.gz
-    |  |  |  ∟RD/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_RD.nii.gz
-    |  |  |  ∟S0/
-    |  |  |     ∟sub-${subject}_ses-${session}_reg-${template}+${space}_S0.nii.gz
-    |  |  ∟scalar_native/ [*not in default output, same subfolders as other scalars]
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_AD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_L1.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_L2.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_L3.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_B0+mean.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_FA.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_MD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_MO.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_RD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_S0.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_V1.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_V2.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_reg-${template}+${space}_V3.nii.gz *not in default output
+    |  |  ∟scalar_native/
+    |  |  |  ∟sub-${subject}_ses-${session}_AD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_L1.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_L2.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_L3.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_B0+mean.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_FA.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_MD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_MO.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_RD.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_S0.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_V1.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_V2.nii.gz *not in default output
+    |  |  |  ∟sub-${subject}_ses-${session}_V3.nii.gz *not in default output
     |  ∟func/
     |  |  ∟analyses/
     |  |  ∟label/
