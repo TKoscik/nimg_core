@@ -30,7 +30,7 @@ in
   p) # project_name
     projectName=${OPTARG}
     ;;
-  o) # project_name
+  o) # output file
     outputFile=${OPTARG}
     ;;
   h) # help
