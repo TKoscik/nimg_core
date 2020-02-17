@@ -78,7 +78,8 @@ ${researcherRoot}/
     |  |  ∟label/
     |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+dkt.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+fs.nii.gz
-    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+tissue.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+lobe.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+tissue.nii.gz #CSF,GM,WM
     |  |  ∟mask/
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-air.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-brain.nii.gz
@@ -110,6 +111,12 @@ ${researcherRoot}/
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-GM.nii.gz
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-label.nii.gz
     |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-WM.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+BG.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+CSF.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+GP.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+GM.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+VB.nii.gz
+    |  |     ∟sub-${subject}_ses-${session}_*_${mod}_seg-baw+WM.nii.gz
     |  ∟dwi/
     |  |  ∟analyses/
     |  |  ∟corrected_${template}_${space}/ [corrected dwi data, in template space]
