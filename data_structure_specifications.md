@@ -76,8 +76,9 @@ ${researcherRoot}/
     |  |  ∟jac_${template}_${space}/
     |  |  |  ∟sub-${subject}_ses-${session}_*_reg-${template}+${space}_jac.nii.gz
     |  |  ∟label/
-    |  |  |  ∟baw_1mm/
-    |  |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+label.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+dkt.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+fs.nii.gz
+    |  |  |  ∟sub-${subject}_ses-${session}_*_label-baw+1mm+tissue.nii.gz
     |  |  ∟mask/
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-air.nii.gz
     |  |  |  ∟sub-${subject}_ses-${session}_*_mask-brain.nii.gz
