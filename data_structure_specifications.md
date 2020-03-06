@@ -18,20 +18,15 @@ ${researcherRoot}/
     ∟participants.tsv
     ∟site.tsv
     ∟code
-    ∟dicom/                   Read-only archive
+    ∟sourcedata/                   Read-only archive
     |  ∟sub-${subject}_ses-${session}_site-${site}.zip
-    ∟histology/
-    |  ∟sub-${subject}/
-    |    ∟sub-${subject}_block-##_face-rostral.jpg
-    |    ∟sub-${subject}_block-##_face-caudal.jpg
-    |    ∟sub-${subject}_block-##_section-##_cutdir-rostral_stain-nissl.vsi
     ∟log/
     |   ∟hpc_output/
     |   |    ∟${job_name}.o######
     |   ∟sub-${subject}_ses-${session}_site-${site}.log
     |   ∟MRtape.log
     ∟lut/
-    ∟nifti/                   Read-only archive
+    ∟rawdata/                   Read-only archive
     |  ∟sub-${subject}/
     |    ∟ses-${session}/
     |      ∟session.tsv
@@ -56,6 +51,11 @@ ${researcherRoot}/
     |      ∟func/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_run-${run}_bold.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_task-${task}_run-${run}_bold.nii.gz
+    |      ∟histology/
+    |      |  ∟sub-${subject}/
+    |      |  ∟sub-${subject}_block-##_face-rostral.jpg
+    |      |  ∟sub-${subject}_block-##_face-caudal.jpg
+    |      |  ∟sub-${subject}_block-##_section-##_cutdir-rostral_stain-nissl.vsi
     |      ∟mrs/
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_roi-${roi}_mrs.json
     |      |  ∟sub-${subject}_ses-${session}_site-${site}_roi-${roi}_mrs.p
